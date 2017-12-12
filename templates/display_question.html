@@ -10,7 +10,7 @@
         {% for item in answers if question_id %}}
         <p>{{ item }}</p>
         {% endfor %}
-        <form action="/display/"{{ question_title }} method="post">
+        <form action='/display/'{{ questions['title'] }} method="post">
             <label for="answer">Acceptance Criteria:</label><br>
             <textarea id="answer" name="answer" required rows="10" cols="40"></textarea><br>
             <button type="submit">Submit!</button>

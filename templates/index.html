@@ -11,17 +11,27 @@
         <table>
             <thead>
                 <tr>
-                {% for item in table_headers %}
-                    <th>{{ item }}</th>
-                {% endfor %}
+                    <th>ID</th>
+                    <th>Submission</th>
+                    <th>View Number</th>
+                    <th>Vote Number</th>
+                    <th>Title</th>
+                    <th>Message</th>
+                    <th>Image</th>
                 </tr>
             </thead>
             <tbody>
+            {% for dictionary in questions %}
                 <tr>
-                    <td>{{ item[0] }}</td>
-                    <td><a href = {{ url_for('route',story_id=item[0]) }}>{{ item[1] }}</a></td>
-                    <td>{{ i|safe }}</td>
+                    <td>{{ questions['id'] }}</td>
+                    <td>{{ questions['submission_time'] }}</td>
+                    <td>{{ questions['view_number'] }}</td>
+                    <td>{{ questions['vote_number'] }}</td>
+                    <td><a href = "/display">{{ questions['title'] }}</a></td>
+                    <td>{{ questions['message'] }}</td>
+                    <td>{{ questions['image'] }}</td>
                 </tr>
+            {% endfor %}
             </tbody>
         </table>
     </body>
