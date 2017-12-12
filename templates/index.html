@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ask, Mate!</title>
+    </head>
+    <body>
+        <h1>Ask, Mate!</h1>
+        <a href="">Ask a question!</a><br>
+        <br>
+        <table>
+            <thead>
+                <tr>
+                {% for item in table_headers %}
+                    <th>{{ item }}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ item[0] }}</td>
+                    <td><a href = {{ url_for('route',story_id=item[0]) }}>{{ item[1] }}</a></td>
+                    <td>{{ i|safe }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
