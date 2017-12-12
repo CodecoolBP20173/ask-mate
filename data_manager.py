@@ -1,7 +1,7 @@
 import connection
 
-QUESTION_FILE_NAME = '/sample_data/question.csv'
-ANSWERS_FILE_NAME = '/sample_data/answer.csv'
+QUESTION_FILE_NAME = 'sample_data/question.csv'
+ANSWERS_FILE_NAME = 'sample_data/answer.csv'
 
 def list_all_questions():
     return connection.get_data_from_file(QUESTION_FILE_NAME)

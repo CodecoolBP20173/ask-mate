@@ -12,7 +12,6 @@ def route_index():
     return render_template('index.html', questions=data_manager.list_all_questions())
 
 
-
 @app.route(URL_DISPLAY, methods=['POST', 'GET'])
 @app.route(URL_DISPLAY + '<question_id>', methods=['POST', 'GET'])
 def route_display(question_id):
