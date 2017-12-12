@@ -23,13 +23,13 @@
             <tbody>
             {% for dictionary in questions %}
                 <tr>
-                    <td>{{ questions['id'] }}</td>
-                    <td>{{ questions['submission_time'] }}</td>
-                    <td>{{ questions['view_number'] }}</td>
-                    <td>{{ questions['vote_number'] }}</td>
-                    <td><a href = "/display">{{ questions['title'] }}</a></td>
-                    <td>{{ questions['message'] }}</td>
-                    <td>{{ questions['image'] }}</td>
+                    <td>{{ dictionary['id'] }}</td>
+                    <td>{{ dictionary['submission_time'] }}</td>
+                    <td>{{ dictionary['view_number'] }}</td>
+                    <td>{{ dictionary['vote_number'] }}</td>
+                    <td><a href = "/display">{{ dictionary['title'] }}</a></td>
+                    <td>{{ dictionary['message'] }}</td>
+                    <td>{{ dictionary['image'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>
