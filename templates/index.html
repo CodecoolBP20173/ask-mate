@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Submission</th>
+                    <th>Submission Time</th>
                     <th>View Number</th>
                     <th>Vote Number</th>
                     <th>Title</th>
@@ -24,12 +24,12 @@
             {% for dictionary in questions %}
                 <tr>
                     <td>{{ dictionary['id'] }}</td>
-                    <td>{{ dictionary['submission_time'] }}</td>
-                    <td>{{ dictionary['view_number'] }}</td>
-                    <td>{{ dictionary['vote_number'] }}</td>
-                    <td><a href = "/display">{{ dictionary['title'] }}</a></td>
-                    <td>{{ dictionary['message'] }}</td>
-                    <td>{{ dictionary['image'] }}</td>
+                    <td>{{ dictionary[' submisson_time'] }}</td>
+                    <td>{{ dictionary[' view_number'] }}</td>
+                    <td>{{ dictionary[' vote_number'] }}</td>
+                    <td><a href = "/display">{{ dictionary[' title'] }}</a></td>
+                    <td>{{ dictionary[' message'] }}</td>
+                    <td>{{ dictionary[' image'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>
