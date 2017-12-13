@@ -25,17 +25,18 @@ def get_answers_by_question_id(id):
     return answers_for_question
 
 
-def get_new_answer_id():
+def get_new_a_q_id(filename, data_header):
     max_id = 0
-    data = connection.get_data_from_file(ANSWERS_FILE_NAME)
+    data = connection.get_data_from_file(filename)
     for num in range(1, len(data)):
-        act_id = int(data[num][connection.DATA_HEADER_ANSWER[0]])
+        act_id = int(data[num][data_header[0]])
         if act_id > max_id:
             max_id = act_id
     return max_id + 1
 
 
-def add_new_answer(answer):
-    all_answers = connection.get_data_from_file(ANSWERS_FILE_NAME)
-    all_answers.append(answer)
-    connection.write_data_to_file(all_answers, connection.DATA_HEADER_ANSWER, ANSWERS_FILE_NAME)
+def add_new_a_q(data, filename, data_header):
+    all_answers = connection.get_data_from_file(filename)
+    all_answers.append(data)
+    connection.write_data_to_file(all_answers, data_header, filename)
+

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 
 import data_manager
-import time
+import connection
 
 app = Flask(__name__)
 URL_INDEX = '/'
@@ -12,8 +12,6 @@ URL_ASK = '/ask'
 
 @app.route(URL_INDEX)
 def route_index():
-    print(time.time())
-    print(time.localtime(time.time()))
     return render_template(
         'index.html',
         questions=data_manager.list_all_questions())
@@ -24,14 +22,15 @@ def route_ask():
     if request.method == 'GET':
         return render_template('ask.html')
     else:
-        question = {"id": '',
-                    "submisson_time": '',
+        question = {"id": str(data_manager.get_new_a_q_id(data_manager.QUESTION_FILE_NAME,
+                                                          connection.DATA_HEADER_QUESTION)),
+                    "submission_time": '',
                     "view_number": '',
                     "vote_number": '',
                     'title': request.form['title'],
                     'message': request.form['message'],
                     'image': ''}
-        data_manager.add_new_question(question)
+        data_manager.add_new_a_q(question, data_manager.QUESTION_FILE_NAME, connection.DATA_HEADER_QUESTION)
         return redirect('/')
 
 
@@ -49,13 +48,14 @@ def route_display(question_id):
             question=data_manager.get_question_by_id(question_id),
             answers=data_manager.get_answers_by_question_id(question_id), question_id=question_id)
     else:  # method POST
-        answer = {'id': str(data_manager.get_new_answer_id()),
+        answer = {'id': str(data_manager.get_new_a_q_id(data_manager.ANSWERS_FILE_NAME,
+                                                                    connection.DATA_HEADER_ANSWER)),
                   "submission_time": '',
                   'vote_number': '',
                   'question_id': question_id,
                   'message': request.form['answer'],
                   'image': ''}
-        data_manager.add_new_answer(answer)
+        data_manager.add_new_a_q(answer, data_manager.ANSWERS_FILE_NAME, connection.DATA_HEADER_ANSWER)
         return redirect(URL_DISPLAY + question_id)
 
 
