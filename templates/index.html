@@ -10,7 +10,7 @@
     </head>
     <body>
         <h1>Ask, Mate!</h1>
-        <a href="">Ask a question!</a><br>
+        <a href="/ask">Ask a question!</a><br>
         <br>
         <table class="table-striped">
             <thead>
@@ -28,7 +28,7 @@
             {% for dictionary in questions %}
                 <tr>
                     <td>{{ dictionary['id'] }}</td>
-                    <td>{{ dictionary['submisson_time'] }}</td>
+                    <td>{{ dictionary['submission_time'] }}</td>
                     <td>{{ dictionary['view_number'] }}</td>
                     <td>{{ dictionary['vote_number'] }}</td>
                     <td><a href = "/display/{{ dictionary['id'] }}">{{ dictionary['title'] }}</a></td>

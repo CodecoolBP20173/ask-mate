@@ -21,14 +21,14 @@
             {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
                 <tr>
                     <td> {{ dictionary['id'] }}</td>
-                    <td> {{ dictionary['submisson_time'] }}</td>
+                    <td> {{ dictionary['submission_time'] }}</td>
                     <td> {{ dictionary['vote_number'] }}</td>
                     <td> {{ dictionary['message'] }}</td>
                     <td> {{ dictionary['image'] }}</td>
-
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <p><a href="/post_answer/{{ question_id }}">Answer this question</a></p>
     </body>
 </html>
