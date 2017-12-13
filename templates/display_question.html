@@ -5,15 +5,30 @@
         <title>Ask, Mate!</title>
     </head>
     <body>
-        <h1>{{ question_title }}</h1>
-        <p>{{ message }}</p>
-        {% for item in answers if question_id %}}
-        <p>{{ item }}</p>
-        {% endfor %}
-        <form action='/display/'{{ questions['title'] }} method="post">
-            <label for="answer">Acceptance Criteria:</label><br>
-            <textarea id="answer" name="answer" required rows="10" cols="40"></textarea><br>
-            <button type="submit">Submit!</button>
-        </form>
+        <h1>{{ question['title'] }}</h1>
+        <p>{{ question['message'] }}</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Submission Time</th>
+                    <th>Vote Number</th>
+                    <th>Message</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
+                <tr>
+                    <td> {{ dictionary['id'] }}</td>
+                    <td> {{ dictionary['submisson_time'] }}</td>
+                    <td> {{ dictionary['vote_number'] }}</td>
+                    <td> {{ dictionary['message'] }}</td>
+                    <td> {{ dictionary['image'] }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </body>
 </html>

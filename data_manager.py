@@ -10,8 +10,9 @@ def list_all_questions():
 
 def get_question_by_id(question_id):
     table = list_all_questions()
+    string_id = str(question_id)
     for question_dict in table:
-        if question_dict['id'] == question_id:
+        if question_dict['id'] == string_id:
             return question_dict
 
 

@@ -28,12 +28,12 @@
             {% for dictionary in questions %}
                 <tr>
                     <td>{{ dictionary['id'] }}</td>
-                    <td>{{ dictionary[' submisson_time'] }}</td>
-                    <td>{{ dictionary[' view_number'] }}</td>
-                    <td>{{ dictionary[' vote_number'] }}</td>
-                    <td><a href = "/display">{{ dictionary[' title'] }}</a></td>
-                    <td>{{ dictionary[' message'] }}</td>
-                    <td>{{ dictionary[' image'] }}</td>
+                    <td>{{ dictionary['submisson_time'] }}</td>
+                    <td>{{ dictionary['view_number'] }}</td>
+                    <td>{{ dictionary['vote_number'] }}</td>
+                    <td><a href = "/display/{{ dictionary['id'] }}">{{ dictionary['title'] }}</a></td>
+                    <td>{{ dictionary['message'] }}</td>
+                    <td>{{ dictionary['image'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>
