@@ -8,11 +8,39 @@
         <p><a href="/">Back</a></p>
         <h1>{{ question['title'] }}</h1>
         <p>{{ question['message'] }}</p>
-        <sub>Votes:{{ question['vote_number'] }}</sub>
-        <form>
-        <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Vote up!</button>
-        <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Downvote!</button>
-        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Submission Time</th>
+                    <th>Vote Number</th>
+                    <th>Views</th>
+                    <th>Title</th>
+                    <th>Message</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> {{ question['id'] }} </td>
+                    <td> {{ question['submission_time'] }}</td>
+                    <td> {{ question['vote_number'] }}</td>
+                    <td> {{ question['views'] }}</td>
+                    <td> {{ question['title'] }}</td>
+                    <td> {{ question['message'] }}</td>
+                    <td><img src="{{ question['image'] }}"/></td>
+                    <td>
+                        <form>
+                            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Vote up!</button>
+                            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Downvote!</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
         <picture>{{ question['image'] }}</picture><br>
         <br>
         <table>
