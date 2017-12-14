@@ -21,3 +21,10 @@ def display_time(act_time):
     result = " ".join([date, hour_minute])
     return result
 
+
+def display_unix_time():
+
+    """
+    :returns UNIX timestamp of current time as a float
+    """
+    return time.time()
