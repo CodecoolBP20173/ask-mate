@@ -1,17 +1,38 @@
 * {
     margin: auto;
     font-family: "Noto Sans Mono CJK JP Regular", fantasy;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 h1 {
     background-color: #3A7734;
     color: #FFFFFF;
     margin-top: 50px;
+    width: 1500px;
+}
+
+a {
+    font-size: 22px;
+}
+
+p {
+    width: 1500px;
+}
+
+h2, h3, h4 {
+    width:1500px;
+}
+
+form {
+    width: 1500px;
+}
+
+textarea {
+    height: 500px;
 }
 
 table {
-    width: 80%;
+    width: 1500px;
 }
 
 th {
@@ -21,16 +42,16 @@ th {
     padding:10px;
 }
 
-
 img {
-    max-height: 500px;
-    max-width: 500px;
+    max-height: 300px;
+    max-width: 300px;
 }
 
 td {
     padding: 20px;
+    text-align: left;
+    vertical-align: top;
 }
-
 
 button {
   border-radius: 4px;
@@ -38,14 +59,14 @@ button {
   border: none;
   color: #FFFFFF;
   font-size: 15px;
-  width: 100px;
+  width: 130px;
     height: 50px;
   transition: all 0.5s;
   cursor: pointer;
   margin-top: 20px;
+    font-size: 20px;
 }
 
 button:hover{
     background-color: #3A7734;
 }
-

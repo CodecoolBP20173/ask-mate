@@ -16,7 +16,7 @@
         {{ question['submission_time'] }} {{ question['view_number'] }} views
         </p>
         <p>{{ question['message'] }}</p>
-        <sub>Votes:{{ question['vote_number'] }}</sub>
+        <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
         <form>
         <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Vote up!</button>
         <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Downvote!</button>
