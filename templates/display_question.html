@@ -20,6 +20,7 @@
         <form>
         <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Vote up!</button>
         <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Downvote!</button>
+        <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get">Edit question</button>
         </form>
         <p>
         <img src="/{{ question['image'] }}"/>
@@ -44,7 +45,8 @@
                     <td> {{ dictionary['message'] }}</td>
                     <td> {{ dictionary['image'] }}</td>
                     <form><td><button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post">Vote up!</button>
-                    <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post">Downvote!</button></td></form>
+                    <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post">Downvote!</button>
+                    <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get">Edit answer</button></td></form>
                 </tr>
             {% endfor %}
             </tbody>
