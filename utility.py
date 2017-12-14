@@ -1,6 +1,11 @@
 import time
 
 def display_time(act_time):
+
+    """
+    :param act_time as a float: the UNIX timestamp
+    :returns date as a string: 'yyyy.mm.dd hh:mm'
+    """
     act_time = time.localtime(act_time)
     year = str(act_time.tm_year)
     month = str(act_time.tm_mon)
