@@ -1,4 +1,28 @@
+* {
+    margin: auto;
+    font-family: "Noto Sans Mono CJK JP Regular", fantasy;
+    font-size: 22px;
+}
+
+h1 {
+    background-color: #3A7734;
+    color: #FFFFFF;
+    margin-top: 50px;
+}
+
+th {
+    text-align:center;
+    vertical-align:middle;
+    margin: 20px;
+    padding:10px;
+}
+
+
 img {
     max-height: 500px;
     max-width: 500px;
+}
+
+td {
+    padding: 20px;
 }
