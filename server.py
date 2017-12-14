@@ -29,7 +29,6 @@ def route_ask():
     if request.method == 'GET':
         return render_template('ask.html')
     else:
-
         file = request.files['file']
         if file and utility.allowed_file(file.filename):
             filename = secure_filename(file.filename)
@@ -42,7 +41,7 @@ def route_ask():
                     "vote_number": '0',
                     'title': request.form['title'],
                     'message': request.form['message'],
-                    'image': UPLOAD_FOLDER + '/' + filename}
+                    'image': UPLOAD_FOLDER + '/' + filename if file.filename else ''}
         data_manager.add_new_a_q(question, data_manager.QUESTION_FILE_NAME, connection.DATA_HEADER_QUESTION)
         return redirect(URL_DISPLAY + question['id'])
 
