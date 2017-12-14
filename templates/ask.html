@@ -23,10 +23,12 @@
             <label for="message">Description:</label>
             <textarea id="message" name="message">{{ question['message'] }}</textarea>
         </div>
+        {% if question['image'] is not defined %}
         <div class="form-group">
             <label for="file">Upload a picture</label>
             <input name="file" id="file" type="file">
         </div>
+        {% endif %}
         <button type="submit">Submit</button>
     </form>
 </body>
