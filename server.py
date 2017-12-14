@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 
 import data_manager
 import connection
+import utility
 
 app = Flask(__name__)
 URL_INDEX = '/'
@@ -12,9 +13,13 @@ URL_ASK = '/ask'
 
 @app.route(URL_INDEX)
 def route_index():
+    questions = data_manager.list_all_questions()
+    for question in questions:
+        print(question['submission_time'])
+        question['submission_time'] = utility.display_time(float(question['submission_time']))
     return render_template(
         'index.html',
-        questions=data_manager.list_all_questions())
+        questions=questions)
 
 
 @app.route(URL_ASK, methods=['GET', 'POST'])
@@ -24,7 +29,7 @@ def route_ask():
     else:
         question = {"id": str(data_manager.get_new_a_q_id(data_manager.QUESTION_FILE_NAME,
                                                           connection.DATA_HEADER_QUESTION)),
-                    "submission_time": '',
+                    "submission_time": str(utility.display_unix_time()),
                     "view_number": '0',
                     "vote_number": '0',
                     'title': request.form['title'],
@@ -43,14 +48,17 @@ def route_answer(question_id):
 @app.route(URL_DISPLAY + '<question_id>', methods=['POST', 'GET'])
 def route_display(question_id):
     if request.method == 'GET':
+        answers = data_manager.get_answers_by_question_id(question_id)
+        for answer in answers:
+            answer['submission_time'] = utility.display_time(float(answer['submission_time']))
         return render_template(
             'display_question.html',
             question=data_manager.get_question_by_id(question_id),
-            answers=data_manager.get_answers_by_question_id(question_id), question_id=question_id)
+            answers=answers, question_id=question_id)
     else:  # method POST
         answer = {'id': str(data_manager.get_new_a_q_id(data_manager.ANSWERS_FILE_NAME,
                                                                     connection.DATA_HEADER_ANSWER)),
-                  "submission_time": '',
+                  "submission_time": str(utility.display_unix_time()),
                   'vote_number': '0',
                   'question_id': question_id,
                   'message': request.form['answer'],
