@@ -12,21 +12,23 @@
 </head>
 <body>
     <h1>Ask a question:</h1>
-    <form action="/ask"
+    <form action="{{ req_url }}"
           method="POST"
           enctype=multipart/form-data>
         <div class="form-group">
             <label for="title" class="col-sm-2 control-label">Question title</label>
-            <input id="title" name="title" type="text" class="form-control">
+            <input id="title" name="title" type="text" class="form-control" value="{{ question['title'] }}">
         </div>
-        <p>
+        <div class="form-group">
             <label for="message" class="col-sm-2 control-label">Description:</label>
-            <textarea id="message" name="message" rows="10" cols="50" class="form-control"></textarea>
-        </p>
+            <textarea id="message" class="form-control" name="message">{{ question['message'] }}</textarea>
+        </div>
+        {% if question['image'] is not defined %}
         <div class="form-group">
             <label for="file">Upload a picture</label>
             <input name="file" id="file" type="file">
         </div>
+        {% endif %}
         <button type="submit">Submit</button>
     </form>
 </body>
