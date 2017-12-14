@@ -18,7 +18,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def route_index():
     questions = data_manager.list_all_questions()
     for question in questions:
-        print(question['submission_time'])
         question['submission_time'] = utility.display_time(float(question['submission_time']))
     return render_template(
         'index.html',
@@ -45,7 +44,7 @@ def route_ask():
                     'message': request.form['message'],
                     'image': UPLOAD_FOLDER + '/' + filename}
         data_manager.add_new_a_q(question, data_manager.QUESTION_FILE_NAME, connection.DATA_HEADER_QUESTION)
-        return redirect('/')
+        return redirect(URL_DISPLAY + question['id'])
 
 
 @app.route(URL_POST_ANSWER + '<question_id>')
@@ -58,11 +57,13 @@ def route_answer(question_id):
 def route_display(question_id):
     if request.method == 'GET':
         answers = data_manager.get_answers_by_question_id(question_id)
+        question = data_manager.get_question_by_id(question_id)
         for answer in answers:
             answer['submission_time'] = utility.display_time(float(answer['submission_time']))
+        question['submission_time'] = utility.display_time(float(question['submission_time']))
         return render_template(
             'display_question.html',
-            question=data_manager.get_question_by_id(question_id),
+            question=question,
             answers=answers, question_id=question_id)
     else:  # method POST
         answer = {'id': str(data_manager.get_new_a_q_id(data_manager.ANSWERS_FILE_NAME,
@@ -77,7 +78,7 @@ def route_display(question_id):
 
 
 @app.route('/display/<question_id>/<direction>', methods=['POST'])
-def route_counter(question_id, direction):
+def route_counter_question(question_id, direction):
     question = data_manager.get_question_by_id(question_id)
     if direction == 'up-vote':
         votes = int(question['vote_number'])
@@ -97,7 +98,7 @@ def route_counter(question_id, direction):
 
 
 @app.route('/display/<question_id>/<response_id>/<direction>', methods=['POST'])
-def route_counter_minus(question_id, response_id, direction):
+def route_counter_answer(question_id, response_id, direction):
     ans= data_manager.get_answers_by_question_id(question_id)
     for item in ans:
         if item['id'] == response_id:

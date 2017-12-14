@@ -12,6 +12,9 @@
     <body>
         <p><a href="/">Back</a></p>
         <h1>{{ question['title'] }}</h1>
+        <p>
+        {{ question['submission_time'] }} {{ question['view_number'] }} views
+        </p>
         <p>{{ question['message'] }}</p>
         <sub>Votes:{{ question['vote_number'] }}</sub>
         <form>
@@ -21,6 +24,7 @@
         <p>
         <img src="/{{ question['image'] }}"/>
         </p>
+
         <table>
             <thead>
                 <tr>
