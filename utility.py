@@ -36,3 +36,19 @@ def display_unix_time():
     :returns UNIX timestamp of current time as a float
     """
     return time.time()
+
+def order_list_by_submission_time(list_of_dict):
+    """
+    Re-orders a list of dictionaries in descending order based on the value of the "submission_time"
+    key.
+    param: list of dictionaries
+    return: list of dictionaries ordered by submission_time
+    """
+    for iterations in range(len(list_of_dict)):
+        current = 0
+        while current <= len(list_of_dict) - 2:
+            if float(list_of_dict[current + 1]["submission_time"]) > float(list_of_dict[current]["submission_time"]):
+                list_of_dict[current], list_of_dict[current+1] = list_of_dict[current+1], list_of_dict[current]
+            current += 1
+        iterations += 1
+    return list_of_dict

@@ -16,7 +16,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route(URL_INDEX)
 def route_index():
-    questions = data_manager.list_all_questions()
+    questions = utility.order_list_by_submission_time(data_manager.list_all_questions())
     for question in questions:
         question['submission_time'] = utility.display_time(float(question['submission_time']))
     return render_template(
