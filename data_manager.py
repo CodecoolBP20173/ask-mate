@@ -40,3 +40,12 @@ def add_new_a_q(data, filename, data_header):
     all_answers.append(data)
     connection.write_data_to_file(all_answers, data_header, filename)
 
+
+def update_q_and_a(data, filename, data_header):
+    table = connection.get_data_from_file(filename)
+    for row in table:
+        row_number = table.index(row)
+        if data['id'] == row['id']:
+            table[row_number] = data
+    return connection.write_data_to_file(table, data_header, filename)
+

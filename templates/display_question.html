@@ -8,6 +8,13 @@
         <p><a href="/">Back</a></p>
         <h1>{{ question['title'] }}</h1>
         <p>{{ question['message'] }}</p>
+        <sub>Votes:{{ question['vote_number'] }}</sub>
+        <form>
+        <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Vote up!</button>
+        <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Downvote!</button>
+        </form>
+        <picture>{{ question['image'] }}</picture><br>
+        <br>
         <table>
             <thead>
                 <tr>
@@ -26,6 +33,8 @@
                     <td> {{ dictionary['vote_number'] }}</td>
                     <td> {{ dictionary['message'] }}</td>
                     <td> {{ dictionary['image'] }}</td>
+                    <form><td><button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post">Vote up!</button>
+                    <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post">Downvote!</button></td></form>
                 </tr>
             {% endfor %}
             </tbody>

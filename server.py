@@ -25,8 +25,8 @@ def route_ask():
         question = {"id": str(data_manager.get_new_a_q_id(data_manager.QUESTION_FILE_NAME,
                                                           connection.DATA_HEADER_QUESTION)),
                     "submission_time": '',
-                    "view_number": '',
-                    "vote_number": '',
+                    "view_number": '0',
+                    "vote_number": '0',
                     'title': request.form['title'],
                     'message': request.form['message'],
                     'image': ''}
@@ -51,12 +51,54 @@ def route_display(question_id):
         answer = {'id': str(data_manager.get_new_a_q_id(data_manager.ANSWERS_FILE_NAME,
                                                                     connection.DATA_HEADER_ANSWER)),
                   "submission_time": '',
-                  'vote_number': '',
+                  'vote_number': '0',
                   'question_id': question_id,
                   'message': request.form['answer'],
                   'image': ''}
         data_manager.add_new_a_q(answer, data_manager.ANSWERS_FILE_NAME, connection.DATA_HEADER_ANSWER)
         return redirect(URL_DISPLAY + question_id)
+
+
+@app.route('/display/<question_id>/<direction>', methods=['POST'])
+def route_counter(question_id, direction):
+    question = data_manager.get_question_by_id(question_id)
+    if direction == 'up-vote':
+        votes = int(question['vote_number'])
+        votes += 1
+    else:
+        votes = int(question['vote_number'])
+        votes -= 1
+    updated_votes = {'id': question['id'],
+                     "submission_time": question["submission_time"],
+                     'view_number': question['view_number'],
+                     'vote_number': votes,
+                     'title': question['title'],
+                     'message': question['message'],
+                     'image': question['image']}
+    data_manager.update_q_and_a(updated_votes, data_manager.QUESTION_FILE_NAME, connection.DATA_HEADER_QUESTION)
+    return redirect(URL_DISPLAY + question_id)
+
+
+@app.route('/display/<question_id>/<response_id>/<direction>', methods=['POST'])
+def route_counter_minus(question_id, response_id, direction):
+    ans= data_manager.get_answers_by_question_id(question_id)
+    for item in ans:
+        if item['id'] == response_id:
+            answers = item
+    if direction == 'up-vote':
+        votes = int(answers['vote_number'])
+        votes += 1
+    else:
+        votes = int(answers['vote_number'])
+        votes -= 1
+    updated_votes = {'id': answers['id'],
+                     "submission_time": answers["submission_time"],
+                     'vote_number': votes,
+                     'question_id': answers['question_id'],
+                     'message': answers['message'],
+                     'image': answers['image']}
+    data_manager.update_q_and_a(updated_votes, data_manager.ANSWERS_FILE_NAME, connection.DATA_HEADER_ANSWER)
+    return redirect(URL_DISPLAY + question_id)
 
 
 if __name__ == '__main__':
