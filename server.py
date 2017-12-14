@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-
+from werkzeug.utils import secure_filename
 import data_manager
 import connection
 
@@ -8,6 +8,9 @@ URL_INDEX = '/'
 URL_DISPLAY = '/display/'
 URL_POST_ANSWER = '/post_answer/'
 URL_ASK = '/ask'
+UPLOAD_FOLDER = '/images'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route(URL_INDEX)
