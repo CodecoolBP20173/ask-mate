@@ -3,6 +3,11 @@
     <head>
         <meta charset="utf-8">
         <title>Ask, Mate!</title>
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+              integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+              crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
         <p><a href="/">Back</a></p>
@@ -13,8 +18,9 @@
         <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Vote up!</button>
         <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Downvote!</button>
         </form>
-        <picture>{{ question['image'] }}</picture><br>
-        <br>
+        <p>
+        <img src="{{ question['image'] }}" alt=""/>
+        </p>
         <table>
             <thead>
                 <tr>
