@@ -167,5 +167,8 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/intellij
 
+# Configurational file
+.idea/wswp-ask-mate-example_pictures.iml
+
 .gitignore
 
