@@ -1,5 +1,8 @@
 import time
 
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+
 def display_time(act_time):
 
     """
@@ -20,6 +23,11 @@ def display_time(act_time):
     hour_minute = ":".join([hour, minute])
     result = " ".join([date, hour_minute])
     return result
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def display_unix_time():
