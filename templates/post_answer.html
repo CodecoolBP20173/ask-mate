@@ -8,9 +8,8 @@
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     </head>
 <body>
-    <h1>Post an answer</h1>
-    <h2> {{ question["title"] }}</h2>
-    <h4> {{ question["message"] }}</h4>
+    <h1> {{ question["title"] }}</h1>
+    <p> {{ question["message"] }}</p>
     <form action="{{ req_url }}" method="post">
             <label for="answer">Your answer:</label><br>
             <textarea id="answer" name="answer" required rows="10" cols="40" minlength="10">{{answers['message']}}

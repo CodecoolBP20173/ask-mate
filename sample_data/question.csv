@@ -11,7 +11,8 @@ app.js (bundled file with webpack, including jquery)",static/images/image1.png
 2,1493015432,1364,53,Drawing canvas with an image picked with Cordova Camera Plugin,"I'm getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I'm on IOS, it throws errors such as cross origin issue, or that I'm trying to use an unknown format.
 
 This is the code I'm using to draw the image (that works on web/desktop but not cordova built ios app)",
-9,1493015432,0,0,Miért zúg a macskám?,fsdfwsfs,static/images/5198682308_c3cabf26ff_o.jpg
+9,1493015432,0,1,Miért zúg a macskám?,fsdfwsfs,static/images/5198682308_c3cabf26ff_o.jpg
 10,1493015432,0,4,Szerintetek így lehetek programozó?,"8.osztályos vagyok,alsóban mindig is kitünő voltam viszont felsőben a matek már nem megy, 6.ban voltam belőle 4es azon kívül pedig 3as. Osztályfőnököm szerint ha kicsit ráállnék a matekra nagyon jól menne,szóval elkezdek járni külön tanárhoz. Már nagyon régóta programozó szeretnék lenni, szerintetetek így ne erőltessem? (Egyébként az évvégi átlagom még sosem ment 4,4 alá)",static/images/Bc1WBw7CUAEK7G4.jpg
 12,1513267681.2274647,0,0,Melyik gombot kell megnyomni?,????,static/images/oregasszonyok.jpg
 13,1513267828.9806917,0,0,Ez programozás?,"<html> <head> <title>Kezdőlap</title> <body> <a><h1><center><b><font color=red>Üdvözöllek a készülő weboldalamon !</h1></font color></b><br /><center><img src=""like.png""></center></center></a> <a><h1><center><b><font color=""blue"">Egy szinten semmi ötletem sincs úgyhogy segíthettek nekem XXD</font color></b></center></h1></a> <a><h1><font color=""pink"">Itt egy szép kép -></font color></h1><img src=""kep.png""></a> </body> </head> </html>",static/images/macska23.jpg
+14,1513327128.0842013,0,0,sdgsd,dvxc,static/images/Star-Wars-8-fan-poster-1086855.jpg
