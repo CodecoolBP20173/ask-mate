@@ -40,7 +40,7 @@ def route_ask():
                     "vote_number": '0', 'title': request.form['title'],
                     'message': request.form['message'],
                     'image': UPLOAD_FOLDER + '/' + filename if file.filename else ''}
-        data_manager.add_new_a_q(question, data_manager.QUESTION_FILE_NAME, connection.DATA_HEADER_QUESTION)
+        data_manager.add_new_question(question)
         return redirect(URL_DISPLAY + question['id'])
 
 
@@ -69,7 +69,7 @@ def route_display(question_id):
                   "submission_time": str(utility.display_unix_time()), 'vote_number': '0',
                   'question_id': question_id, 'message': request.form['answer'],
                   'image': ''}
-        data_manager.add_new_a_q(answer, data_manager.ANSWERS_FILE_NAME, connection.DATA_HEADER_ANSWER)
+        data_manager.add_new_answer(answer)
         return redirect(URL_DISPLAY + question_id)
 
 
@@ -86,7 +86,7 @@ def route_counter_question(question_id, direction):
                      'view_number': question['view_number'], 'vote_number': votes,
                      'title': question['title'], 'message': question['message'],
                      'image': question['image']}
-    data_manager.update_q_and_a(updated_votes, data_manager.QUESTION_FILE_NAME, connection.DATA_HEADER_QUESTION)
+    data_manager.update_question(updated_votes)
     return redirect(URL_DISPLAY + question_id)
 
 
@@ -105,7 +105,7 @@ def route_counter_answer(question_id, response_id, direction):
     updated_votes = {'id': answers['id'], "submission_time": answers["submission_time"],
                      'vote_number': votes, 'question_id': answers['question_id'],
                      'message': answers['message'], 'image': answers['image']}
-    data_manager.update_q_and_a(updated_votes, data_manager.ANSWERS_FILE_NAME, connection.DATA_HEADER_ANSWER)
+    data_manager.update_answer(updated_votes)
     return redirect(URL_DISPLAY + question_id)
 
 
@@ -123,7 +123,7 @@ def route_edit_question_save(question_id):
                      'view_number': question['view_number'], 'vote_number': question['vote_number'],
                      'title': request.form['title'], 'message': request.form['message'],
                      'image': question['image']}
-    data_manager.update_q_and_a(updated_votes, data_manager.QUESTION_FILE_NAME, connection.DATA_HEADER_QUESTION)
+    data_manager.update_question(updated_votes)
     return redirect(URL_DISPLAY + question_id)
 
 
@@ -148,7 +148,7 @@ def route_edit_answer_save(question_id, response_id):
     updated_votes = {'id': answers['id'], "submission_time": answers["submission_time"],
                      'vote_number': answers['vote_number'], 'question_id': answers['question_id'],
                      'message': request.form['answer'], 'image': answers['image']}
-    data_manager.update_q_and_a(updated_votes, data_manager.ANSWERS_FILE_NAME, connection.DATA_HEADER_ANSWER)
+    data_manager.update_answer(updated_votes)
     return redirect(URL_DISPLAY + question_id)
 
 
