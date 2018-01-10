@@ -17,8 +17,7 @@ def list_all_questions_ordered_by_submission_time(cursor):
 @connection.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""SELECT * FROM question WHERE id = %(id)s;""", {'id': question_id})
-    found_question = cursor.fetchall()
-    return found_question
+    return cursor.fetchone()
 
 
 @connection.connection_handler
