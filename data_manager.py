@@ -73,12 +73,19 @@ def add_new_answer(cursor, new_data):
 
 @connection.connection_handler
 def update_question(data, filename, data_header):
-    table = connection.get_data_from_file(filename)
-    for row in table:
-        row_number = table.index(row)
-        if data['id'] == row['id']:
-            table[row_number] = data
-    return connection.write_data_to_file(table, data_header, filename)
+    @connection.connection_handler
+    def update_question(cursor, data):
+        cursor.execute("""
+                        UPDATE question
+                        SET submission_time = %{'submission_time'}s,
+                        view_number = %{'view_number'}s,
+                        vote_number = %{'vote_number'}s,
+                        title = %{'title'}s,
+                        message = %{'message'}s,
+                        image = %{'image'}s
+                        WHERE id = %{'id'}s;
+                        """,
+                       data)
 
 
 @connection.connection_handler
