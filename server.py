@@ -130,29 +130,24 @@ def route_edit_question_save(question_id):
     return redirect(URL_DISPLAY + question_id)
 
 
-@app.route('/display/<question_id>/<response_id>/edit', methods=['GET'])
-def route_edit_answer(question_id, response_id):
-    ans = data_manager.get_answers_by_question_id(question_id)
-    for item in ans:
-        if item['id'] == response_id:
-            answers = item
+@app.route('/display/<question_id>/<answer_id>/edit', methods=['GET', 'POST'])
+def route_edit_answer(question_id, answer_id):
     if request.method == 'GET':
-        return render_template('post_answer.html', answers=answers, question=data_manager.get_question_by_id(question_id),
-                               req_url=url_for('route_edit_answer_save', question_id=question_id, response_id=response_id),
-                               response_id=answers['id'], question_id=question_id)
-
-
-@app.route('/display/<question_id>/<response_id>/edit/save', methods=['POST'])
-def route_edit_answer_save(question_id, response_id):
-    ans = data_manager.get_answers_by_question_id(question_id)
-    for item in ans:
-        if item['id'] == response_id:
-            answers = item
-    updated_votes = {'id': answers['id'], "submission_time": answers["submission_time"],
-                     'vote_number': answers['vote_number'], 'question_id': answers['question_id'],
-                     'message': request.form['answer'], 'image': answers['image']}
-    data_manager.update_answer(updated_votes)
-    return redirect(URL_DISPLAY + question_id)
+        answer = data_manager.get_answer_by_id(answer_id)
+        question = data_manager.get_question_by_id(question_id)
+        req_url = url_for('route_edit_answer', question_id=question_id, answer_id=answer_id)
+        print(req_url)
+        return render_template('post_answer.html', answers=answer, question=question, req_url=req_url)
+    else:
+        answer = data_manager.get_answer_by_id(answer_id)
+        updated_votes = {'id': answer['id'],
+                         "submission_time": answer["submission_time"],
+                         'vote_number': answer['vote_number'],
+                         'question_id': answer['question_id'],
+                         'message': request.form['answer'],
+                         'image': answer['image']}
+        data_manager.update_answer(updated_votes)
+        return redirect(URL_DISPLAY + question_id)
 
 
 if __name__ == '__main__':
