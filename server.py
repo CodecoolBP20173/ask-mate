@@ -4,6 +4,7 @@ import data_manager
 import connection
 import utility
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 URL_INDEX = '/'
@@ -16,9 +17,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route(URL_INDEX)
 def route_index():
-    questions = utility.order_list_by_submission_time(data_manager.list_all_questions())
-    for question in questions:
-        question['submission_time'] = utility.display_time(float(question['submission_time']))
+    questions = data_manager.list_all_questions_ordered_by_submission_time()
     return render_template(
         'index.html',
         questions=questions)
@@ -34,14 +33,17 @@ def route_ask():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        question = {"id": str(data_manager.get_new_a_q_id(data_manager.QUESTION_FILE_NAME,
-                                                          connection.DATA_HEADER_QUESTION)),
-                    "submission_time": str(utility.display_unix_time()), "view_number": '0',
-                    "vote_number": '0', 'title': request.form['title'],
+        """id": str(data_manager.get_new_a_q_id(data_manager.QUESTION_FILE_NAME,
+                                                                  connection.DATA_HEADER_QUESTION)),"""
+        question = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
+                    "view_number": 0,
+                    "vote_number": 0,
+                    'title': request.form['title'],
                     'message': request.form['message'],
                     'image': UPLOAD_FOLDER + '/' + filename if file.filename else ''}
-        data_manager.add_new_a_q(question, data_manager.QUESTION_FILE_NAME, connection.DATA_HEADER_QUESTION)
-        return redirect(URL_DISPLAY + question['id'])
+        tempid = data_manager.add_new_question(question)
+
+        return redirect(URL_DISPLAY + str(tempid))
 
 
 @app.route(URL_POST_ANSWER + '<question_id>')
@@ -56,9 +58,9 @@ def route_display(question_id):
     if request.method == 'GET':
         answers = data_manager.get_answers_by_question_id(question_id)
         question = data_manager.get_question_by_id(question_id)
-        for answer in answers:
+        '''for answer in answers:
             answer['submission_time'] = utility.display_time(float(answer['submission_time']))
-        question['submission_time'] = utility.display_time(float(question['submission_time']))
+        question['submission_time'] = utility.display_time(float(question['submission_time']))'''
         return render_template(
             'display_question.html',
             question=question,
