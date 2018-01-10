@@ -13,6 +13,22 @@ h1 {
     font-style: italic;
 }
 
+#right {
+    margin-right: 800px;
+}
+
+#left {
+
+}
+
+.first_panel {
+    display: inline;
+}
+
+div {
+    width: 1500px;
+}
+
 a {
     font-size: 22px;
 }
