@@ -5,8 +5,11 @@ ANSWERS_FILE_NAME = 'sample_data/answer.csv'
 
 
 @connection.connection_handler
-def list_all_questions(cursor):
-    cursor.execute("""SELECT * FROM question;""")
+def list_all_questions_ordered_by_submission_time(cursor):
+    cursor.execute("""
+                      SELECT * FROM question
+                      ORDER BY submission_time DESC;
+                   """)
     all_questions = cursor.fetchall()
     return all_questions
 
@@ -14,8 +17,7 @@ def list_all_questions(cursor):
 @connection.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""SELECT * FROM question WHERE id = %(id)s;""", {'id': question_id})
-    found_question = cursor.fetchall()
-    return found_question
+    return cursor.fetchone()
 
 
 @connection.connection_handler
@@ -27,10 +29,26 @@ def get_answers_by_question_id(cursor, id):
 
 @connection.connection_handler
 def add_new_question(cursor, new_data): # Needs testing
-    '''new_data_list = [new_data['submission_time'], new_data['view_number'], new_data['vote_number'],
-                     new_data['title'], new_data['message'], new_data['image']]'''
-    cursor.execute("""INSERT INTO question(submission_time, view_number, vote_number, title, message, image) 
-                      VALUES (%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s);""", new_data)
+    cursor.execute("""INSERT INTO question(submission_time, 
+                                           view_number, 
+                                           vote_number, 
+                                           title, 
+                                           message, 
+                                           image) 
+                      VALUES (%(submission_time)s, 
+                              %(view_number)s,
+                              %(vote_number)s, 
+                              %(title)s, 
+                              %(message)s, 
+                              %(image)s);
+                    """, new_data)
+
+    cursor.execute("""SELECT id FROM question
+                      ORDER BY id DESC
+                      LIMIT 1;
+                   """)
+
+    return cursor.fetchone()['id']
 
 
 @connection.connection_handler
@@ -64,5 +82,12 @@ def update_question(data, filename, data_header):
 
 
 @connection.connection_handler
-def update_answer(data, filename, data_header):
-    pass
+def update_answer(cursor, new_data):
+    cursor.execute("""
+                      UPDATE answers
+                      SET submission_time = %('submission_time')s, 
+                      vote_number = %('vote_number')s, 
+                      message = %('message')s, 
+                      image = %('image')
+                      WHERE id = %('id')s;
+                  """, new_data)
