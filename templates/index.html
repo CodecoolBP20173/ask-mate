@@ -28,7 +28,7 @@
             {% for dictionary in questions %}
                 <tr>
                     <td>{{ dictionary['id'] }}</td>
-                    <td>{{ dictionary['submission_time'] }}</td>
+                    <td>{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
                     <td>{{ dictionary['view_number'] }}</td>
                     <td>{{ dictionary['vote_number'] }}</td>
                     <td><a href = "/display/{{ dictionary['id'] }}">{{ dictionary['title'] }}</a></td>
