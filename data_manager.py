@@ -35,7 +35,22 @@ def add_new_question(cursor, new_data): # Needs testing
 
 @connection.connection_handler
 def add_new_answer(cursor, new_data):
-    pass
+    cursor.execute("""INSERT INTO answer(submission_time, 
+                                        vote_number, 
+                                        question_id, 
+                                        message, 
+                                        image)
+                      VALUES (%('submission_time')s, 
+                              %('vote_number')s, 
+                              %('question_id')s, 
+                              %('message')s, 
+                              %('image')s);
+                    """, new_data)
+    cursor.execute("""SELECT id FROM question
+                      ORDER BY id DESC
+                      LIMIT 1;
+                    """)
+    return cursor.fetchone('id')
 
 
 @connection.connection_handler
