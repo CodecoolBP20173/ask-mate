@@ -149,6 +149,22 @@ def route_edit_answer(question_id, answer_id):
         return redirect(URL_DISPLAY + question_id)
 
 
+@app.route('/search_questions', methods=['POST'])
+def search_question():
+    pattern = request.form["search_input"]
+    return redirect(url_for('display_search_question', search_pattern=pattern))
+    """
+    questions = data_manager.search_questions(pattern)
+    return render_template('index.html', questions=questions)
+    """
+
+
+@app.route('/search?q=<search_pattern>', methods=['GET'])
+def display_search_question(search_pattern):
+    questions = data_manager.search_questions(search_pattern)
+    return render_template('index.html', questions=questions)
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
