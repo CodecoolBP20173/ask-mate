@@ -11,6 +11,8 @@ h1 {
     width: 1500px;
     height: 80px;
     font-style: italic;
+    padding-left: 20px;
+    padding-top: 10px;
 }
 
 #right {
@@ -28,7 +30,9 @@ h1 {
 .panel-under-header {
     width: 1500px;
     height: 150px;
-    background: #ffff9B;
+    background: #66df22;
+    padding-top: 30px;
+    padding-left:60px;
 }
 
 a {
