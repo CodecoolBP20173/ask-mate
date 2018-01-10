@@ -99,3 +99,24 @@ def update_answer(cursor, new_data):
                       image = %(image)s
                       WHERE id = %(id)s;
                   """, new_data)
+
+@connection.connection_handler
+def search_questions(cursor, pattern):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE title LIKE %(pattern)s
+                    OR
+                    description LIKE %(pattern)s
+                    """,
+                   {'pattern': '%' + pattern + '%'})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def search_answer(cursor, pattern):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE message LIKE %(pattern)s
+                    """,
+                   {'pattern': '%' + pattern + '%'})
+    return cursor.fetchall()
