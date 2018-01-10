@@ -49,5 +49,12 @@ def update_question(data, filename, data_header):
 
 
 @connection.connection_handler
-def update_answer(data, filename, data_header):
-    pass
+def update_answer(cursor, new_data):
+    cursor.execute("""
+                      UPDATE answers
+                      SET submission_time = %('submission_time')s, 
+                      vote_number = %('vote_number')s, 
+                      message = %('message')s, 
+                      image = %('image')
+                      WHERE id = %('id')s;
+                  """, new_data)
