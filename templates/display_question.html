@@ -16,6 +16,10 @@
         {{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }} {{ question['view_number'] }} views
         </p>
         <p>{{ question['message'] }}</p>
+        <form>
+            <input type="text" id="st-search-input" class="st-search-input search-field" />
+            <button type="submit">Search</button>
+        </form>
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
         <form id="button-form">
         <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Like</button>
