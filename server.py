@@ -112,22 +112,22 @@ def route_counter_answer(question_id, response_id, direction):
     return redirect(URL_DISPLAY + question_id)
 
 
-@app.route('/display/<question_id>/edit', methods=['GET'])
+@app.route('/display/<question_id>/edit', methods=['GET', 'POST'])
 def route_edit_question(question_id):
     question = data_manager.get_question_by_id(question_id)
-    return render_template('ask.html', question=question,
-                           req_url=url_for('route_edit_question_save', question_id=question_id), question_id=question_id)
-
-
-@app.route('/display/<question_id>/edit/save', methods=['POST'])
-def route_edit_question_save(question_id):
-    question = data_manager.get_question_by_id(question_id)
-    updated_votes = {'id': question['id'], "submission_time": question["submission_time"],
-                     'view_number': question['view_number'], 'vote_number': question['vote_number'],
-                     'title': request.form['title'], 'message': request.form['message'],
-                     'image': question['image']}
-    data_manager.update_question(updated_votes)
-    return redirect(URL_DISPLAY + question_id)
+    if request.method == 'GET':
+        return render_template('ask.html', question=question,
+                               req_url=url_for('route_edit_question', question_id=question_id), question_id=question_id)
+    else:
+        updated_question = {'id': question['id'],
+                            "submission_time": question["submission_time"],
+                            'view_number': question['view_number'],
+                            'vote_number': question['vote_number'],
+                            'title': request.form['title'],
+                            'message': request.form['message'],
+                            'image': question['image']}
+        data_manager.update_question(updated_question)
+        return redirect(URL_DISPLAY + question_id)
 
 
 @app.route('/display/<question_id>/<answer_id>/edit', methods=['GET', 'POST'])
