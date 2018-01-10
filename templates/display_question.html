@@ -12,14 +12,17 @@
     <body>
         <p><a href="/">Back</a></p>
         <h1>{{ question['title'] }}</h1>
-        <p class="first_panel">
-        {{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }} {{ question['view_number'] }} views
-        </p>
+        <div class="panel-under-header">
+            <p class="first_panel">
+            {{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }} {{ question['view_number'] }} views
+            </p>
+            <form action="/search_answer/{{ question_id }}" method="post" class="first_panel">
+                <input type="text" id="st-search-input" class="st-search-input search-field" name="search_input" />
+                <button type="submit">Search</button>
+            </form>
+        </div>
         <p>{{ question['message'] }}</p>
-        <form action="/search_answer/{{ question_id }}" method="post" class="first_panel">
-            <input type="text" id="st-search-input" class="st-search-input search-field" name="search_input" />
-            <button type="submit">Search</button>
-        </form>
+
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
         <form id="button-form">
         <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Like</button>
