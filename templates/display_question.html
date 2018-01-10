@@ -16,8 +16,8 @@
         {{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }} {{ question['view_number'] }} views
         </p>
         <p>{{ question['message'] }}</p>
-        <form>
-            <input type="text" id="st-search-input" class="st-search-input search-field" />
+        <form action="/search_answer/{{ question_id }}" method="post">
+            <input type="text" id="st-search-input" class="st-search-input search-field" name="search_input" />
             <button type="submit">Search</button>
         </form>
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
