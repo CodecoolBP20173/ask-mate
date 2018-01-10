@@ -53,39 +53,34 @@ def add_new_question(cursor, new_data): # Needs testing
 
 @connection.connection_handler
 def add_new_answer(cursor, new_data):
+    print(new_data)
     cursor.execute("""INSERT INTO answer(submission_time, 
                                         vote_number, 
                                         question_id, 
                                         message, 
                                         image)
-                      VALUES (%('submission_time')s, 
-                              %('vote_number')s, 
-                              %('question_id')s, 
-                              %('message')s, 
-                              %('image')s);
+                      VALUES (%(submission_time)s, 
+                              %(vote_number)s, 
+                              %(question_id)s, 
+                              %(message)s, 
+                              %(image)s);
                     """, new_data)
-    cursor.execute("""SELECT id FROM question
-                      ORDER BY id DESC
-                      LIMIT 1;
-                    """)
-    return cursor.fetchone('id')
+
 
 
 @connection.connection_handler
-def update_question(data, filename, data_header):
-    @connection.connection_handler
-    def update_question(cursor, data):
-        cursor.execute("""
-                        UPDATE question
-                        SET submission_time = %{'submission_time'}s,
-                        view_number = %{'view_number'}s,
-                        vote_number = %{'vote_number'}s,
-                        title = %{'title'}s,
-                        message = %{'message'}s,
-                        image = %{'image'}s
-                        WHERE id = %{'id'}s;
-                        """,
-                       data)
+def update_question(cursor, data):
+    cursor.execute("""
+                    UPDATE question
+                    SET submission_time = %(submission_time)s,
+                    view_number = %(view_number)s,
+                    vote_number = %(vote_number)s,
+                    title = %(title)s,
+                    message = %(message)s,
+                    image = %(image)s
+                    WHERE id = %(id)s;
+                    """,
+                   data)
 
 
 @connection.connection_handler

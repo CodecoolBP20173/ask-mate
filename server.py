@@ -66,11 +66,12 @@ def route_display(question_id):
             question=question,
             answers=answers, question_id=question_id)
     else:  # method POST
-        answer = {'id': str(data_manager.get_new_a_q_id(data_manager.ANSWERS_FILE_NAME,
-                                                                    connection.DATA_HEADER_ANSWER)),
-                  "submission_time": str(utility.display_unix_time()), 'vote_number': '0',
-                  'question_id': question_id, 'message': request.form['answer'],
+        answer = {'submission_time': datetime.today(),
+                  'vote_number': 0,
+                  'question_id': question_id,
+                  'message': request.form['answer'],
                   'image': ''}
+        print(answer)
         data_manager.add_new_answer(answer)
         return redirect(URL_DISPLAY + question_id)
 
