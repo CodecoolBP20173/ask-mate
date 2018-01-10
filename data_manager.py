@@ -106,7 +106,8 @@ def search_questions(cursor, pattern):
                     SELECT * FROM question
                     WHERE title LIKE %(pattern)s
                     OR
-                    description LIKE %(pattern)s
+                    message LIKE %(pattern)s
+                    ORDER BY id DESC;
                     """,
                    {'pattern': '%' + pattern + '%'})
     return cursor.fetchall()
@@ -117,6 +118,7 @@ def search_answer(cursor, pattern):
     cursor.execute("""
                     SELECT * FROM answer
                     WHERE message LIKE %(pattern)s
+                    ORDER BY id DESC;
                     """,
                    {'pattern': '%' + pattern + '%'})
     return cursor.fetchall()

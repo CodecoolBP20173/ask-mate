@@ -12,10 +12,12 @@
     <body>
         <h1>Ask, Mate!</h1>
         <p><a href="/ask">Ask a question!</a></p>
-        <form>
-            <input type="text" id="st-search-input" class="st-search-input search-field" />
+
+        <form action="/search_questions" method="post">
+            <input type="text" id="st-search-input" class="st-search-input search-field" name="search_input" />
             <button type="submit">Search</button>
         </form>
+
         <table class="table-striped">
             <thead>
                 <tr>
