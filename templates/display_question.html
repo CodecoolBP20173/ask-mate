@@ -27,10 +27,9 @@
         <p>{{ question['message'] }}</p>
 
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
-
         <div id="tags">
-            {% for tag in tags %}
-                
+            {% for tag in question_tags %}
+                <span class="badge badge-secondary">{{tag.name}}</span>
             {% endfor %}
         </div>
 
