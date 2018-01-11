@@ -175,6 +175,7 @@ def delete_answer(question_id, answer_id):
 def search_question():
     pattern = request.form["search_input"]
     questions = data_manager.search_questions(pattern)
+    print(questions)
     return render_template('index.html', questions=questions)
 
 
