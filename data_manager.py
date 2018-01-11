@@ -155,9 +155,16 @@ def add_new_tag(cursor, tag_name):
 
 @connection.connection_handler
 def create_question_tag_relation(cursor, question_id, tag_id):
-    cursor.execute("""INSERT INTO question_tag (question_id, tag_id)
-                      VALUES (%(q_id)s, %(t_id)s);""",
-                   {'q_id': question_id, 't_id': tag_id})
+    cursor.execute("""
+                    SELECT * FROM question_tag
+                    WHERE question_id=%(qid)s
+                    AND
+                    tag_id=%(tid)s;
+                    """, {'qid': question_id, 'tid': tag_id})
+    if not cursor.fetchone():
+        cursor.execute("""INSERT INTO question_tag (question_id, tag_id)
+                          VALUES (%(q_id)s, %(t_id)s);""",
+                       {'q_id': question_id, 't_id': tag_id})
 
 
 @connection.connection_handler
