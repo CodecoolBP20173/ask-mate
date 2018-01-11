@@ -99,10 +99,13 @@ def route_counter_question(question_id, direction):
 
 @app.route('/display/<question_id>/<response_id>/<direction>', methods=['POST'])
 def route_counter_answer(question_id, response_id, direction):
+    answers = data_manager.get_answer_by_id(response_id)
+    """
     ans = data_manager.get_answers_by_question_id(question_id)
     for item in ans:
         if item['id'] == response_id:
             answers = item
+    """
     if direction == 'up-vote':
         votes = int(answers['vote_number'])
         votes += 1

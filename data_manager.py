@@ -22,13 +22,17 @@ def get_question_by_id(cursor, question_id):
 
 @connection.connection_handler
 def get_answer_by_id(cursor, answer_id):
-    cursor.execute("""SELECT * FROM answer WHERE id = %(id)s;""", {'id': answer_id})
+    cursor.execute("""SELECT * FROM answer
+                      WHERE id = %(id)s
+                      ORDER BY submission_time;""", {'id': answer_id})
     return cursor.fetchone()
 
 
 @connection.connection_handler
 def get_answers_by_question_id(cursor, id):
-    cursor.execute("""SELECT * FROM answer WHERE question_id = %(question_id)s;""", {'question_id': id})
+    cursor.execute("""SELECT * FROM answer
+                      WHERE question_id = %(question_id)s
+                      ORDER BY submission_time;""", {'question_id': id})
     answers_for_question = cursor.fetchall()
     return answers_for_question
 
