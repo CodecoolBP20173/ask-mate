@@ -6,9 +6,12 @@
               integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
               crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+            <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand" rel="stylesheet">
+
     </head>
 <body>
-    <h1> {{ question["title"] }}</h1>
+    <h1>Ask, Mate!</h1>
+    <h2> {{ question["title"] }}</h2>
     <p> {{ question["message"] }}</p>
     <form action="{{ req_url }}" method="post">
             <label for="answer">Your answer:</label><br>

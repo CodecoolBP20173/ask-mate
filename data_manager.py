@@ -34,7 +34,7 @@ def get_answers_by_question_id(cursor, id):
 
 
 @connection.connection_handler
-def add_new_question(cursor, new_data): # Needs testing
+def add_new_question(cursor, new_data):
     cursor.execute("""INSERT INTO question(submission_time, 
                                            view_number, 
                                            vote_number, 
