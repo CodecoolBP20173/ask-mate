@@ -185,7 +185,7 @@ def add_new_tag(question_id, tag):
         return render_template('new-tag.html', answers=answers, question=question, question_id=question_id, tags=tags, question_tags=question_tags)
     else:
         new_question_tag = tag if tag else request.form["new-tag"]
-        print(new_question_tag)
+        data_manager.add_tag_to_question(question_id, new_question_tag)
         return redirect(url_for('route_display', question_id=question_id))
 
 

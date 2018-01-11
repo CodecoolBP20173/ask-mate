@@ -149,7 +149,8 @@ def add_new_tag(cursor, tag_name):
     cursor.execute("""SELECT id FROM tag
                       WHERE name = %(t_name)s;""",
                    {'t_name': tag_name})
-    return cursor.fetchone
+    result = cursor.fetchone()
+    return result
 
 
 @connection.connection_handler
