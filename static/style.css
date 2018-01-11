@@ -46,7 +46,7 @@ p {
     width: 1100px;
 }
 
-h2, h3, h4 {
+h2, h3, h4, h5 {
     width: 1100px;
 }
 
@@ -112,7 +112,7 @@ button, .button {
 }
 
 .side-buttons button {
-    width: 70px;
+    width: 80px;
     height: 40px;
     text-align: center;
 }
@@ -138,4 +138,8 @@ tr {
 
 #tags {
     font-size: 25px;
+}
+
+.comments {
+    background: #F8BBD0;
 }

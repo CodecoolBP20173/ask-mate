@@ -26,7 +26,8 @@
         </div>
         <p>{{ question['message'] }}</p>
         {% for question_comment in question_comments %}
-        <p>{{ question_comment.message }}</p>
+        <h5>Comments:</h5>
+        <p class="comments">{{ question_comment.message }}</p>
         {% endfor %}
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
 
@@ -85,8 +86,8 @@
                     </form>
                 </tr>
                 {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
-                <tr>
-                    <td colspan="5">{{ list['message'] }}</td>
+                <tr class="comments">
+                    <td colspan="5"  class="comments">{{ list['message'] }}</td>
                 </tr>
                 {% endfor %}
             {% endfor %}
