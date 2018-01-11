@@ -188,6 +188,10 @@ def delete_question_and_answers(cursor, question_id):
                     WHERE question_id=%(qid)s;
                     """, {'qid': question_id})
     cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id=%(question_id)s;
+                    """, {'question_id': question_id})
+    cursor.execute("""
                     DELETE FROM question
                     WHERE id=%(qid)s;
                     """, {'qid': question_id})
