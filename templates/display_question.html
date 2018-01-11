@@ -35,11 +35,11 @@
         </div>
 
         <form id="button-form">
-            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Like</button>
-            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Dislike</button>
-            <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get">Edit question</button>
-            <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get">Add new tag</button>
-            <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get">Delete question</button>
+            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
+            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post" class="btn btn-outline-danger">Dislike</button>
+            <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get" class="btn btn-warning">Edit question</button>
+            <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get" class="btn btn-primary">Add new tag</button>
+            <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get" class="btn btn-danger">Delete question</button>
         </form>
 
         {% block content %} {% endblock %}
@@ -67,10 +67,10 @@
                     <td> {{ dictionary['image'] }}</td>
                     <form>
                         <td>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post">Like</button>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post">Dislike</button>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get">Edit answer</button>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get">Delete answer</button>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post" class="btn btn-outline-danger">Dislike</button>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get" class="btn btn-warning">Edit answer</button>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get" class="btn btn-danger">Delete answer</button>
                         </td>
                     </form>
                 </tr>
