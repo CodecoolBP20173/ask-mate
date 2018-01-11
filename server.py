@@ -150,6 +150,12 @@ def route_edit_answer(question_id, answer_id):
         return redirect(URL_DISPLAY + question_id)
 
 
+@app.route('/display/<question_id>/<answer_id>/delete', methods=['GET', 'POST'])
+def delete_answer(question_id, answer_id):
+    data_manager.delete_answer(answer_id)
+    return redirect(URL_DISPLAY + question_id)
+
+
 @app.route('/search_questions', methods=['POST'])
 def search_question():
     pattern = request.form["search_input"]
