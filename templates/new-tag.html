@@ -1,0 +1,13 @@
+{% extends 'display_question.html' %}
+
+{% block content %}
+
+<form action="/question/{{question_id}}/new-tag" method="post">
+    {%for tag in tags %}
+        <a href="/question/{{question_id}}/new-tag/{{tag}}"><span class="badge badge-secondary">{{tag}}</span></a>
+    {% endfor %}
+    <label for="new-tag">Add new tag:</label>
+    <input type="text" name="new-tag" id="new-tag">
+    <button class="button" type="submit">Add tag</button>
+</form>
+{% endblock %}
