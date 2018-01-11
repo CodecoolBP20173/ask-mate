@@ -73,7 +73,6 @@ def add_new_answer(cursor, new_data):
                     """, new_data)
 
 
-
 @connection.connection_handler
 def update_question(cursor, data):
     cursor.execute("""
@@ -100,6 +99,7 @@ def update_answer(cursor, new_data):
                       WHERE id = %(id)s;
                   """, new_data)
 
+
 @connection.connection_handler
 def search_questions(cursor, pattern):
     cursor.execute("""
@@ -122,3 +122,56 @@ def search_answer(cursor, pattern):
                     """,
                    {'pattern': '%' + pattern + '%'})
     return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_all_tags(cursor):
+    cursor.execute("""
+                    SELECT * FROM tag;
+                    """)
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_tags_by_question_id(cursor, question_id):
+    cursor.execute("""SELECT name FROM tag 
+                      INNER JOIN question_tag ON question_tag.tag_id=tag.id 
+                      WHERE question_id=%(q_id)s;""",
+                      {'q_id': question_id})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def add_new_tag(cursor, tag_name):
+    cursor.execute("""INSERT INTO tag (name) 
+                      VALUES (%(name)s);""",
+                   {'name': tag_name})
+    cursor.execute("""SELECT id FROM tag
+                      WHERE name = %(t_name)s;""",
+                   {'t_name': tag_name})
+    return cursor.fetchone
+
+
+@connection.connection_handler
+def create_question_tag_relation(cursor, question_id, tag_id):
+    cursor.execute("""INSERT INTO question_tag (question_id, tag_id)
+                      VALUES (%(q_id)s, %(t_id)s);""",
+                   {'q_id': question_id, 't_id': tag_id})
+
+
+@connection.connection_handler
+def add_tag_to_question(cursor, question_id, tag_name):
+    cursor.execute("""SELECT id FROM tag
+                      WHERE name = %(t_name)s;""",
+                   {'t_name': tag_name})
+    result = cursor.fetchone()
+    if result:
+        create_question_tag_relation(question_id, result['id'])
+    else:
+        tag_id = add_new_tag(tag_name)['id']
+        create_question_tag_relation(question_id, tag_id)
+
+
+
+
+
