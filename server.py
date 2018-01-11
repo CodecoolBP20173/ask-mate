@@ -173,6 +173,19 @@ def search_answer(question_id):
     return render_template('display_question.html', question=question, answers=answers, question_id=question_id)
 
 
+@app.route('/question/<question_id>/new-tag', methods=['POST', 'GET'], defaults={'tag': None})
+@app.route('/question/<question_id>/new-tag/<tag>')
+def add_new_tag(question_id, tag):
+    if request.method == 'GET' and tag is None:
+        answers = data_manager.get_answers_by_question_id(question_id)
+        question = data_manager.get_question_by_id(question_id)
+        tags = ["python", "tag2"]
+        return render_template('new-tag.html', answers=answers, question=question, question_id=question_id, tags=tags)
+    else:
+        new_question_tag = tag if tag else request.form["new-tag"]
+        print(new_question_tag)
+        return redirect(url_for('route_display', question_id=question_id))
+
 
 if __name__ == '__main__':
     app.run(
