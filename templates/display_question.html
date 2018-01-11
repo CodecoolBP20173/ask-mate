@@ -25,8 +25,9 @@
             </form>
         </div>
         <p>{{ question['message'] }}</p>
-        {% for question_comment in question_comments %}
         <h5>Comments:</h5>
+        {% for question_comment in question_comments %}
+
         <p class="comments">{{ question_comment.message }}</p>
         {% endfor %}
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
