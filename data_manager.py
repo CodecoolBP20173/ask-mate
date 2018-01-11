@@ -140,7 +140,7 @@ def get_tags_by_question_id(cursor, question_id):
     cursor.execute("""SELECT name FROM tag 
                       INNER JOIN question_tag ON question_tag.tag_id=tag.id 
                       WHERE question_id=%(q_id)s;""",
-                      {'q_id': question_id})
+                   {'q_id': question_id})
     return cursor.fetchall()
 
 
@@ -185,6 +185,7 @@ def add_tag_to_question(cursor, question_id, tag_name):
 
 @connection.connection_handler
 def delete_answer(cursor, answer_id):
+    deactivate_answer_comments(answer_id)
     cursor.execute("""
                     DELETE FROM answer
                     WHERE id = %(answer_id)s;
@@ -193,6 +194,7 @@ def delete_answer(cursor, answer_id):
 
 @connection.connection_handler
 def delete_question_and_answers(cursor, question_id):
+    deactivate_question_comments(question_id)
     cursor.execute("""
                     DELETE FROM answer
                     WHERE question_id=%(qid)s;
@@ -207,13 +209,35 @@ def delete_question_and_answers(cursor, question_id):
                     """, {'qid': question_id})
 
 
+@connection.connection_handler
+def deactivate_answer_comments(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE comment
+                    SET answer_id=NULL
+                    WHERE answer_id=%(answer_id)s;
+                    """, {'answer_id': answer_id})
 
+
+@connection.connection_handler
+def deactivate_question_comments(cursor, question_id):
+    cursor.execute("""
+                    UPDATE comment
+                    SET question_id=NULL
+                    WHERE question_id=%(question_id)s;
+                    """, {'question_id': question_id})
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE question_id=%(question_id)s;
+                    """, {'question_id': question_id})
+    results=cursor.fetchall()
+    for answer in results:
+        deactivate_answer_comments(answer['id'])
 
 
 @connection.connection_handler
 def show_comment_question(cursor, question_id):
     cursor.execute("""SELECT message FROM comment WHERE question_id = %(q_id)s;""",
-                    {'q_id': question_id})
+                   {'q_id': question_id})
     comments = cursor.fetchall()
     return comments
 
@@ -227,7 +251,7 @@ def add_comment_to_question(cursor, new_comment):
 @connection.connection_handler
 def show_comment_answer(cursor, answer_id):
     cursor.execute("""SELECT * FROM comment WHERE answer_id = %(a_id)s;""",
-                    {'a_id': answer_id})
+                   {'a_id': answer_id})
     comments = cursor.fetchall()
     return comments
 
