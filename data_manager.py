@@ -181,6 +181,18 @@ def delete_answer(cursor, answer_id):
                   """, {'answer_id': answer_id})
 
 
+@connection.connection_handler
+def delete_question_and_answers(cursor, question_id):
+    cursor.execute("""
+                    DELETE FROM answer
+                    WHERE question_id=%(qid)s;
+                    """, {'qid': question_id})
+    cursor.execute("""
+                    DELETE FROM question
+                    WHERE id=%(qid)s;
+                    """, {'qid': question_id})
+
+
 
 
 
