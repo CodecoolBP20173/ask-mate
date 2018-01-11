@@ -28,10 +28,13 @@
 
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
         <form id="button-form">
-        <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Like</button>
-        <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Dislike</button>
-        <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get">Edit question</button>
+            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Like</button>
+            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Dislike</button>
+            <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get">Edit question</button>
+            <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get">Add new tag</button>
         </form>
+
+        {% block content %} {% endblock %}
         <p>
         <img id="display_pic" src="/{{ question['image'] }}"/>
         </p>
