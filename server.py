@@ -55,11 +55,11 @@ def route_display(question_id):
     if request.method == 'GET':
         answers = data_manager.get_answers_by_question_id(question_id)
         question = data_manager.get_question_by_id(question_id)
-        tags = data_manager.get_tags_by_question_id(question_id)
+        question_tags = data_manager.get_tags_by_question_id(question_id)
         return render_template(
             'display_question.html',
             question=question,
-            answers=answers, question_id=question_id, tags=tags)
+            answers=answers, question_id=question_id, question_tags=question_tags)
     else:
         answer = {'submission_time': datetime.today(),
                   'vote_number': 0,
@@ -181,7 +181,8 @@ def add_new_tag(question_id, tag):
         answers = data_manager.get_answers_by_question_id(question_id)
         question = data_manager.get_question_by_id(question_id)
         tags = data_manager.get_all_tags()
-        return render_template('new-tag.html', answers=answers, question=question, question_id=question_id, tags=tags)
+        question_tags = data_manager.get_tags_by_question_id(question_id)
+        return render_template('new-tag.html', answers=answers, question=question, question_id=question_id, tags=tags, question_tags=question_tags)
     else:
         new_question_tag = tag if tag else request.form["new-tag"]
         print(new_question_tag)
