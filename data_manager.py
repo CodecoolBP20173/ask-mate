@@ -210,6 +210,29 @@ def delete_question_and_answers(cursor, question_id):
 
 
 
+@connection.connection_handler
+def show_comment_question(cursor, question_id):
+    cursor.execute("""SELECT message FROM comment WHERE question_id = %(q_id)s;""",
+                    {'q_id': question_id})
+    comments = cursor.fetchall()
+    return comments
 
 
+@connection.connection_handler
+def add_comment_to_question(cursor, new_comment):
+    cursor.execute("""INSERT INTO comment(question_id, message, submission_time) VALUES 
+                      (%(question_id)s, %(message)s, %(submission_time)s);""", new_comment)
 
+
+@connection.connection_handler
+def show_comment_answer(cursor, answer_id):
+    cursor.execute("""SELECT * FROM comment WHERE answer_id = %(a_id)s;""",
+                    {'a_id': answer_id})
+    comments = cursor.fetchall()
+    return comments
+
+
+@connection.connection_handler
+def add_comment_to_answer(cursor, new_comment):
+    cursor.execute("""INSERT INTO comment(answer_id, message, submission_time) VALUES 
+                      (%(answer_id)s, %(message)s, %(submission_time)s);""", new_comment)

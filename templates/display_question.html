@@ -25,7 +25,9 @@
             </form>
         </div>
         <p>{{ question['message'] }}</p>
-
+        {% for question_comment in question_comments %}
+        <p>{{ question_comment.message }}</p>
+        {% endfor %}
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
 
         <div id="tags">
@@ -40,6 +42,7 @@
             <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get" class="btn btn-warning">Edit question</button>
             <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get" class="btn btn-primary">Add new tag</button>
             <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get" class="btn btn-danger">Delete question</button>
+            <button type="submit" formaction="/question/{{question_id}}/new-comment" formmethod="get" class="btn btn-danger">Add new comment</button>
         </form>
 
         {% block content %} {% endblock %}
@@ -76,10 +79,16 @@
                             <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get" class="btn btn-warning">Edit</button>
                             <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get" class="btn btn-danger">Delete</button>
                                 </div>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/add-comment" formmethod="get">Add comment</button></form></td>
                             </div>
                         </td>
                     </form>
                 </tr>
+                {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
+                <tr>
+                    <td colspan="5">{{ list['message'] }}</td>
+                </tr>
+                {% endfor %}
             {% endfor %}
             </tbody>
         </table>

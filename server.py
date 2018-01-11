@@ -56,10 +56,16 @@ def route_display(question_id):
         answers = data_manager.get_answers_by_question_id(question_id)
         question = data_manager.get_question_by_id(question_id)
         question_tags = data_manager.get_tags_by_question_id(question_id)
+        question_comments = data_manager.show_comment_question(question_id)
+        answer_comments = []
+        for item in answers:
+            sublist = data_manager.show_comment_answer(item['id'])
+            for element in sublist:
+                answer_comments.append(element)
         return render_template(
             'display_question.html',
             question=question,
-            answers=answers, question_id=question_id, question_tags=question_tags)
+            answers=answers, question_id=question_id, question_tags=question_tags, question_comments=question_comments, answer_comments=answer_comments)
     else:
         answer = {'submission_time': datetime.today(),
                   'vote_number': 0,
@@ -189,6 +195,33 @@ def add_new_tag(question_id, tag):
     else:
         new_question_tag = tag if tag else request.form["new-tag"]
         data_manager.add_tag_to_question(question_id, new_question_tag)
+        return redirect(url_for('route_display', question_id=question_id))
+
+
+@app.route('/question/<question_id>/new-comment', methods=['POST', 'GET'])
+def add_new_comment(question_id):
+    if request.method == 'GET':
+        return render_template('post_answer.html', question=data_manager.get_question_by_id(question_id), answers={},
+                                question_id=question_id, req_url=url_for('add_new_comment', question_id=question_id))
+    else:
+        comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
+                    'message': request.form['answer'],
+                    'question_id': question_id}
+        data_manager.add_comment_to_question(comment)
+        return redirect(url_for('route_display', question_id=question_id))
+
+
+@app.route('/display/<question_id>/<response_id>/add-comment', methods=['POST', 'GET'])
+def add_new_comment_answer(question_id, response_id):
+    if request.method == 'GET':
+        return render_template('post_answer.html', question=data_manager.get_answer_by_id(response_id), answers={},
+                                question_id=question_id, req_url=url_for('add_new_comment_answer', question_id=question_id,
+                                                                         response_id=response_id))
+    else:
+        comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
+                    'message': request.form['answer'],
+                    'answer_id': response_id}
+        data_manager.add_comment_to_answer(comment)
         return redirect(url_for('route_display', question_id=question_id))
 
 
