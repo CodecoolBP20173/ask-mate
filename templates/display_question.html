@@ -51,7 +51,7 @@
         <img id="display_pic" src="/{{ question['image'] }}"/>
         </p>
         <h2>Answers:</h2>
-        <table>
+        <table id="answer_table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -70,7 +70,7 @@
                     <td> {{ dictionary['message'] }}</td>
                     <td> {{ dictionary['image'] }}</td>
                     <form>
-                        <td>
+                        <td id="buttons">
                             <div class="side-buttons">
                                 <div class="side-buttons-row">
                             <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
