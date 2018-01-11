@@ -27,6 +27,13 @@
         <p>{{ question['message'] }}</p>
 
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
+
+        <div id="tags">
+            {% for tag in tags %}
+                
+            {% endfor %}
+        </div>
+
         <form id="button-form">
             <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Like</button>
             <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Dislike</button>
