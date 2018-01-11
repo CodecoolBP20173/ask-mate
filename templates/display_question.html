@@ -8,17 +8,20 @@
               integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
               crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand" rel="stylesheet">
+
     </head>
     <body>
+        <h1>Ask, Mate!</h1>
         <p><a href="/">Back</a></p>
-        <h1>{{ question['title'] }}</h1>
+        <h2>{{ question['title'] }}</h2>
         <div class="panel-under-header">
             <p class="first_panel">
             {{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }} {{ question['view_number'] }} views
             </p>
             <form action="/search_answer/{{ question_id }}" method="post" class="first_panel">
                 <input type="text" id="st-search-input" class="st-search-input search-field" name="search_input" />
-                <button type="submit">Search</button>
+                <button type="submit" class="search-button">Search</button>
             </form>
         </div>
         <p>{{ question['message'] }}</p>
