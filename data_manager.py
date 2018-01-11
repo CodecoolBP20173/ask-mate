@@ -104,10 +104,13 @@ def update_answer(cursor, new_data):
 def search_questions(cursor, pattern):
     cursor.execute("""
                     SELECT * FROM question
+                    INNER JOIN answer ON question.id = answer.question_id
                     WHERE title LIKE %(pattern)s
                     OR
-                    message LIKE %(pattern)s
-                    ORDER BY id DESC;
+                    question.message LIKE %(pattern)s
+                    OR
+                    answer.message LIKE %(pattern)s
+                    ORDER BY question.id DESC;
                     """,
                    {'pattern': '%' + pattern + '%'})
     return cursor.fetchall()
