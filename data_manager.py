@@ -176,6 +176,33 @@ def add_tag_to_question(cursor, question_id, tag_name):
         create_question_tag_relation(question_id, tag_id)
 
 
+@connection.connection_handler
+def delete_answer(cursor, answer_id):
+    cursor.execute("""
+                    DELETE FROM answer
+                    WHERE id = %(answer_id)s;
+                  """, {'answer_id': answer_id})
+
+
+@connection.connection_handler
+def delete_question_and_answers(cursor, question_id):
+    cursor.execute("""
+                    DELETE FROM answer
+                    WHERE question_id=%(qid)s;
+                    """, {'qid': question_id})
+    cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id=%(question_id)s;
+                    """, {'question_id': question_id})
+    cursor.execute("""
+                    DELETE FROM question
+                    WHERE id=%(qid)s;
+                    """, {'qid': question_id})
+
+
+
+
+
 
 
 

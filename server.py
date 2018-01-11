@@ -131,6 +131,12 @@ def route_edit_question(question_id):
         return redirect(URL_DISPLAY + question_id)
 
 
+@app.route('/display/<question_id>/delete', methods=['GET', 'POST'])
+def route_delete_question(question_id):
+    data_manager.delete_question_and_answers(question_id)
+    return redirect(URL_INDEX)
+
+
 @app.route('/display/<question_id>/<answer_id>/edit', methods=['GET', 'POST'])
 def route_edit_answer(question_id, answer_id):
     if request.method == 'GET':
@@ -148,6 +154,12 @@ def route_edit_answer(question_id, answer_id):
                          'image': answer['image']}
         data_manager.update_answer(updated_votes)
         return redirect(URL_DISPLAY + question_id)
+
+
+@app.route('/display/<question_id>/<answer_id>/delete', methods=['GET', 'POST'])
+def delete_answer(question_id, answer_id):
+    data_manager.delete_answer(answer_id)
+    return redirect(URL_DISPLAY + question_id)
 
 
 @app.route('/search_questions', methods=['POST'])

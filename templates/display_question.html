@@ -27,9 +27,10 @@
         <p>{{ question['message'] }}</p>
 
         <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
+
         <div id="tags">
             {% for tag in question_tags %}
-                <span class="badge badge-secondary">{{tag.name}}</span>
+                <span class="badge badge-pill badge-primary">{{tag.name}}</span>
             {% endfor %}
         </div>
 
@@ -38,6 +39,7 @@
             <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Dislike</button>
             <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get">Edit question</button>
             <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get">Add new tag</button>
+            <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get">Delete question</button>
         </form>
 
         {% block content %} {% endblock %}
@@ -63,9 +65,14 @@
                     <td> {{ dictionary['vote_number'] }}</td>
                     <td> {{ dictionary['message'] }}</td>
                     <td> {{ dictionary['image'] }}</td>
-                    <form><td><button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post">Like</button>
-                    <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post">Dislike</button>
-                    <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get">Edit answer</button></td></form>
+                    <form>
+                        <td>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post">Like</button>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post">Dislike</button>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get">Edit answer</button>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get">Delete answer</button>
+                        </td>
+                    </form>
                 </tr>
             {% endfor %}
             </tbody>
