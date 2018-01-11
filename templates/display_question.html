@@ -67,10 +67,16 @@
                     <td> {{ dictionary['image'] }}</td>
                     <form>
                         <td>
+                            <div class="side-buttons">
+                                <div class="side-buttons-row">
                             <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
                             <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post" class="btn btn-outline-danger">Dislike</button>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get" class="btn btn-warning">Edit answer</button>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get" class="btn btn-danger">Delete answer</button>
+                                </div>
+                                <div class="side-buttons-row">
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get" class="btn btn-warning">Edit</button>
+                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
                         </td>
                     </form>
                 </tr>
