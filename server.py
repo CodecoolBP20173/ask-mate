@@ -5,9 +5,13 @@ import utility
 import os
 from datetime import datetime
 from server_answer import route_answer_blueprint
+from server_display import display
+from server_search import route_search
 
 app = Flask(__name__)
+app.register_blueprint(display, url_prefix="/display")
 app.register_blueprint(route_answer_blueprint)
+app.register_blueprint(route_search, url_prefix="/search")
 UPLOAD_FOLDER = "static/images"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -58,7 +62,7 @@ def route_add_new_tag(question_id, tag):
     else:
         new_question_tag = tag if tag else request.form["new-tag"]
         utility.add_tag_to_question(question_id, new_question_tag)
-        return redirect(url_for('route_display', question_id=question_id))
+        return redirect(url_for('display.route_display', question_id=question_id))
 
 
 @app.route('/question/<question_id>/new-comment', methods=['POST', 'GET'])
@@ -75,7 +79,7 @@ def route_add_new_comment(question_id):
                    'message': request.form['answer'],
                    'question_id': question_id}
         utility.add_comment_to_question(comment)
-        return redirect(url_for('route_display', question_id=question_id))
+        return redirect(url_for('display.route_display', question_id=question_id))
 
 
 @app.route('/display/<question_id>/<response_id>/add-comment', methods=['POST', 'GET'])
@@ -93,7 +97,7 @@ def route_add_new_comment_answer(question_id, response_id):
                    'message': request.form['answer'],
                    'answer_id': response_id}
         utility.add_comment_to_answer(comment)
-        return redirect(url_for('route_display', question_id=question_id))
+        return redirect(url_for('display.route_display', question_id=question_id))
 
 
 if __name__ == '__main__':

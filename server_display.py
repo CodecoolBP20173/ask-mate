@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import data_manager, utility
+from datetime import datetime
 
 display = Blueprint('display', __name__,
                         template_folder='templates')
@@ -85,7 +86,7 @@ def route_edit_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     if request.method == 'GET':
         return render_template('ask.html', question=question,
-                               req_url=url_for('route_edit_question',
+                               req_url=url_for('display.route_edit_question',
                                                question_id=question_id),
                                question_id=question_id)
     else:
@@ -105,7 +106,7 @@ def route_edit_answer(question_id, answer_id):
     if request.method == 'GET':
         answer = data_manager.get_answer_by_id(answer_id)
         question = data_manager.get_question_by_id(question_id)
-        req_url = url_for('route_edit_answer',
+        req_url = url_for('display.route_edit_answer',
                           question_id=question_id,
                           answer_id=answer_id)
         return render_template('post_answer.html',
