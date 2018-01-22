@@ -6,15 +6,11 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-URL_INDEX = '/'
-URL_DISPLAY = '/display/'
-URL_POST_ANSWER = '/post_answer/'
-URL_ASK = '/ask'
 UPLOAD_FOLDER = "static/images"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-@app.route(URL_INDEX)
+@app.route('/')
 def route_index():
     questions = data_manager.list_all_questions_ordered_by_submission_time()
     return render_template(
@@ -22,7 +18,7 @@ def route_index():
         questions=questions)
 
 
-@app.route(URL_ASK, methods=['GET', 'POST'])
+@app.route('/ask', methods=['GET', 'POST'])
 def route_ask():
     if request.method == 'GET':
         return render_template('ask.html', req_url=url_for('route_ask'), question={})
@@ -40,41 +36,47 @@ def route_ask():
                     'image': UPLOAD_FOLDER + '/' + filename if file.filename else ''}
         tempid = data_manager.add_new_question(question)
 
-        return redirect(URL_DISPLAY + str(tempid))
+        return redirect('/display/' + str(tempid))
 
 
-@app.route(URL_POST_ANSWER + '<question_id>')
+@app.route('/post_answer/' + '<question_id>')
 def route_answer(question_id):
-    return render_template('post_answer.html', question_id=question_id,
+    return render_template('post_answer.html',
+                           question_id=question_id,
                            question=data_manager.get_question_by_id(question_id),
-                           req_url=url_for('route_display', question_id=question_id), answers={})
+                           req_url=url_for('route_display',
+                                           question_id=question_id),
+                           answers={})
 
 
-@app.route(URL_DISPLAY + '<question_id>', methods=['POST', 'GET'])
+@app.route('/display/<question_id>', methods=['POST', 'GET'])
 def route_display(question_id):
     if request.method == 'GET':
         answers = data_manager.get_answers_by_question_id(question_id)
         question = data_manager.get_question_by_id(question_id)
-        question_tags = data_manager.get_tags_by_question_id(question_id)
-        question_comments = data_manager.show_comment_question(question_id)
+        question_tags = utility.get_tags_by_question_id(question_id)
+        question_comments = utility.show_comment_question(question_id)
         answer_comments = []
         for item in answers:
-            sublist = data_manager.show_comment_answer(item['id'])
+            sublist = utility.show_comment_answer(item['id'])
             for element in sublist:
                 answer_comments.append(element)
         return render_template(
             'display_question.html',
             question=question,
-            answers=answers, question_id=question_id, question_tags=question_tags, question_comments=question_comments, answer_comments=answer_comments)
+            answers=answers,
+            question_id=question_id,
+            question_tags=question_tags,
+            question_comments=question_comments,
+            answer_comments=answer_comments)
     else:
         answer = {'submission_time': datetime.today(),
                   'vote_number': 0,
                   'question_id': question_id,
                   'message': request.form['answer'],
                   'image': ''}
-        print(answer)
         data_manager.add_new_answer(answer)
-        return redirect(URL_DISPLAY + question_id)
+        return redirect('/display/' + question_id)
 
 
 @app.route('/display/<question_id>/<direction>', methods=['POST'])
@@ -94,7 +96,7 @@ def route_counter_question(question_id, direction):
                      'message': question['message'],
                      'image': question['image']}
     data_manager.update_question(updated_votes)
-    return redirect(URL_DISPLAY + question_id)
+    return redirect('/display/' + question_id)
 
 
 @app.route('/display/<question_id>/<response_id>/<direction>', methods=['POST'])
@@ -119,7 +121,7 @@ def route_counter_answer(question_id, response_id, direction):
                      'message': answers['message'],
                      'image': answers['image']}
     data_manager.update_answer(updated_votes)
-    return redirect(URL_DISPLAY + question_id)
+    return redirect('/display/' + question_id)
 
 
 @app.route('/display/<question_id>/edit', methods=['GET', 'POST'])
@@ -127,7 +129,9 @@ def route_edit_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     if request.method == 'GET':
         return render_template('ask.html', question=question,
-                               req_url=url_for('route_edit_question', question_id=question_id), question_id=question_id)
+                               req_url=url_for('route_edit_question',
+                                               question_id=question_id),
+                               question_id=question_id)
     else:
         updated_question = {'id': question['id'],
                             "submission_time": question["submission_time"],
@@ -137,13 +141,13 @@ def route_edit_question(question_id):
                             'message': request.form['message'],
                             'image': question['image']}
         data_manager.update_question(updated_question)
-        return redirect(URL_DISPLAY + question_id)
+        return redirect('/display/' + question_id)
 
 
 @app.route('/display/<question_id>/delete', methods=['GET', 'POST'])
 def route_delete_question(question_id):
-    data_manager.delete_question_and_answers(question_id)
-    return redirect(URL_INDEX)
+    utility.delete_question_and_answers(question_id)
+    return redirect('')
 
 
 @app.route('/display/<question_id>/<answer_id>/edit', methods=['GET', 'POST'])
@@ -151,8 +155,13 @@ def route_edit_answer(question_id, answer_id):
     if request.method == 'GET':
         answer = data_manager.get_answer_by_id(answer_id)
         question = data_manager.get_question_by_id(question_id)
-        req_url = url_for('route_edit_answer', question_id=question_id, answer_id=answer_id)
-        return render_template('post_answer.html', answers=answer, question=question, req_url=req_url)
+        req_url = url_for('route_edit_answer',
+                          question_id=question_id,
+                          answer_id=answer_id)
+        return render_template('post_answer.html',
+                               answers=answer,
+                               question=question,
+                               req_url=req_url)
     else:
         answer = data_manager.get_answer_by_id(answer_id)
         updated_votes = {'id': answer['id'],
@@ -162,70 +171,86 @@ def route_edit_answer(question_id, answer_id):
                          'message': request.form['answer'],
                          'image': answer['image']}
         data_manager.update_answer(updated_votes)
-        return redirect(URL_DISPLAY + question_id)
+        return redirect('/display/' + question_id)
 
 
 @app.route('/display/<question_id>/<answer_id>/delete', methods=['GET', 'POST'])
-def delete_answer(question_id, answer_id):
-    data_manager.delete_answer(answer_id)
-    return redirect(URL_DISPLAY + question_id)
+def route_delete_answer(question_id, answer_id):
+    utility.delete_answer(answer_id)
+    return redirect('/display/' + question_id)
 
 
 @app.route('/search_questions', methods=['POST'])
-def search_question():
+def route_search_question():
     pattern = request.form["search_input"]
     questions = data_manager.search_questions(pattern)
     print(questions)
     return render_template('index.html', questions=questions)
 
 
-@app.route('/search_answer/<question_id>', methods=['POST'])
-def search_answer(question_id):
+@app.route('/route_search_answer/<question_id>', methods=['POST'])
+def route_search_answer(question_id):
     pattern = request.form["search_input"]
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.search_answer(pattern)
-    return render_template('display_question.html', question=question, answers=answers, question_id=question_id)
+    return render_template('display_question.html',
+                           question=question,
+                           answers=answers,
+                           question_id=question_id)
 
 
 @app.route('/question/<question_id>/new-tag', methods=['POST', 'GET'], defaults={'tag': None})
 @app.route('/question/<question_id>/new-tag/<tag>')
-def add_new_tag(question_id, tag):
+def route_add_new_tag(question_id, tag):
     if request.method == 'GET' and tag is None:
         answers = data_manager.get_answers_by_question_id(question_id)
         question = data_manager.get_question_by_id(question_id)
-        tags = data_manager.get_all_tags()
-        question_tags = data_manager.get_tags_by_question_id(question_id)
-        return render_template('new-tag.html', answers=answers, question=question, question_id=question_id, tags=tags, question_tags=question_tags)
+        tags = utility.get_all_tags()
+        question_tags = utility.get_tags_by_question_id(question_id)
+        return render_template('new-tag.html',
+                               answers=answers,
+                               question=question,
+                               question_id=question_id,
+                               tags=tags,
+                               question_tags=question_tags)
     else:
         new_question_tag = tag if tag else request.form["new-tag"]
-        data_manager.add_tag_to_question(question_id, new_question_tag)
+        utility.add_tag_to_question(question_id, new_question_tag)
         return redirect(url_for('route_display', question_id=question_id))
 
 
 @app.route('/question/<question_id>/new-comment', methods=['POST', 'GET'])
-def add_new_comment(question_id):
+def route_add_new_comment(question_id):
     if request.method == 'GET':
-        return render_template('post_answer.html', question=data_manager.get_question_by_id(question_id), answers={},
-                                question_id=question_id, req_url=url_for('add_new_comment', question_id=question_id))
+        return render_template('post_answer.html',
+                               question=data_manager.get_question_by_id(question_id),
+                               answers={},
+                               question_id=question_id,
+                               req_url=url_for('route_add_new_comment',
+                                               question_id=question_id))
     else:
         comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
-                    'message': request.form['answer'],
-                    'question_id': question_id}
-        data_manager.add_comment_to_question(comment)
+                   'message': request.form['answer'],
+                   'question_id': question_id}
+        utility.add_comment_to_question(comment)
         return redirect(url_for('route_display', question_id=question_id))
 
 
 @app.route('/display/<question_id>/<response_id>/add-comment', methods=['POST', 'GET'])
-def add_new_comment_answer(question_id, response_id):
+def route_add_new_comment_answer(question_id, response_id):
     if request.method == 'GET':
-        return render_template('post_answer.html', question=data_manager.get_answer_by_id(response_id), answers={},
-                                question_id=question_id, req_url=url_for('add_new_comment_answer', question_id=question_id,
-                                                                         response_id=response_id))
+        return render_template('post_answer.html',
+                               question=data_manager.get_answer_by_id(response_id),
+                               answers={},
+                               question_id=question_id,
+                               req_url=url_for('route_add_new_comment_answer',
+                                               question_id=question_id,
+                                               response_id=response_id))
     else:
         comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
-                    'message': request.form['answer'],
-                    'answer_id': response_id}
-        data_manager.add_comment_to_answer(comment)
+                   'message': request.form['answer'],
+                   'answer_id': response_id}
+        utility.add_comment_to_answer(comment)
         return redirect(url_for('route_display', question_id=question_id))
 
 
