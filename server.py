@@ -4,8 +4,10 @@ import data_manager
 import utility
 import os
 from datetime import datetime
+from server_answer import route_answer_blueprint
 
 app = Flask(__name__)
+app.register_blueprint(route_answer_blueprint)
 UPLOAD_FOLDER = "static/images"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
