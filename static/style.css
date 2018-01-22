@@ -7,9 +7,8 @@
 
 h1 {
     text-align: center;
-    background-color: #00695C;
     /*background-color: #30799B;*/
-    color: #FFFFFF;
+    color: #000000;
     margin-top: 30px;
     height: 90px;
     font-family: 'Joti One', cursive;
@@ -74,6 +73,10 @@ textarea {
 table {
     width: 1100px;
     margin-top: 30px;
+}
+
+.card {
+    width: 1100px;
 }
 
 th {

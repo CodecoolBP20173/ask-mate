@@ -14,44 +14,66 @@
     </head>
     <body>
         <h1>Ask, Mate!</h1>
-        <p><a href="/">Back</a></p>
-        <h2>{{ question['title'] }}</h2>
         <div class="panel-under-header">
             <p class="first_panel">
-            {{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }} {{ question['view_number'] }} views
+                <a href="/">Back</a>
             </p>
             <form action="/search_answer/{{ question_id }}" method="post" class="first_panel">
                 <input type="text" id="st-search-input" class="st-search-input search-field" name="search_input" />
                 <button type="submit" class="search-button">Search</button>
             </form>
         </div>
-        <p>{{ question['message'] }}</p>
-        <h5>Comments:</h5>
-        {% for question_comment in question_comments %}
+        <p></p>
 
-        <p class="comments">{{ question_comment.message }}</p>
-        {% endfor %}
-        <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
-
-        <div id="tags">
-            {% for tag in question_tags %}
-                <span class="badge badge-pill badge-primary">{{tag.name}}</span>
-            {% endfor %}
+        <div class="card mb-3">
+            <h3 class="card-header">{{ question['title'] }}</h3>
+            <div class="card-body">
+                <h5 class="card-title">{{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h5>
+                <h6 class="card-subtitle text-muted">View number: {{ question['view_number'] }}</h6>
+            </div>
+            <img src="/{{ question['image'] }}" alt="Card image">
+            <div class="card-body">
+                <p class="card-text">{{ question['message'] }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Comments:</b></li>
+                {% for question_comment in question_comments %}
+                    <li class="list-group-item">{{ question_comment.message }}</li>
+                {% endfor %}
+            </ul>
+            <div class="card-body">
+                <a href="#" class="card-link">Add comment</a>
+            </div>
+            <div class="card-footer text-muted">
+                2 days ago
+            </div>
         </div>
 
-        <form id="button-form">
-            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
-            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post" class="btn btn-outline-danger">Dislike</button>
-            <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get" class="btn btn-warning">Edit question</button>
-            <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get" class="btn btn-primary">Add new tag</button>
-            <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get" class="btn btn-danger">Delete question</button>
-            <button type="submit" formaction="/question/{{question_id}}/new-comment" formmethod="get" class="btn btn-danger">Add new comment</button>
-        </form>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Tags and buttons</h4>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+                <div id="tags">
+                    {% for tag in question_tags %}
+                        <span class="badge badge-pill badge-primary">{{tag.name}}</span>
+                    {% endfor %}
+                </div>
+                <form id="button-form">
+                    <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
+                    <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post" class="btn btn-outline-danger">Dislike</button>
+                    <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get" class="btn btn-warning">Edit question</button>
+                    <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get" class="btn btn-primary">Add new tag</button>
+                    <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get" class="btn btn-danger">Delete question</button>
+                    <button type="submit" formaction="/question/{{question_id}}/new-comment" formmethod="get" class="btn btn-danger">Add new comment</button>
+                </form>
+                {% block content %} {% endblock %}
+            </div>
+        </div>
 
-        {% block content %} {% endblock %}
-        <p>
-        <img id="display_pic" src="/{{ question['image'] }}"/>
-        </p>
+
         <h2>Answers:</h2>
         <table id="answer_table">
             <thead>
