@@ -25,14 +25,13 @@
 
         <table>
             <thead>
-                <tr>
+                <tr class="">
                     <th>ID</th>
                     <th>Submission Time</th>
                     <th>View Number</th>
                     <th>Vote Number</th>
                     <th>Title</th>
                     <!--<th>Message</th>-->
-                    <th>Image</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,7 +43,6 @@
                     <td>{{ dictionary['vote_number'] }}</td>
                     <td><a href = "/display/{{ dictionary['id'] }}">{{ dictionary['title'] }}</a></td>
                     <!-- <td>{{ dictionary['message'] }}</td> -->
-                    <td><img src="{{ dictionary['image'] }}" alt=""/></td>
                 </tr>
             {% endfor %}
             </tbody>
