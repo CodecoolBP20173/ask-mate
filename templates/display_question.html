@@ -75,48 +75,41 @@
 
 
         <h2>Answers:</h2>
-        <table id="answer_table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Submission Time</th>
-                    <th>Vote Number</th>
-                    <th>Message</th>
-                    <th>Image</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
-                <tr>
-                    <td> {{ dictionary['id'] }}</td>
-                    <td> {{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                    <td> {{ dictionary['vote_number'] }}</td>
-                    <td> {{ dictionary['message'] }}</td>
-                    <td> {{ dictionary['image'] }}</td>
-                    <form>
-                        <td id="buttons">
-                            <div class="side-buttons">
-                                <div class="side-buttons-row">
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post" class="btn btn-outline-danger">Dislike</button>
-                                </div>
-                                <div class="side-buttons-row">
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get" class="btn btn-warning">Edit</button>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get" class="btn btn-danger">Delete</button>
-                                </div>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/add-comment" formmethod="get">Add comment</button></form></td>
-                            </div>
-                        </td>
-                    </form>
-                </tr>
-                {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
-                <tr class="comments">
-                    <td colspan="5"  class="comments">{{ list['message'] }}</td>
-                </tr>
+
+
+    {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ dictionary['id'] }}</h4>
+            <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['vote_number'] }}</h6>
+            <p class="card-text">{{ dictionary['message'] }}</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Comments:</b></li>
+                 {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
+                    <li class="list-group-item">{{ list['message'] }}</li>
                 {% endfor %}
-            {% endfor %}
-            </tbody>
-        </table>
-        <p><a href="/post_answer/{{ question_id }}">Answer this question</a></p>
+            </ul>
+            <form>
+                <div class="side-buttons">
+                    <div class="side-buttons-row">
+                <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
+                <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post" class="btn btn-outline-danger">Dislike</button>
+                    </div>
+                    <div class="side-buttons-row">
+                <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get" class="btn btn-warning">Edit</button>
+                <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get" class="btn btn-danger">Delete</button>
+                    </div>
+                <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/add-comment" formmethod="get">Add comment</button></form></td>
+                </div>
+            </form>
+            <a href="#" class="card-link">Add comment</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+    {% endfor %}
+            <p><a href="/post_answer/{{ question_id }}">Answer this question</a></p>
+
+
     </body>
 </html>
