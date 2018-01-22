@@ -39,16 +39,6 @@ def route_ask():
         return redirect('/display/' + str(tempid))
 
 
-@app.route('/post_answer/' + '<question_id>')
-def route_answer(question_id):
-    return render_template('post_answer.html',
-                           question_id=question_id,
-                           question=data_manager.get_question_by_id(question_id),
-                           req_url=url_for('route_display',
-                                           question_id=question_id),
-                           answers={})
-
-
 @app.route('/display/<question_id>', methods=['POST', 'GET'])
 def route_display(question_id):
     if request.method == 'GET':
