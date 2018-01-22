@@ -49,25 +49,6 @@ def route_answer(question_id):
                            answers={})
 
 
-@app.route('/search_questions', methods=['POST'])
-def route_search_question():
-    pattern = request.form["search_input"]
-    questions = data_manager.search_questions(pattern)
-    print(questions)
-    return render_template('index.html', questions=questions)
-
-
-@app.route('/route_search_answer/<question_id>', methods=['POST'])
-def route_search_answer(question_id):
-    pattern = request.form["search_input"]
-    question = data_manager.get_question_by_id(question_id)
-    answers = data_manager.search_answer(pattern)
-    return render_template('display_question.html',
-                           question=question,
-                           answers=answers,
-                           question_id=question_id)
-
-
 @app.route('/question/<question_id>/new-tag', methods=['POST', 'GET'], defaults={'tag': None})
 @app.route('/question/<question_id>/new-tag/<tag>')
 def route_add_new_tag(question_id, tag):
