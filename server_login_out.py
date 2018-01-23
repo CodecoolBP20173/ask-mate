@@ -9,7 +9,7 @@ login = Blueprint('login', __name__, template_folder='templates')
 def registration():
     if request.method == 'GET':
         questions = data_manager.list_all_questions_ordered_by_submission_time()
-        return render_template('register_login.html', questions=questions)
+        return render_template('registration.html')
     else:
         new_user_data={'user_name': request.form['user_name'],
                        'password': user_handling.hash_password(request.form['password']),
