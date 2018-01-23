@@ -39,12 +39,8 @@ def route_display(question_id):
 @display.route('/<question_id>/<direction>', methods=['POST'])
 def route_counter_question(question_id, direction):
     question = data_manager.get_question_by_id(question_id)
-    if direction == 'up-vote':
-        votes = int(question['vote_number'])
-        votes += 1
-    else:
-        votes = int(question['vote_number'])
-        votes -= 1
+    votes = int(question['vote_number'])
+    votes += 1 if direction == 'up-vote' else -1
     updated_votes = {'id': question['id'],
                      "submission_time": question["submission_time"],
                      'view_number': question['view_number'],
@@ -59,18 +55,8 @@ def route_counter_question(question_id, direction):
 @display.route('/<question_id>/<response_id>/<direction>', methods=['POST'])
 def route_counter_answer(question_id, response_id, direction):
     answers = data_manager.get_answer_by_id(response_id)
-    """
-    ans = data_manager.get_answers_by_question_id(question_id)
-    for item in ans:
-        if item['id'] == response_id:
-            answers = item
-    """
-    if direction == 'up-vote':
-        votes = int(answers['vote_number'])
-        votes += 1
-    else:
-        votes = int(answers['vote_number'])
-        votes -= 1
+    votes = int(answers['vote_number'])
+    votes += 1 if direction == 'up-vote' else -1
     updated_votes = {'id': answers['id'],
                      "submission_time": answers["submission_time"],
                      'vote_number': votes,
