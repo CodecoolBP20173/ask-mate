@@ -5,7 +5,8 @@
 
 body, html {
     margin: 0 auto;
-    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Oswald', sans-serif;
+    /*font-family: 'Open Sans Condensed', sans-serif;*/
     width: 1000px;
     margin-bottom: 40px;
 }
