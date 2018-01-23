@@ -13,7 +13,8 @@ def registration():
     else:
         new_user_data={'user_name': request.form['user_name'],
                        'password': user_handling.hash_password(request.form['password']),
-                       'registration_date': datetime.fromtimestamp(utility.display_unix_time())}
+                       'registration_date': datetime.fromtimestamp(utility.display_unix_time()),
+                       'email': request.form['email']}
         user_handling.new_user_to_db(new_user_data)
         return redirect('/')
 

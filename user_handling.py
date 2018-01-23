@@ -18,10 +18,12 @@ def new_user_to_db(cursor, new_user_information):
     cursor.execute("""INSERT INTO users(
                                         user_name, 
                                         registration_date, 
-                                        password) 
+                                        password,
+                                        email) 
                       VALUES (%(user_name)s, 
                               %(registration_date)s, 
-                              %(password)s);""", new_user_information)
+                              %(password)s,
+                              %(email)s);""", new_user_information)
 
 
 @connection.connection_handler
