@@ -45,20 +45,33 @@
 
 <h2>Questions:</h2>
 
+
 <table>
     <tbody>
     {% for dictionary in questions %}
+
     <tr>
         <td>{{ dictionary['id'] }}</td>
         <td>{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
         <td>{{ dictionary['view_number'] }}</td>
         <td>{{ dictionary['vote_number'] }}</td>
         <td><a href="/display/{{ dictionary['id'] }}">{{ dictionary['title'] }}</a></td>
-        <!-- <td>{{ dictionary['message'] }}</td> -->
+         <!--<td>{{ dictionary['message'] }}</td>-->
     </tr>
+
     {% endfor %}
     </tbody>
 </table>
+<!--
+{% for dictionary in questions %}
+<div class="card text-white bg-secondary mb-3">
+  <div class="card-header">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</div>
+  <div class="card-body">
+    <h4 class="card-title">{{ dictionary['title'] }}</h4>
+  </div>
+</div>
+{% endfor %}
+-->
 
 
 <ul class="list-group sidetags">
