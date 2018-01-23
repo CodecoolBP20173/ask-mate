@@ -111,7 +111,6 @@ def registration():
                        'password': user_handling.hash_password(request.form['password']),
                        'registration_date': datetime.fromtimestamp(utility.display_unix_time())}
         user_handling.new_user_to_db(new_user_data)
-        print(new_user_data)
         return redirect('/')
 
 

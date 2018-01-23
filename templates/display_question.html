@@ -1,99 +1,146 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Ask, Mate!</title>
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-              integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-              crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-        <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand" rel="stylesheet">
+<head>
+    <meta charset="utf-8">
+    <title>Ask, Mate!</title>
+    <!--<link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+          crossorigin="anonymous">-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand"
+          rel="stylesheet">
 
-    </head>
-    <body>
-        <h1>Ask, Mate!</h1>
-        <p><a href="/">Back</a></p>
-        <h2>{{ question['title'] }}</h2>
-        <div class="panel-under-header">
-            <p class="first_panel">
-            {{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }} {{ question['view_number'] }} views
-            </p>
-            <form action="/search_answer/{{ question_id }}" method="post" class="first_panel">
-                <input type="text" id="st-search-input" class="st-search-input search-field" name="search_input" />
-                <button type="submit" class="search-button">Search</button>
-            </form>
-        </div>
-        <p>{{ question['message'] }}</p>
-        <h5>Comments:</h5>
+</head>
+<body>
+<h1>Ask, Mate!</h1>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/post_answer/{{ question_id }}">Answer question </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" form action="/search/answer/{{ question_id }}" method="post">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search_input">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+
+<div class="card mb-3">
+    <h3 class="card-header">{{ question['title'] }}</h3>
+    <div class="card-body">
+        <h5 class="card-title">{{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h5>
+        <h6 class="card-subtitle text-muted">View number: {{ question['view_number'] }}</h6>
+    </div>
+    <img src="/{{ question['image'] }}" alt="Card image">
+    <div class="card-body">
+        <p class="card-text">{{ question['message'] }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>Comments:</b></li>
         {% for question_comment in question_comments %}
-
-        <p class="comments">{{ question_comment.message }}</p>
+        <li class="list-group-item">{{ question_comment.message }}</li>
         {% endfor %}
-        <p><sub>Votes:{{ question['vote_number'] }}</sub></p>
+    </ul>
+    <div class="card-body">
+        <a href="/question/{{question_id}}/new-comment" class="card-link">Add comment</a>
+    </div>
+    <div class="card-footer text-muted">
+        2 days ago
+    </div>
+</div>
 
+<div class="card">
+    <div class="card-body">
+        <!--<h4 class="card-title">Tags and buttons</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content.</p>
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>-->
         <div id="tags">
             {% for tag in question_tags %}
-                <span class="badge badge-pill badge-primary">{{tag.name}}</span>
+            <span class="badge badge-pill badge-primary">{{tag.name}}</span>
             {% endfor %}
         </div>
-
         <form id="button-form">
-            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
-            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post" class="btn btn-outline-danger">Dislike</button>
-            <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get" class="btn btn-warning">Edit question</button>
-            <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get" class="btn btn-primary">Add new tag</button>
-            <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get" class="btn btn-danger">Delete question</button>
-            <button type="submit" formaction="/question/{{question_id}}/new-comment" formmethod="get" class="btn btn-danger">Add new comment</button>
+            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post"
+                    class="btn btn-outline-success">Like
+            </button>
+            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post"
+                    class="btn btn-outline-danger">Dislike
+            </button>
+            <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get" class="btn btn-warning">
+                Edit question
+            </button>
+            <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get"
+                    class="btn btn-primary">Add new tag
+            </button>
+            <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get" class="btn btn-danger">
+                Delete question
+            </button>
         </form>
-
         {% block content %} {% endblock %}
-        <p>
-        <img id="display_pic" src="/{{ question['image'] }}"/>
-        </p>
-        <h2>Answers:</h2>
-        <table id="answer_table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Submission Time</th>
-                    <th>Vote Number</th>
-                    <th>Message</th>
-                    <th>Image</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
-                <tr>
-                    <td> {{ dictionary['id'] }}</td>
-                    <td> {{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                    <td> {{ dictionary['vote_number'] }}</td>
-                    <td> {{ dictionary['message'] }}</td>
-                    <td> {{ dictionary['image'] }}</td>
-                    <form>
-                        <td id="buttons">
-                            <div class="side-buttons">
-                                <div class="side-buttons-row">
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post" class="btn btn-outline-success">Like</button>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote" formmethod="post" class="btn btn-outline-danger">Dislike</button>
-                                </div>
-                                <div class="side-buttons-row">
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get" class="btn btn-warning">Edit</button>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get" class="btn btn-danger">Delete</button>
-                                </div>
-                            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/add-comment" formmethod="get">Add comment</button></form></td>
-                            </div>
-                        </td>
-                    </form>
-                </tr>
-                {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
-                <tr class="comments">
-                    <td colspan="5"  class="comments">{{ list['message'] }}</td>
-                </tr>
-                {% endfor %}
+    </div>
+</div>
+
+
+<h2>Answers:</h2>
+
+
+{% for dictionary in answers if question['id'] == dictionary['question_id'] %}
+<div class="card">
+    <div class="card-body">
+        <h5>{{ dictionary['message'] }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+        <P class="card-subtitle mb-2 text-muted">Vote number: {{ dictionary['vote_number'] }}</P>
+        <p class="card-text">Id: {{ dictionary['id'] }}</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Comments:</b></li>
+            {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
+            <li class="list-group-item">{{ list['message'] }}</li>
             {% endfor %}
-            </tbody>
-        </table>
-        <p><a href="/post_answer/{{ question_id }}">Answer this question</a></p>
-    </body>
+        </ul>
+
+        <a href="/display/{{question_id}}/{{ dictionary['id'] }}/add-comment" class="card-link">Add comment</a>
+        <a href="#" class="card-link">Another link</a>
+        <form>
+            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post"
+                    class="btn btn-outline-success">Like
+            </button>
+            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote"
+                    formmethod="post" class="btn btn-outline-danger">Dislike
+            </button>
+            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get"
+                    class="btn btn-warning">Edit
+            </button>
+            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get"
+                    class="btn btn-danger">Delete
+            </button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+<p><a href="/post_answer/{{ question_id }}">Answer this question</a></p>
+
+
+</body>
 </html>

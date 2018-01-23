@@ -1,15 +1,17 @@
 * {
     margin: auto;
-    /*font-family: "Noto Sans Mono CJK JP Regular", fantasy;*/
-    font-family: 'Open Sans Condensed', sans-serif;
     font-size: 18px;
 }
 
+body, html {
+    margin: 0 auto;
+    font-family: 'Open Sans Condensed', sans-serif;
+    width: 1000px;
+    margin-bottom: 40px;
+}
 h1 {
     text-align: center;
-    background-color: #00695C;
-    /*background-color: #30799B;*/
-    color: #FFFFFF;
+    color: #000000;
     margin-top: 30px;
     height: 90px;
     font-family: 'Joti One', cursive;
@@ -18,45 +20,10 @@ h1 {
     padding-top: 5px;
 }
 
-.first_panel {
-    display: inline;
-    margin-right: 550px;
-
+.navbar {
+    margin: 30px 0 50px 0;
 }
 
-.panel-under-header {
-    /*width: 1100px;*/
-    height: 60px;
-    /*background: #66df22;*/
-    text-align: center;
-    width: 1100px;
-    vertical-align: center;
-    padding-top: 3px;
-    padding-left: 20px;
-    padding-bottom: 1px;
-    /*background-color: #E6EE9C;*/
-    margin-bottom: 15px;
-}
-
-a {
-    font-size: 22px;
-}
-
-p {
-    width: 1100px;
-}
-
-h2, h3, h4, h5 {
-    width: 1100px;
-}
-
-span {
-}
-
-#display_pic {
-    margin-top: 20px;
-    align-items: center;
-}
 
 #tags {
     width: 1000px;
@@ -72,8 +39,13 @@ textarea {
 }
 
 table {
-    width: 1100px;
     margin-top: 30px;
+}
+
+.card {
+    width: 100%;
+    margin-bottom: 40px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
 }
 
 th {
@@ -83,9 +55,13 @@ th {
     padding: 10px;
 }
 
+h4 {
+    width: 100%;
+}
+
 img {
-    max-height: 300px;
-    max-width: 300px;
+    max-height: 400px;
+    max-width: 400px;
 }
 
 #button-form {
@@ -111,39 +87,6 @@ button, .button {
     margin-top: 20px;
 }
 
-.side-buttons button {
-    width: 80px;
-    height: 40px;
-    text-align: center;
-}
-
-.side-buttons-row {
-    display: block;
-}
-
-button:hover, .button:hover {
-    background-color: #9C1A1C;
-}
-
-.search-button {
-    height: 28px;
-    width: 80px;
-    background-color: black;
-    font-style: italic;
-}
-
 tr {
     border-bottom: 2px solid black;
-}
-
-#tags {
-    font-size: 25px;
-}
-
-.comments {
-    background: #F8BBD0;
-}
-
-#buttons {
-    width: 20%;
 }

@@ -105,13 +105,13 @@ def update_answer(cursor, new_data):
 @connection.connection_handler
 def search_questions(cursor, pattern):
     cursor.execute("""
-                    SELECT DISTINCT question.view_number, question.message, question.view_number,
+                    SELECT DISTINCT question.vote_number, question.message, question.view_number,
                     question.title, question.submission_time, question.id, question.image
                     FROM question
-                    INNER JOIN answer ON question.id = answer.question_id
-                    WHERE (title LIKE %(pattern)s
+                    LEFT JOIN answer ON question.id = answer.question_id
+                    WHERE question.title LIKE %(pattern)s
                     OR
-                    question.message LIKE %(pattern)s)
+                    question.message LIKE %(pattern)s
                     OR
                     answer.message LIKE %(pattern)s
                     ORDER BY question.submission_time DESC;
