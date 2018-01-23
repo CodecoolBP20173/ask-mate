@@ -61,7 +61,7 @@
         {% endfor %}
     </ul>
     <div class="card-body">
-        <a href="#" class="card-link">Add comment</a>
+        <a href="/question/{{question_id}}/new-comment" class="card-link">Add comment</a>
     </div>
     <div class="card-footer text-muted">
         2 days ago
@@ -97,9 +97,6 @@
             <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get" class="btn btn-danger">
                 Delete question
             </button>
-            <button type="submit" formaction="/question/{{question_id}}/new-comment" formmethod="get"
-                    class="btn btn-danger">Add new comment
-            </button>
         </form>
         {% block content %} {% endblock %}
     </div>
@@ -123,7 +120,7 @@
             {% endfor %}
         </ul>
 
-        <a href="#" class="card-link">Add comment</a>
+        <a href="/display/{{question_id}}/{{ dictionary['id'] }}/add-comment" class="card-link">Add comment</a>
         <a href="#" class="card-link">Another link</a>
         <form>
             <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post"
@@ -137,9 +134,6 @@
             </button>
             <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get"
                     class="btn btn-danger">Delete
-            </button>
-            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/add-comment"
-                    formmethod="get">Add comment
             </button>
         </form>
     </div>
