@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 import data_manager, utility
 from datetime import datetime
 
@@ -27,12 +27,16 @@ def route_display(question_id):
             question_comments=question_comments,
             answer_comments=answer_comments)
     else:
-        answer = {'submission_time': datetime.today(),
-                  'vote_number': 0,
-                  'question_id': question_id,
-                  'message': request.form['answer'],
-                  'image': ''}
-        data_manager.add_new_answer(answer)
+        try:
+            answer = {'submission_time': datetime.today(),
+                      'vote_number': 0,
+                      'question_id': question_id,
+                      'message': request.form['answer'],
+                      'image': '',
+                      'user_id': session['user_id']}
+            data_manager.add_new_answer(answer)
+        except KeyError:
+            return redirect('/')
         return redirect('/display/' + question_id)
 
 

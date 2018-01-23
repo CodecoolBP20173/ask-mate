@@ -29,3 +29,4 @@ def get_password_hash_from_db(cursor, username):
     cursor.execute("""SELECT password, id FROM users WHERE user_name=%(user_name)s""",
                    {'user_name': username})
     return cursor.fetchone()
+

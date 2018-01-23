@@ -35,19 +35,22 @@ def route_ask():
     if request.method == 'GET':
         return render_template('ask.html', req_url=url_for('route_ask'), question={})
     else:
-        file = request.files['file']
-        if file and utility.allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        try:
+            file = request.files['file']
+            if file and utility.allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        question = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
-                    "view_number": 0,
-                    "vote_number": 0,
-                    'title': request.form['title'],
-                    'message': request.form['message'],
-                    'image': UPLOAD_FOLDER + '/' + filename if file.filename else ''}
-        tempid = data_manager.add_new_question(question)
-
+            question = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
+                        "view_number": 0,
+                        "vote_number": 0,
+                        'title': request.form['title'],
+                        'message': request.form['message'],
+                        'image': UPLOAD_FOLDER + '/' + filename if file.filename else '',
+                        'user_id': session['user_id']}
+            tempid = data_manager.add_new_question(question)
+        except KeyError:
+            return redirect('/')
         return redirect('/display/' + str(tempid))
 
 
@@ -81,10 +84,14 @@ def route_add_new_comment(question_id):
                                req_url=url_for('route_add_new_comment',
                                                question_id=question_id))
     else:
-        comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
-                   'message': request.form['answer'],
-                   'question_id': question_id}
-        utility.add_comment_to_question(comment)
+        try:
+            comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
+                       'message': request.form['answer'],
+                       'question_id': question_id,
+                       'user_id': session['user_id']}
+            utility.add_comment_to_question(comment)
+        except KeyError:
+            return redirect('/')
         return redirect(url_for('display.route_display', question_id=question_id))
 
 
@@ -99,10 +106,14 @@ def route_add_new_comment_answer(question_id, response_id):
                                                question_id=question_id,
                                                response_id=response_id))
     else:
-        comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
-                   'message': request.form['answer'],
-                   'answer_id': response_id}
-        utility.add_comment_to_answer(comment)
+        try:
+            comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
+                       'message': request.form['answer'],
+                       'answer_id': response_id,
+                       'user_id': session['user_id']}
+            utility.add_comment_to_answer(comment)
+        except KeyError:
+            return redirect('/')
         return redirect(url_for('display.route_display', question_id=question_id))
 
 
