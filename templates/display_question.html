@@ -70,12 +70,12 @@
 
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Tags and buttons</h4>
+        <!--<h4 class="card-title">Tags and buttons</h4>
         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
             content.</p>
         <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+        <a href="#" class="card-link">Another link</a>-->
         <div id="tags">
             {% for tag in question_tags %}
             <span class="badge badge-pill badge-primary">{{tag.name}}</span>
@@ -109,9 +109,9 @@
 {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
 <div class="card">
     <div class="card-body">
-        <h4 class="card-header">{{ dictionary['message'] }}</h4>
+        <h5>{{ dictionary['message'] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h6>
-        <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['vote_number'] }}</h6>
+        <P class="card-subtitle mb-2 text-muted">Vote number: {{ dictionary['vote_number'] }}</P>
         <p class="card-text">Id: {{ dictionary['id'] }}</p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><b>Comments:</b></li>
