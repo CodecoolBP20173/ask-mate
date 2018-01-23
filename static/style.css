@@ -39,13 +39,20 @@ textarea {
 }
 
 table {
+    display: inline-block;
     margin-top: 30px;
+    width: 800px;
 }
 
 .card {
-    width: 100%;
     margin-bottom: 40px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+}
+
+.sidetags {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 40px;
 }
 
 th {
@@ -85,8 +92,4 @@ button, .button {
     transition: all 0.5s;
     cursor: pointer;
     margin-top: 20px;
-}
-
-tr {
-    border-bottom: 2px solid black;
 }
