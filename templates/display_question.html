@@ -19,7 +19,7 @@
             <p class="first_panel">
             {{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }} {{ question['view_number'] }} views
             </p>
-            <form action="/search_answer/{{ question_id }}" method="post" class="first_panel">
+            <form action="/search/answer/{{ question_id }}" method="post" class="first_panel">
                 <input type="text" id="st-search-input" class="st-search-input search-field" name="search_input" />
                 <button type="submit" class="search-button">Search</button>
             </form>
