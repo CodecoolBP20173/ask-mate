@@ -35,6 +35,6 @@ def get_password_hash_from_db(cursor, username):
 def get_user_name_by_id(cursor, user_id):
     cursor.execute("""
                     SELECT user_name FROM users
-                    WHERE id=%('u_id')s;
-                    """, {'u_id': user_id})
+                    WHERE id=%(user_id)s;
+                    """, {'user_id': user_id})
     return cursor.fetchone()
