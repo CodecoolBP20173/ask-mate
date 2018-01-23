@@ -9,6 +9,7 @@ body, html {
     width: 1000px;
     margin-bottom: 40px;
 }
+
 h1 {
     text-align: center;
     color: #000000;
@@ -24,11 +25,9 @@ h1 {
     margin: 30px 0 50px 0;
 }
 
-
 #tags {
     width: 1000px;
 }
-
 
 form {
     width: 1000px;
@@ -41,7 +40,7 @@ textarea {
 table {
     display: inline-block;
     margin-top: 30px;
-    width: 870px;
+    width: 80%;
 }
 
 .card {
@@ -53,6 +52,7 @@ table {
     display: inline-block;
     vertical-align: top;
     margin-top: 40px;
+    width: 15%;
 }
 
 h4 {
@@ -89,4 +89,8 @@ button, .button {
 
 .badge-danger {
     font-size: 17px;
+}
+
+.align-items-center {
+    display: inline-block;
 }

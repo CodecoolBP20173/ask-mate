@@ -39,6 +39,10 @@ def display_unix_time():
 
 @connection.connection_handler
 def get_all_tags(cursor):
+    """
+    :param:  -
+    :return: Return a disctionary with the following keys: name, id, count_tag
+    """
     cursor.execute("""
                     SELECT name, id, COUNT(id) AS count_tag 
                     FROM tag
