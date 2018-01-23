@@ -12,6 +12,8 @@
     </head>
     <body>
         <h1>Ask, Mate!</h1>
+        <a href="/register">Register!</a>
+        {% block content %} {% endblock %}
         <div class="panel-under-header">
             <a href="/ask" class="first_panel" id="right">Ask a question!</a>
             <form action="/search/questions" method="post" class="first_panel" id="left">

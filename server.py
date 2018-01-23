@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 import data_manager
 import utility
 import os
+import user_handling
 from datetime import datetime
 from server_answer import route_answer_blueprint
 from server_display import display
@@ -98,6 +99,20 @@ def route_add_new_comment_answer(question_id, response_id):
                    'answer_id': response_id}
         utility.add_comment_to_answer(comment)
         return redirect(url_for('display.route_display', question_id=question_id))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def registration():
+    if request.method == 'GET':
+        questions = data_manager.list_all_questions_ordered_by_submission_time()
+        return render_template('register_login.html', questions=questions)
+    else:
+        new_user_data={'user_name': request.form['user_name'],
+                       'password': user_handling.hash_password(request.form['password']),
+                       'registration_date': datetime.fromtimestamp(utility.display_unix_time())}
+        user_handling.new_user_to_db(new_user_data)
+        print(new_user_data)
+        return redirect('/')
 
 
 if __name__ == '__main__':
