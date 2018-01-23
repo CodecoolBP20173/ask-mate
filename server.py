@@ -22,12 +22,15 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/')
 def route_index():
     if 'user_id' in session:
-        '''user_handling.get_user_by_id(session['user_id'])'''
-        pass
+        user_name = user_handling.get_user_by_id(session['user_id'])['user_name']
+    else:
+        user_name = "Balázs"
+    print(user_name)
     questions = data_manager.list_all_questions_ordered_by_submission_time()
     return render_template(
         'index.html',
-        questions=questions)
+        questions=questions,
+        user_name=user_name)
 
 
 @app.route('/ask', methods=['GET', 'POST'])
