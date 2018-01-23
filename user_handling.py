@@ -22,3 +22,12 @@ def new_user_to_db(cursor, new_user_information):
                       VALUES (%(user_name)s, 
                               %(registration_date)s, 
                               %(password)s);""", new_user_information)
+
+    
+@connection.connection_handler
+def get_user_name_by_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT user_name FROM users
+                    WHERE id=%('u_id')s;
+                    """, {'u_id': user_id})
+    return cursor.fetchone()
