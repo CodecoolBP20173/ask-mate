@@ -19,9 +19,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/')
 def route_index():
     questions = data_manager.list_all_questions_ordered_by_submission_time()
+    tags = utility.get_all_tags()
     return render_template(
         'index.html',
-        questions=questions)
+        questions=questions, tags=tags)
 
 
 @app.route('/ask', methods=['GET', 'POST'])

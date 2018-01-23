@@ -41,7 +41,7 @@ textarea {
 table {
     display: inline-block;
     margin-top: 30px;
-    width: 800px;
+    width: 870px;
 }
 
 .card {
@@ -53,13 +53,6 @@ table {
     display: inline-block;
     vertical-align: top;
     margin-top: 40px;
-}
-
-th {
-    text-align: center;
-    vertical-align: middle;
-    margin: 20px;
-    padding: 10px;
 }
 
 h4 {
@@ -92,4 +85,8 @@ button, .button {
     transition: all 0.5s;
     cursor: pointer;
     margin-top: 20px;
+}
+
+.badge-danger {
+    font-size: 17px;
 }

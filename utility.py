@@ -40,7 +40,10 @@ def display_unix_time():
 @connection.connection_handler
 def get_all_tags(cursor):
     cursor.execute("""
-                    SELECT * FROM tag;
+                    SELECT name, id, COUNT(id) AS count_tag 
+                    FROM tag
+                    JOIN question_tag ON tag.id = question_tag.tag_id
+                    GROUP BY id
                     """)
     return cursor.fetchall()
 
