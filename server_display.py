@@ -87,7 +87,7 @@ def route_edit_question(question_id):
         return redirect('/display/' + question_id)
 
 
-@display.route('/<question_id>/<answer_id>/edit')
+@display.route('/<question_id>/<answer_id>/edit', methods=['GET', 'POST'])
 def route_edit_answer(question_id, answer_id):
     if request.method == 'GET':
         answer = data_manager.get_answer_by_id(answer_id)
