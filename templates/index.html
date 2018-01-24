@@ -10,6 +10,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Oswald:600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand"
+          rel="stylesheet">
+
 </head>
 <body>
 <h1>Ask, Mate!</h1>
@@ -62,9 +65,7 @@
     <tr>
       <td class="id-column">{{ dictionary['id'] }}</td>
         <td class="date-column">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
-        <td class="view-column">{{ dictionary['view_number'] }}</td>
-        <td class="vote-column">{{ dictionary['vote_number'] }}</td>
-        <td><a href="/display/{{ dictionary['id'] }}">{{ dictionary['title'] }}</a></td>
+        <td><a href="/display/{{ dictionary['id'] }}" class="text-danger" style="font-weight: bold">{{ dictionary['title'] }}</a></td>
          <!--<td>{{ dictionary['message'] }}</td>-->
     </tr>
 
@@ -87,7 +88,7 @@
     {% for tag in tags %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href="/{{tag.name}}">{{tag.name}}</a>
-            <span class="badge badge-primary badge-danger">{{ tag.count_tag }}</span>
+            <span class="badge badge-primary badge-dark">{{ tag.count_tag }}</span>
         </li>
     {% endfor %}
 </ul>

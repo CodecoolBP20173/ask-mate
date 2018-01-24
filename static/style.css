@@ -177,7 +177,18 @@ tbody:hover tr:hover td {
 }
 
 .date-column, .id-column, .vote-column, .view-column {
-    font-size: 12px;
+    font-size: 14px;
+}
+
+.id-column {
+    width: 1%;
+}
+
+.vote-column {
+    width: 1%;
+}
+.id-column {
+    width: 1%;
 }
 
 .id-column {
@@ -185,5 +196,5 @@ tbody:hover tr:hover td {
 }
 
 .date-column {
-    width: 20%;
+    width: 10%;
 }
