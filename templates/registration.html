@@ -10,25 +10,25 @@
         <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand" rel="stylesheet">
 
     </head>
-<body>
-    <form action="/login/register" method="post">
-        <p>
-            <label for="user_name">User name:</label>
-            <input type="text" name="user_name" id="user_name">
-        </p>
-        <p>
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password">
-        </p>
-        <p>
-            <label for="email">e-mail:</label>
-            <input type="email" name="email" id="email">
-        </p>
-        <p>
-            <button type="submit" class="search-button">Register</button>
-        </p>
-    </form>
-</body>
-
+    <body>
+        <form action="/login/register" method="post">
+            <fieldset>
+            <legend>Register</legend>
+            <div class="form-group">
+                <label for="user_name">User name</label>
+                <input type="text" class="form-control" name="user_name" id="user_name" placeholder="User Name">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" name="email"id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </fieldset>
+        </form>
+    </body>
 </html>
-
