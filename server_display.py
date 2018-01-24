@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 import data_manager, utility
 from datetime import datetime
 
@@ -31,7 +31,10 @@ def route_display(question_id):
                   'vote_number': 0,
                   'question_id': question_id,
                   'message': request.form['answer'],
-                  'image': ''}
+                  'image': '',
+                  'user_id': None}
+        if 'user_id' in session:
+            answer['user_id'] = session['user_id']
         data_manager.add_new_answer(answer)
         return redirect('/display/' + question_id)
 
@@ -87,7 +90,7 @@ def route_edit_question(question_id):
         return redirect('/display/' + question_id)
 
 
-@display.route('/<question_id>/<answer_id>/edit')
+@display.route('/<question_id>/<answer_id>/edit', methods=['GET', 'POST'])
 def route_edit_answer(question_id, answer_id):
     if request.method == 'GET':
         answer = data_manager.get_answer_by_id(answer_id)

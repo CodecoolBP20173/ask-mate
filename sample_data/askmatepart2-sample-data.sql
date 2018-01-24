@@ -64,6 +64,19 @@ CREATE TABLE tag (
     name text
 );
 
+CREATE SEQUENCE user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE TABLE users (
+	id INT NOT NULL PRIMARY KEY DEFAULT nextval('user_id_seq'), 
+	user_name VARCHAR(255) NOT NULL UNIQUE, 
+  	registration_date TIMESTAMP, password VARCHAR(255) NOT NULL
+);
+
 
 ALTER TABLE ONLY answer
     ADD CONSTRAINT pk_answer_id PRIMARY KEY (id);
@@ -125,3 +138,5 @@ SELECT pg_catalog.setval('tag_id_seq', 3, true);
 INSERT INTO question_tag VALUES (0, 1);
 INSERT INTO question_tag VALUES (1, 3);
 INSERT INTO question_tag VALUES (2, 3);
+
+INSERT INTO users(user_name, registration_date, password) VALUES ('admin', '2018-01-22', '$2b$12$Z8pp0IKovWhRYko4JEyViO9/fKfuZsEczxspYBmyTN4CIdKFV9YbS');
