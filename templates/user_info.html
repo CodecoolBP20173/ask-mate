@@ -43,10 +43,10 @@
     </div>
 </nav>
     {% block content %} {% endblock %}
-    <table>
+    <table class="table table-hover">
         {% for user in user_info %}
-            <tr>
-                <td> <a href="/login/users/{{ user['id'] }}"> {{ user['user_name'] }}</a></td>
+            <tr class="table-primary">
+        <th scope="row"> <a href="/login/users/{{ user['id'] }}"> {{ user['user_name'] }}</a></th>
                 <td> {{ user['registration_date'] }}</td>
                 <td> {{ user['email'] }}</td>
             </tr>

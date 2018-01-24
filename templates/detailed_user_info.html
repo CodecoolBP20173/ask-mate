@@ -1,15 +1,18 @@
 {% extends 'user_info.html' %}
 
 {% block content %}
-
-
-<h5>{{ user['user_name'] }}</h5>
-<h5>{{ user['registration_date'] }}</h5>
-<h5>{{ user['email'] }}</h5>
+<table>
+<tr class="table-dark">
+<th scope="row">{{ user['user_name'] }}</th>
+<td>{{ user['registration_date'] }}</td>
+<td>{{ user['email'] }}</td>
+    </tr>
+</table>
 <h6>Questions:</h6>
 {% for question in questions %}
 <table>
-    <tr>
+    <tr class="table-light">
+        <th scope="row"><a href="/display/{{question['id']}}"> {{question['id']}}</a></th>
         <td> {{ question['submission_time'] }}</a></td>
         <td> {{ question['message'] }}</td>
     </tr>
@@ -18,8 +21,9 @@
 <h6>Answers:</h6>
 {% for answer in answers %}
 <table>
-    <tr>
-        <td> {{ answer['submission_time'] }}</a></td>
+    <tr class="table-light">
+        <th scope="row">{{ answer['id']}}</th>
+        <td> {{ answer['submission_time'] }}</td>
         <td> {{ answer['message'] }}</td>
     </tr>
 </table>
@@ -27,8 +31,9 @@
 <h6>Comments:</h6>
 {% for comment in comments %}
 <table>
-    <tr>
-        <td> {{ comment['submission_time'] }}</a></td>
+    <tr class="table-light">
+        <th scope="row">{{ question['id']}}</th>
+        <td> {{ comment['submission_time'] }}</td>
         <td> {{ comment['message'] }}</td>
     </tr>
 </table>
