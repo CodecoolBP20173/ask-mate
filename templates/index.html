@@ -93,7 +93,7 @@
     {% for tag in tags %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href="/{{tag.name}}" style="font-size: 15px" class="text-primary">{{tag.name}}</a>
-            <span class="badge badge-primary badge-warning" style="font-size: 12px">{{ tag.count_tag }}</span>
+            <span class="badge badge-primary badge-dark" style="font-size: 12px">{{ tag.count_tag }}</span>
         </li>
     {% endfor %}
 </ul>
