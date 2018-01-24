@@ -17,12 +17,16 @@ def registration():
         user_handling.new_user_to_db(new_user_data)
         return redirect('/')
 
-
 @login.route('/', methods=['GET','POST'])
-def login_check():
+@login.route('/<error>', methods=['GET','POST'])
+def login_check(error=None):
     if request.method == 'GET':
+        if error:
+            message = "Please log in to access this feature!"
+        else:
+            message = ""
         questions = data_manager.list_all_questions_ordered_by_submission_time()
-        return render_template('register_login.html', questions=questions, message='')
+        return render_template('register_login.html', questions=questions, message=message)
     else:
         hash = user_handling.get_password_hash_from_db(request.form['user_name'])
         verify = user_handling.verify_password(request.form['password'], hash['password'])

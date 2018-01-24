@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 import data_manager, utility
+import user_handling
 from datetime import datetime
 
 display = Blueprint('display', __name__,
@@ -71,6 +72,7 @@ def route_counter_answer(question_id, response_id, direction):
 
 
 @display.route('/<question_id>/edit', methods=['GET', 'POST'])
+@user_handling.login_required
 def route_edit_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     if request.method == 'GET':
@@ -91,6 +93,7 @@ def route_edit_question(question_id):
 
 
 @display.route('/<question_id>/<answer_id>/edit', methods=['GET', 'POST'])
+@user_handling.login_required
 def route_edit_answer(question_id, answer_id):
     if request.method == 'GET':
         answer = data_manager.get_answer_by_id(answer_id)
@@ -115,12 +118,14 @@ def route_edit_answer(question_id, answer_id):
 
 
 @display.route('/<question_id>/delete', methods=['GET', 'POST'])
+@user_handling.login_required
 def route_delete_question(question_id):
     utility.delete_question_and_answers(question_id)
     return redirect('')
 
 
 @display.route('/<question_id>/<answer_id>/delete', methods=['GET', 'POST'])
+@user_handling.login_required
 def route_delete_answer(question_id, answer_id):
     utility.delete_answer(answer_id)
     return redirect('/display/' + question_id)

@@ -47,8 +47,8 @@ def get_user_name_by_id(cursor, user_id):
 def login_required(function):
     @wraps(function)
     def wrap(*args, **kwargs):
-        if session['user_id']:
+        if 'user_id' in session:
             return function(*args, **kwargs)
         else:
-            return redirect(url_for('login./')+"login_error")
+            return redirect(url_for('login.login_check')+"login_error")
     return wrap
