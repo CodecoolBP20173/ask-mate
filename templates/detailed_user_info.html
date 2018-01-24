@@ -1,0 +1,36 @@
+{% extends 'user_info.html' %}
+
+{% block content %}
+
+
+<h5>{{ user['user_name'] }}</h5>
+<h5>{{ user['registration_date'] }}</h5>
+<h5>{{ user['email'] }}</h5>
+<h6>Questions:</h6>
+{% for question in questions %}
+<table>
+    <tr>
+        <td> {{ question['submission_time'] }}</a></td>
+        <td> {{ question['message'] }}</td>
+    </tr>
+</table>
+{% endfor%}
+<h6>Answers:</h6>
+{% for answer in answers %}
+<table>
+    <tr>
+        <td> {{ answer['submission_time'] }}</a></td>
+        <td> {{ answer['message'] }}</td>
+    </tr>
+</table>
+{% endfor%}
+<h6>Comments:</h6>
+{% for comment in comments %}
+<table>
+    <tr>
+        <td> {{ comment['submission_time'] }}</a></td>
+        <td> {{ comment['message'] }}</td>
+    </tr>
+</table>
+{% endfor%}
+{% endblock %}
