@@ -47,7 +47,7 @@
 <div class="card mb-3">
     <h3 class="card-header">{{ question['title'] }}</h3>
     <div class="card-body">
-        <h5 class="card-title">{{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h5>
+        <h5 class="card-title text-muted">{{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h5>
         <h6 class="card-subtitle text-muted">View number: {{ question['view_number'] }}</h6>
     </div>
     <img src="/{{ question['image'] }}" alt="Card image">
@@ -60,15 +60,19 @@
         <li class="list-group-item">{{ question_comment.message }}</li>
         {% endfor %}
     </ul>
-    <div class="card-body">
+    <div class="card-body add-comment">
         <a href="/question/{{question_id}}/new-comment" class="card-link">Add comment</a>
     </div>
     <div class="card-footer text-muted">
-        2 days ago
+        <div id="tags">
+            {% for tag in question_tags %}
+            <span class="badge badge-pill badge-primary">{{tag.name}}</span>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
-<div class="card">
+<div class="card card-under">
     <div class="card-body">
         <!--<h4 class="card-title">Tags and buttons</h4>
         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -76,11 +80,6 @@
             content.</p>
         <a href="#" class="card-link">Card link</a>
         <a href="#" class="card-link">Another link</a>-->
-        <div id="tags">
-            {% for tag in question_tags %}
-            <span class="badge badge-pill badge-primary">{{tag.name}}</span>
-            {% endfor %}
-        </div>
         <form id="button-form">
             <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post"
                     class="btn btn-outline-success">Like
@@ -109,10 +108,10 @@
 {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
 <div class="card">
     <div class="card-body">
-        <h5>{{ dictionary['message'] }}</h5>
+        <h5 class="card-text">{{ dictionary['message'] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h6>
         <P class="card-subtitle mb-2 text-muted">Vote number: {{ dictionary['vote_number'] }}</P>
-        <p class="card-text">Id: {{ dictionary['id'] }}</p>
+        <p class="card-subtitle mb-2 text-muted">Id: {{ dictionary['id'] }}</p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><b>Comments:</b></li>
             {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}

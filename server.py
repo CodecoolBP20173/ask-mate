@@ -20,16 +20,18 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route('/')
-def route_index():
+@app.route('/<tag>')
+def route_index(tag=None):
+    tags = utility.get_all_tags()
     if 'user_id' in session:
         user_name = user_handling.get_user_name_by_id(session['user_id'])['user_name']
     else:
         user_name = None
-    questions = data_manager.list_all_questions_ordered_by_submission_time()
-    tags = utility.get_all_tags()
-    return render_template(
-        'index.html',
-        questions=questions, tags=tags, user_name=user_name)
+    if tag:
+        questions = data_manager.get_questions_by_tag(tag)
+    else:
+        questions = data_manager.list_all_questions_ordered_by_submission_time()
+    return render_template('index.html', questions=questions, tags=tags, user_name=user_name)
 
 
 @app.route('/ask', methods=['GET', 'POST'])
