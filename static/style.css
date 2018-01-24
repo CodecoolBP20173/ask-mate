@@ -67,8 +67,9 @@ h4, h5 {
 }
 
 img {
-    max-height: 400px;
-    max-width: 400px;
+    margin:auto;
+    width: 300px;
+    object-fit: contain;
 }
 
 td {
@@ -165,4 +166,36 @@ tbody:hover tr:hover td {
     color: red;
     font-weight: bold;
     font-size: 18px;
+}
+
+.list-group-flush, .add-comment {
+    margin-left: 50%;
+    font-size: 13px;
+}
+
+.title-column {
+    width: 79%;
+}
+
+.date-column, .id-column, .vote-column, .view-column {
+    font-size: 14px;
+}
+
+.id-column {
+    width: 1%;
+}
+
+.vote-column {
+    width: 1%;
+}
+.id-column {
+    width: 1%;
+}
+
+.id-column {
+    width: 1%;
+}
+
+.date-column {
+    width: 10%;
 }
