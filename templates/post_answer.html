@@ -14,10 +14,16 @@
     <h1>Ask, Mate!</h1>
     <h2> {{ question["title"] }}</h2>
     <p> {{ question["message"] }}</p>
-    <form action="{{ req_url }}" method="post">
+    <form action="{{ req_url }}" method="POST" enctype=multipart/form-data>
             <label for="answer">Your answer:</label><br>
             <textarea id="answer" name="answer" required rows="10" cols="40" minlength="10">{{answers['message']}}
-            </textarea><br>
+            </textarea>
+            {% if answers['image'] is not defined %}
+            <div class="form-group">
+                <label for="file">Upload a picture</label>
+                <input name="file" id="file" type="file">
+            </div>
+            {% endif %}
             <button type="submit">Submit!</button>
     </form>
 </body>
