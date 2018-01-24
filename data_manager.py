@@ -21,6 +21,24 @@ def get_question_by_id(cursor, question_id):
 
 
 @connection.connection_handler
+def get_questions_by_tag(cursor, tag):
+    """
+    :param tag:
+    :return: List of dictionaries, where every dictionary contains a questions, with
+    the following keys: id, submission_time, title, view_number, vote_number
+    """
+    cursor.execute("""
+                   SELECT DISTINCT question.id, question.submission_time, 
+                          question.view_number, question.vote_number, question.title
+                    FROM question
+                    LEFT JOIN question_tag ON question.id = question_tag.question_id
+                    LEFT JOIN tag ON tag.id = question_tag.tag_id
+                    WHERE tag.name = %(tag)s;
+                   """, {'tag': tag})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
 def get_answer_by_id(cursor, answer_id):
     cursor.execute("""SELECT * FROM answer
                       WHERE id = %(id)s;""", {'id': answer_id})
