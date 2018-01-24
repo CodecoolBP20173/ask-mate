@@ -136,6 +136,22 @@ button, .button {
     text-align: left;
 }
 
+
+td {
+    padding: 10px 15px;
+    position: relative;
+    transition: all 300ms;
+}
+
+tbody:hover td {
+    color: transparent;
+    text-shadow: 0 0 3px #aaa;
+}
+
+tbody:hover tr:hover td {
+    color: #444;
+    text-shadow: 0 1px 0 #fff;
+}
 .badge-light{
     font-size: 12px;
     margin-left: 8px;

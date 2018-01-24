@@ -41,6 +41,7 @@ def list_users():
     return render_template('user_info.html', user_info=list_all_users)
 
 
+
 @login.route('/users/<user_id>')
 def list_user_contributions(user_id):
     list_all_users = user_handling.get_user_list()
@@ -49,6 +50,7 @@ def list_user_contributions(user_id):
     questions = user_handling.get_user_questions_by_id(user_id)
     comments = user_handling.get_user_comments_by_id(user_id)
     return render_template('detailed_user_info.html', user_info=list_all_users, user=user, answers=answers, questions=questions, comments=comments)
+
 
 @login.route('/out')
 def logout():

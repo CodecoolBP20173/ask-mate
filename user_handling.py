@@ -65,3 +65,4 @@ def get_user_comments_by_id(cursor, user_id):
 def get_user_answers_by_id(cursor, user_id):
     cursor.execute("""SELECT * FROM answer WHERE user_id=%(user_id)s;""", {'user_id': user_id})
     return cursor.fetchall()
+
