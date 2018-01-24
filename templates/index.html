@@ -14,8 +14,19 @@
 </head>
 <body>
 <h1>Ask, Mate!</h1>
-<a href="/login/">Log in</a>
-{% block content %} {% endblock %}
+{% if user_name %}
+    <div>
+        <form action="/login/out" method="get">
+            Hello {{ user_name }}!
+            <button type="submit" class="search-button">
+                Log out
+            </button>
+        </form>
+    </div>
+{% else %}
+    <a href="/login/">Log in</a>
+    {% block content %} {% endblock %}
+{% endif %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="/ask">Ask a question</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
@@ -42,20 +53,9 @@
     </div>
 </nav>
 
-
 <h2>Questions:</h2>
 
 <table>
-    <thead>
-    <tr class="">
-        <th>ID</th>
-        <th>Submission Time</th>
-        <th>View Number</th>
-        <th>Vote Number</th>
-        <th>Title</th>
-        <!--<th>Message</th>-->
-    </tr>
-    </thead>
     <tbody>
     {% for dictionary in questions %}
     <tr>
@@ -69,5 +69,17 @@
     {% endfor %}
     </tbody>
 </table>
+
+
+<ul class="list-group sidetags">
+    {% for tag in tags %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{tag.name}}
+            <span class="badge badge-primary badge-danger">{{ tag.count_tag }}</span>
+        </li>
+    {% endfor %}
+</ul>
+
+
 </body>
 </html>

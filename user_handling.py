@@ -18,10 +18,12 @@ def new_user_to_db(cursor, new_user_information):
     cursor.execute("""INSERT INTO users(
                                         user_name, 
                                         registration_date, 
-                                        password) 
+                                        password,
+                                        email) 
                       VALUES (%(user_name)s, 
                               %(registration_date)s, 
-                              %(password)s);""", new_user_information)
+                              %(password)s,
+                              %(email)s);""", new_user_information)
 
 
 @connection.connection_handler
@@ -30,3 +32,11 @@ def get_password_hash_from_db(cursor, username):
                    {'user_name': username})
     return cursor.fetchone()
 
+
+@connection.connection_handler
+def get_user_name_by_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT user_name FROM users
+                    WHERE id=%(user_id)s;
+                    """, {'user_id': user_id})
+    return cursor.fetchone()
