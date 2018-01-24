@@ -9,6 +9,12 @@ body, html {
     width: 1000px;
     margin-bottom: 40px;
 }
+body, html {
+    margin: 0 auto;
+    font-family: 'Open Sans Condensed', sans-serif;
+    width: 1000px;
+    margin-bottom: 40px;
+}
 
 h1 {
     text-align: center;

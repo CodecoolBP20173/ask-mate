@@ -62,7 +62,6 @@ def add_new_question(cursor, new_data):
 
 @connection.connection_handler
 def add_new_answer(cursor, new_data):
-    print(new_data)
     cursor.execute("""INSERT INTO answer(submission_time, 
                                         vote_number, 
                                         question_id, 

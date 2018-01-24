@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <form action="/login/" method="post">
+        <label for="user_name">User name:</label>
+        <input type="text" name="user_name" id="user_name">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password">
+        <button type="submit" class="search-button">Log in</button>
+        <p>{{ message }}</p>
+        <p>Dont't have an account yet? <a href="/login/register">Register</a></p>
+    </form>
+
+{% endblock %}
