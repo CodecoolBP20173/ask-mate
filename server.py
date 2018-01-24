@@ -68,12 +68,12 @@ def route_add_new_tag(question_id, tag):
 
 @app.route('/question/<question_id>/delete-tag/<tag>')
 def route_delete_tag(question_id, tag):
-    utility.remove_tag_from_question(question_id, tag)
+    utility.remove_tag_from_question(tag, question_id)
     answers = data_manager.get_answers_by_question_id(question_id)
     question = data_manager.get_question_by_id(question_id)
     tags = utility.get_all_tags()
     question_tags = utility.get_tags_by_question_id(question_id)
-    return render_template('new-tag.html',
+    return render_template('display_question.html',
                            answers=answers,
                            question=question,
                            question_id=question_id,

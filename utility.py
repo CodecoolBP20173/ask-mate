@@ -111,7 +111,7 @@ def remove_tag_from_question(cursor, tag_name, question_id):
     tag_id = result['id']
     cursor.execute("""
                     DELETE FROM question_tag
-                    WHERE question_id=%(1_id)s
+                    WHERE question_id=%(q_id)s
                     AND
                     tag_id=%(tag_id)s;
                     """,
