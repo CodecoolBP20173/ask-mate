@@ -40,3 +40,12 @@ def get_user_name_by_id(cursor, user_id):
                     WHERE id=%(user_id)s;
                     """, {'user_id': user_id})
     return cursor.fetchone()
+
+
+@connection.connection_handler
+def get_user_list(cursor):
+    cursor.execute("""
+                    SELECT id, user_name, registration_date, email
+                    FROM users;
+                    """)
+    return cursor.fetchall()
