@@ -101,6 +101,24 @@ def add_tag_to_question(cursor, question_id, tag_name):
 
 
 @connection.connection_handler
+def remove_tag_from_question(cursor, tag_name, question_id):
+    cursor.execute("""
+                    SELECT id FROM tag
+                    WHERE name = %(t_name)s;
+                    """,
+                   {'t_name': tag_name})
+    result = cursor.fetchone()
+    tag_id = result['id']
+    cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id=%(1_id)s
+                    AND
+                    tag_id=%(tag_id)s;
+                    """,
+                   {'q_id': question_id, 'tag_id': tag_id})
+
+
+@connection.connection_handler
 def delete_answer(cursor, answer_id):
     deactivate_answer_comments(answer_id)
     cursor.execute("""
