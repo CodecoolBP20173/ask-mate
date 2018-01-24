@@ -134,3 +134,9 @@ def route_delete_question(question_id):
 def route_delete_answer(question_id, answer_id):
     utility.delete_answer(answer_id)
     return redirect('/display/' + question_id)
+
+
+@display.route('/<question_id>/<comment_id>/commdelete')
+def route_delete_comment(question_id, comment_id):
+    data_manager.delete_comment(comment_id)
+    return redirect(url_for('display.route_display', question_id=question_id))
