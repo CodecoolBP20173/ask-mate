@@ -1,7 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, Flask
+from werkzeug.utils import secure_filename
 import data_manager, utility
+import os
 import user_handling
 from datetime import datetime
+app = Flask(__name__)
+UPLOAD_FOLDER = "static/images"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 display = Blueprint('display', __name__,
                         template_folder='templates')
@@ -28,11 +33,16 @@ def route_display(question_id):
             question_comments=question_comments,
             answer_comments=answer_comments)
     else:
+        file = request.files['file']
+        if file and utility.allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
         answer = {'submission_time': datetime.today(),
                   'vote_number': 0,
                   'question_id': question_id,
                   'message': request.form['answer'],
-                  'image': '',
+                  'image': UPLOAD_FOLDER + '/' + filename if file.filename else '',
                   'user_id': None}
         if 'user_id' in session:
             answer['user_id'] = session['user_id']
@@ -129,3 +139,9 @@ def route_delete_question(question_id):
 def route_delete_answer(question_id, answer_id):
     utility.delete_answer(answer_id)
     return redirect('/display/' + question_id)
+
+
+@display.route('/<question_id>/<comment_id>/commdelete')
+def route_delete_comment(question_id, comment_id):
+    data_manager.delete_comment(comment_id)
+    return redirect(url_for('display.route_display', question_id=question_id))

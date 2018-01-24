@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand"
           rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Oswald:600" rel="stylesheet">
+
 
 </head>
 <body>
@@ -30,7 +32,7 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="/login/users">Users</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
@@ -57,7 +59,11 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item"><b>Comments:</b></li>
         {% for question_comment in question_comments %}
-        <li class="list-group-item">{{ question_comment.message }}</li>
+        <li class="list-group-item">{{ question_comment.message }}
+            <form class="button-delete">
+        <button type="submit" formaction="/display/{{question_id}}/{{question_comment.id}}/commdelete" formmethod="get"
+                                                                         id="delete-comment-now">Delete
+        </button></form></li>
         {% endfor %}
     </ul>
     <div class="card-body add-comment">
@@ -66,7 +72,14 @@
     <div class="card-footer text-muted">
         <div id="tags">
             {% for tag in question_tags %}
-            <span class="badge badge-pill badge-primary">{{tag.name}}</span>
+            <span class="badge badge-pill badge-primary">
+                {{tag.name}}
+                <span class="badge badge-pill badge-light">
+                    <a href="/question/{{ question['id'] }}/delete-tag/{{ tag.name }}" class="badge-delete-button">
+                        X
+                    </a>
+                </span>
+            </span>
             {% endfor %}
         </div>
     </div>
@@ -108,14 +121,19 @@
 {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
 <div class="card">
     <div class="card-body">
-        <h5 class="card-text">{{ dictionary['message'] }}</h5>
+        <h5>{{ dictionary['message'] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h6>
         <P class="card-subtitle mb-2 text-muted">Vote number: {{ dictionary['vote_number'] }}</P>
         <p class="card-subtitle mb-2 text-muted">Id: {{ dictionary['id'] }}</p>
+        <p class="card-text">Id: {{ dictionary['id'] }}</p>
+        <img src="/{{ dictionary['image'] }}">
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><b>Comments:</b></li>
             {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
-            <li class="list-group-item">{{ list['message'] }}</li>
+            <li class="list-group-item">{{ list['message'] }}
+                <form class="button-delete">
+                <button type="submit" formaction="/display/{{question_id}}/{{list['id']}}/commdelete" formmethod="get"
+                        id="delete-comment">Delete</button></form></li>
             {% endfor %}
         </ul>
 

@@ -43,12 +43,12 @@ def get_all_tags(cursor):
     :param:  -
     :return: Return a disctionary with the following keys: name, id, count_tag
     """
-    cursor.execute("""
-                    SELECT name, id, COUNT(id) AS count_tag 
-                    FROM tag
-                    JOIN question_tag ON tag.id = question_tag.tag_id
-                    GROUP BY id
-                    """)
+    cursor.execute("""SELECT name, id, COUNT(id) AS count_tag 
+                      FROM tag
+                      JOIN question_tag ON tag.id = question_tag.tag_id
+                      GROUP BY id
+                      ORDER BY count_tag DESC
+                      LIMIT 7 """)
     return cursor.fetchall()
 
 
@@ -64,14 +64,10 @@ def get_tags_by_question_id(cursor, question_id):
 @connection.connection_handler
 def add_new_tag(cursor, tag_name):
     cursor.execute("""INSERT INTO tag (name) 
-                      VALUES (%(name)s);""",
-                   {'name': tag_name})
+                      VALUES (%(name)s);""", {'name': tag_name})
     cursor.execute("""SELECT id FROM tag
-                      WHERE name = %(t_name)s;""",
-                   {'t_name': tag_name})
-    result = cursor.fetchone()
-    return result
-
+                      WHERE name = %(t_name)s;""", {'t_name': tag_name})
+    return cursor.fetchone()
 
 @connection.connection_handler
 def create_question_tag_relation(cursor, question_id, tag_id):
@@ -98,6 +94,24 @@ def add_tag_to_question(cursor, question_id, tag_name):
     else:
         tag_id = add_new_tag(tag_name)['id']
         create_question_tag_relation(question_id, tag_id)
+
+
+@connection.connection_handler
+def remove_tag_from_question(cursor, tag_name, question_id):
+    cursor.execute("""
+                    SELECT id FROM tag
+                    WHERE name = %(t_name)s;
+                    """,
+                   {'t_name': tag_name})
+    result = cursor.fetchone()
+    tag_id = result['id']
+    cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id=%(q_id)s
+                    AND
+                    tag_id=%(tag_id)s;
+                    """,
+                   {'q_id': question_id, 'tag_id': tag_id})
 
 
 @connection.connection_handler
@@ -153,7 +167,7 @@ def deactivate_question_comments(cursor, question_id):
 
 @connection.connection_handler
 def show_comment_question(cursor, question_id):
-    cursor.execute("""SELECT message FROM comment WHERE question_id = %(q_id)s;""",
+    cursor.execute("""SELECT id, message FROM comment WHERE question_id = %(q_id)s;""",
                    {'q_id': question_id})
     comments = cursor.fetchall()
     return comments

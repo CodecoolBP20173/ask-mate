@@ -38,10 +38,37 @@ def get_password_hash_from_db(cursor, username):
 @connection.connection_handler
 def get_user_name_by_id(cursor, user_id):
     cursor.execute("""
-                    SELECT user_name FROM users
+                    SELECT user_name, registration_date, COALESCE(email, 'No email address') AS email FROM users
                     WHERE id=%(user_id)s;
                     """, {'user_id': user_id})
     return cursor.fetchone()
+
+
+@connection.connection_handler
+def get_user_list(cursor):
+    cursor.execute("""
+                    SELECT id, user_name, registration_date, COALESCE(email, 'No email address') AS email
+                    FROM users ORDER BY user_name;
+                    """)
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_user_questions_by_id(cursor, user_id):
+    cursor.execute("""SELECT * FROM question WHERE user_id=%(user_id)s;""", {'user_id': user_id})
+    return cursor.fetchall()
+
+@connection.connection_handler
+def get_user_comments_by_id(cursor, user_id):
+    cursor.execute("""SELECT * FROM comment WHERE user_id=%(user_id)s;""", {'user_id': user_id})
+    return cursor.fetchall()
+
+@connection.connection_handler
+def get_user_answers_by_id(cursor, user_id):
+    cursor.execute("""SELECT * FROM answer WHERE user_id=%(user_id)s;""", {'user_id': user_id})
+    return cursor.fetchall()
+
+
 
 
 def login_required(function):
