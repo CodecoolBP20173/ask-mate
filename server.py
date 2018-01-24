@@ -18,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 @app.route('/<tag>')
-def route_index(tag):
+def route_index(tag=None):
     tags = utility.get_all_tags()
     if tag:
         questions = data_manager.get_questions_by_tag(tag)
