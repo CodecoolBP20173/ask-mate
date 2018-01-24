@@ -1,5 +1,7 @@
 import bcrypt
 import connection
+from functools import wraps
+from flask import session, redirect, url_for
 
 
 def hash_password(plain_text_password):
@@ -40,3 +42,13 @@ def get_user_name_by_id(cursor, user_id):
                     WHERE id=%(user_id)s;
                     """, {'user_id': user_id})
     return cursor.fetchone()
+
+
+def login_required(function):
+    @wraps(function)
+    def wrap(*args, **kwargs):
+        if session['user_id']:
+            return function(*args, **kwargs)
+        else:
+            return redirect(url_for('login./')+"login_error")
+    return wrap
