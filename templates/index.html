@@ -15,7 +15,9 @@
 
 </head>
 <body>
+<div class="card header">
 <h1>Ask, Mate!</h1>
+    </div>
 {% if user_name %}
     <div>
         <form action="/login/out" method="get">
@@ -55,8 +57,10 @@
     </div>
 </nav>
 
-<h2>Questions:</h2>
 
+<div class="card">
+
+<h2>Questions:</h2>
 
 <table>
     <tbody>
@@ -87,12 +91,12 @@
 <ul class="list-group sidetags">
     {% for tag in tags %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="/{{tag.name}}">{{tag.name}}</a>
-            <span class="badge badge-primary badge-dark">{{ tag.count_tag }}</span>
+            <a href="/{{tag.name}}" style="font-size: 15px" class="text-dark">{{tag.name}}</a>
+            <span class="badge badge-primary badge-dark" style="font-size: 12px">{{ tag.count_tag }}</span>
         </li>
     {% endfor %}
 </ul>
-
+</div>
 
 </body>
 </html>
