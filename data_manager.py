@@ -129,3 +129,8 @@ def search_answer(cursor, pattern):
                     """,
                    {'pattern': '%' + pattern + '%'})
     return cursor.fetchall()
+
+
+@connection.connection_handler
+def delete_comment(cursor, comment_id):
+    cursor.execute("""DELETE FROM comment WHERE id = %(cid)s;""", {'cid': comment_id})

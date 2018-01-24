@@ -57,7 +57,11 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item"><b>Comments:</b></li>
         {% for question_comment in question_comments %}
-        <li class="list-group-item">{{ question_comment.message }}</li>
+        <li class="list-group-item">{{ question_comment.message }}
+            <form class="list-group list-group-flush">
+        <button type="submit" formaction="/display/{{question_id}}/{{question_comment.id}}/commdelete" formmethod="get"
+                                                                          class="btn btn-danger">Delete
+        </button></form></li>
         {% endfor %}
     </ul>
     <div class="card-body">
@@ -116,7 +120,10 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><b>Comments:</b></li>
             {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
-            <li class="list-group-item">{{ list['message'] }}</li>
+            <li class="list-group-item">{{ list['message'] }}
+                <form class="list-group list-group-flush">
+                <button type="submit" formaction="/display/{{question_id}}/{{list['id']}}/commdelete" formmethod="get"
+                        class="btn btn-primary btn-sm">Delete</button></form></li>
             {% endfor %}
         </ul>
 
