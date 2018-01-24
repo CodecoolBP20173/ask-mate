@@ -20,16 +20,18 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route('/')
-def route_index():
+@app.route('/<tag>')
+def route_index(tag=None):
+    tags = utility.get_all_tags()
     if 'user_id' in session:
         user_name = user_handling.get_user_name_by_id(session['user_id'])['user_name']
     else:
         user_name = None
-    questions = data_manager.list_all_questions_ordered_by_submission_time()
-    return render_template(
-        'index.html',
-        questions=questions,
-        user_name=user_name)
+    if tag:
+        questions = data_manager.get_questions_by_tag(tag)
+    else:
+        questions = data_manager.list_all_questions_ordered_by_submission_time()
+    return render_template('index.html', questions=questions, tags=tags, user_name=user_name)
 
 
 @app.route('/ask', methods=['GET', 'POST'])
@@ -47,9 +49,11 @@ def route_ask():
                     "vote_number": 0,
                     'title': request.form['title'],
                     'message': request.form['message'],
-                    'image': UPLOAD_FOLDER + '/' + filename if file.filename else ''}
+                    'image': UPLOAD_FOLDER + '/' + filename if file.filename else '',
+                    'user_id': None}
+        if 'user_id' in session:
+            question['user_id'] = session['user_id']
         tempid = data_manager.add_new_question(question)
-
         return redirect('/display/' + str(tempid))
 
 
@@ -85,7 +89,10 @@ def route_add_new_comment(question_id):
     else:
         comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
                    'message': request.form['answer'],
-                   'question_id': question_id}
+                   'question_id': question_id,
+                   'user_id': None}
+        if 'user_id' in session:
+            comment['user_id'] = session['user_id']
         utility.add_comment_to_question(comment)
         return redirect(url_for('display.route_display', question_id=question_id))
 
@@ -103,7 +110,10 @@ def route_add_new_comment_answer(question_id, response_id):
     else:
         comment = {"submission_time": datetime.fromtimestamp(utility.display_unix_time()),
                    'message': request.form['answer'],
-                   'answer_id': response_id}
+                   'answer_id': response_id,
+                   'user_id': None}
+        if 'user_id' in session:
+            comment['user_id'] = session['user_id']
         utility.add_comment_to_answer(comment)
         return redirect(url_for('display.route_display', question_id=question_id))
 

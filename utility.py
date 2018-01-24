@@ -39,8 +39,15 @@ def display_unix_time():
 
 @connection.connection_handler
 def get_all_tags(cursor):
+    """
+    :param:  -
+    :return: Return a disctionary with the following keys: name, id, count_tag
+    """
     cursor.execute("""
-                    SELECT * FROM tag;
+                    SELECT name, id, COUNT(id) AS count_tag 
+                    FROM tag
+                    JOIN question_tag ON tag.id = question_tag.tag_id
+                    GROUP BY id
                     """)
     return cursor.fetchall()
 
@@ -154,8 +161,8 @@ def show_comment_question(cursor, question_id):
 
 @connection.connection_handler
 def add_comment_to_question(cursor, new_comment):
-    cursor.execute("""INSERT INTO comment(question_id, message, submission_time) VALUES 
-                      (%(question_id)s, %(message)s, %(submission_time)s);""", new_comment)
+    cursor.execute("""INSERT INTO comment(question_id, message, submission_time, user_id) VALUES 
+                      (%(question_id)s, %(message)s, %(submission_time)s, %(user_id)s);""", new_comment)
 
 
 @connection.connection_handler
@@ -168,5 +175,5 @@ def show_comment_answer(cursor, answer_id):
 
 @connection.connection_handler
 def add_comment_to_answer(cursor, new_comment):
-    cursor.execute("""INSERT INTO comment(answer_id, message, submission_time) VALUES 
-                      (%(answer_id)s, %(message)s, %(submission_time)s);""", new_comment)
+    cursor.execute("""INSERT INTO comment(answer_id, message, submission_time, user_id) VALUES 
+                      (%(answer_id)s, %(message)s, %(submission_time)s, %(user_id)s);""", new_comment)
