@@ -61,13 +61,15 @@ def add_new_question(cursor, new_data):
                                            vote_number, 
                                            title, 
                                            message, 
-                                           image) 
+                                           image,
+                                           user_id) 
                       VALUES (%(submission_time)s, 
                               %(view_number)s,
                               %(vote_number)s, 
                               %(title)s, 
                               %(message)s, 
-                              %(image)s);
+                              %(image)s,
+                              %(user_id)s);
                     """, new_data)
 
     cursor.execute("""SELECT id FROM question
@@ -84,12 +86,14 @@ def add_new_answer(cursor, new_data):
                                         vote_number, 
                                         question_id, 
                                         message, 
-                                        image)
+                                        image,
+                                        user_id)
                       VALUES (%(submission_time)s, 
                               %(vote_number)s, 
                               %(question_id)s, 
                               %(message)s, 
-                              %(image)s);
+                              %(image)s,
+                              %(user_id)s);
                     """, new_data)
 
 
