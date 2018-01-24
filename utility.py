@@ -171,7 +171,7 @@ def deactivate_question_comments(cursor, question_id):
 
 @connection.connection_handler
 def show_comment_question(cursor, question_id):
-    cursor.execute("""SELECT message FROM comment WHERE question_id = %(q_id)s;""",
+    cursor.execute("""SELECT id, message FROM comment WHERE question_id = %(q_id)s;""",
                    {'q_id': question_id})
     comments = cursor.fetchall()
     return comments
