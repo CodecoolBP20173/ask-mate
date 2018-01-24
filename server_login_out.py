@@ -24,16 +24,20 @@ def login_check():
         questions = data_manager.list_all_questions_ordered_by_submission_time()
         return render_template('register_login.html', questions=questions, message='')
     else:
-        hash = user_handling.get_password_hash_from_db(request.form['user_name'])
-        verify = user_handling.verify_password(request.form['password'], hash['password'])
-        if verify:
-            session['user_id'] = hash['id']
-            return redirect('/')
-        else:
+        try:
+            hash = user_handling.get_password_hash_from_db(request.form['user_name'])
+            verify = user_handling.verify_password(request.form['password'], hash['password'])
+            if verify:
+                session['user_id'] = hash['id']
+                return redirect('/')
+            else:
+                message = 'Wrong user name or password'
+                questions = data_manager.list_all_questions_ordered_by_submission_time()
+                return render_template('register_login.html', questions=questions, message=message)
+        except TypeError:
             message = 'Wrong user name or password'
             questions = data_manager.list_all_questions_ordered_by_submission_time()
             return render_template('register_login.html', questions=questions, message=message)
-
 
 @login.route('/users', methods=['GET', 'POST'])
 def list_users():
