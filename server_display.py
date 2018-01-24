@@ -27,16 +27,15 @@ def route_display(question_id):
             question_comments=question_comments,
             answer_comments=answer_comments)
     else:
-        try:
-            answer = {'submission_time': datetime.today(),
-                      'vote_number': 0,
-                      'question_id': question_id,
-                      'message': request.form['answer'],
-                      'image': '',
-                      'user_id': session['user_id']}
-            data_manager.add_new_answer(answer)
-        except KeyError:
-            return redirect('/')
+        answer = {'submission_time': datetime.today(),
+                  'vote_number': 0,
+                  'question_id': question_id,
+                  'message': request.form['answer'],
+                  'image': '',
+                  'user_id': None}
+        if 'user_id' in session:
+            answer['user_id'] = session['user_id']
+        data_manager.add_new_answer(answer)
         return redirect('/display/' + question_id)
 
 
