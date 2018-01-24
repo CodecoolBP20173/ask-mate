@@ -67,8 +67,9 @@ h4, h5 {
 }
 
 img {
-    max-height: 400px;
-    max-width: 400px;
+    margin:auto;
+    width: 300px;
+    object-fit: contain;
 }
 
 td {
