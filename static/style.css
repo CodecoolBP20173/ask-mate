@@ -3,19 +3,21 @@
 }
 
 body {
+    width:100%;
     background-image: url("html-page-background-color-html-web-page-background-color-codes-html-page-background-color-to-download-945x591.jpg");
     background-repeat: repeat-y;
 }
 
-body, html {
+.main {
     margin: 0 auto;
     font-family: 'Oswald', sans-serif;
     /*font-family: 'Open Sans Condensed', sans-serif;*/
-    width: 1000px;
+    width: 900px;
     margin-bottom: 40px;
 }
 
 h1 {
+    margin: 0 auto;
     text-align: center;
     color: #000000;
     margin-top: 30px;
@@ -59,7 +61,7 @@ table {
     display: inline-block;
     vertical-align: top;
     margin-top: 40px;
-    width: 10%;
+    width: 13%;
 }
 
 h4, h5 {
@@ -67,7 +69,8 @@ h4, h5 {
 }
 
 img {
-    margin:auto;
+    margin-left: 200px;
+    margin-right: auto;
     width: 300px;
     object-fit: contain;
 }
@@ -174,7 +177,7 @@ tbody:hover tr:hover td {
 }
 
 .title-column {
-    width: 83%;
+    width: 90%;
     font-weight: bold;
 }
 
@@ -202,7 +205,7 @@ tbody:hover tr:hover td {
 }
 
 .header {
+    margin: 0 auto;
     margin-top: 20px;
     padding: 10px;
-    margin-left: 300px;
 }
