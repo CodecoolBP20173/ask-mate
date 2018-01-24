@@ -66,6 +66,21 @@ def route_add_new_tag(question_id, tag):
         return redirect(url_for('display.route_display', question_id=question_id))
 
 
+@app.route('/question/<question_id>/delete-tag/<tag>')
+def route_delete_tag(question_id, tag):
+    utility.remove_tag_from_question(question_id, tag)
+    answers = data_manager.get_answers_by_question_id(question_id)
+    question = data_manager.get_question_by_id(question_id)
+    tags = utility.get_all_tags()
+    question_tags = utility.get_tags_by_question_id(question_id)
+    return render_template('new-tag.html',
+                           answers=answers,
+                           question=question,
+                           question_id=question_id,
+                           tags=tags,
+                           question_tags=question_tags)
+
+
 @app.route('/question/<question_id>/new-comment', methods=['POST', 'GET'])
 def route_add_new_comment(question_id):
     if request.method == 'GET':
