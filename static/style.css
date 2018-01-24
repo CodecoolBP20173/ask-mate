@@ -166,3 +166,24 @@ tbody:hover tr:hover td {
     font-weight: bold;
     font-size: 18px;
 }
+
+.list-group-flush, .add-comment {
+    margin-left: 50%;
+    font-size: 13px;
+}
+
+.title-column {
+    width: 79%;
+}
+
+.date-column, .id-column, .vote-column, .view-column {
+    font-size: 12px;
+}
+
+.id-column {
+    width: 1%;
+}
+
+.date-column {
+    width: 20%;
+}
