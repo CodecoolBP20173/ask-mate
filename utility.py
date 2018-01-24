@@ -43,12 +43,12 @@ def get_all_tags(cursor):
     :param:  -
     :return: Return a disctionary with the following keys: name, id, count_tag
     """
-    cursor.execute("""
-                    SELECT name, id, COUNT(id) AS count_tag 
-                    FROM tag
-                    JOIN question_tag ON tag.id = question_tag.tag_id
-                    GROUP BY id
-                    """)
+    cursor.execute("""SELECT name, id, COUNT(id) AS count_tag 
+                      FROM tag
+                      JOIN question_tag ON tag.id = question_tag.tag_id
+                      GROUP BY id
+                      ORDER BY count_tag DESC
+                      LIMIT 7 """)
     return cursor.fetchall()
 
 
@@ -64,14 +64,10 @@ def get_tags_by_question_id(cursor, question_id):
 @connection.connection_handler
 def add_new_tag(cursor, tag_name):
     cursor.execute("""INSERT INTO tag (name) 
-                      VALUES (%(name)s);""",
-                   {'name': tag_name})
+                      VALUES (%(name)s);""", {'name': tag_name})
     cursor.execute("""SELECT id FROM tag
-                      WHERE name = %(t_name)s;""",
-                   {'t_name': tag_name})
-    result = cursor.fetchone()
-    return result
-
+                      WHERE name = %(t_name)s;""", {'t_name': tag_name})
+    return cursor.fetchone()
 
 @connection.connection_handler
 def create_question_tag_relation(cursor, question_id, tag_id):
