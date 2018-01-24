@@ -53,20 +53,9 @@
     </div>
 </nav>
 
-
 <h2>Questions:</h2>
 
 <table>
-    <thead>
-    <tr class="">
-        <th>ID</th>
-        <th>Submission Time</th>
-        <th>View Number</th>
-        <th>Vote Number</th>
-        <th>Title</th>
-        <!--<th>Message</th>-->
-    </tr>
-    </thead>
     <tbody>
     {% for dictionary in questions %}
     <tr>
@@ -80,5 +69,17 @@
     {% endfor %}
     </tbody>
 </table>
+
+
+<ul class="list-group sidetags">
+    {% for tag in tags %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{tag.name}}
+            <span class="badge badge-primary badge-danger">{{ tag.count_tag }}</span>
+        </li>
+    {% endfor %}
+</ul>
+
+
 </body>
 </html>

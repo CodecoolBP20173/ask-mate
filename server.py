@@ -26,10 +26,10 @@ def route_index():
     else:
         user_name = None
     questions = data_manager.list_all_questions_ordered_by_submission_time()
+    tags = utility.get_all_tags()
     return render_template(
         'index.html',
-        questions=questions,
-        user_name=user_name)
+        questions=questions, tags=tags, user_name=user_name)
 
 
 @app.route('/ask', methods=['GET', 'POST'])
