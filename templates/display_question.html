@@ -66,7 +66,14 @@
     <div class="card-footer text-muted">
         <div id="tags">
             {% for tag in question_tags %}
-            <span class="badge badge-pill badge-primary">{{tag.name}}</span>
+            <span class="badge badge-pill badge-primary">
+                {{tag.name}}
+                <span class="badge badge-pill badge-light">
+                    <a href="/question/{{ question['id'] }}/delete-tag/{{ tag.name }}" class="badge-delete-button">
+                        X
+                    </a>
+                </span>
+            </span>
             {% endfor %}
         </div>
     </div>

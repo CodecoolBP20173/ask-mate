@@ -116,3 +116,19 @@ button, .button {
     font-size: 13px;
 }
 
+
+
+.badge-light{
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.badge-primary{
+    font-size: 16px;
+}
+
+.badge-delete-button{
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+}
