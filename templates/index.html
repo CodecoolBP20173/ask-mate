@@ -60,10 +60,10 @@
     {% for dictionary in questions %}
 
     <tr>
-        <td>{{ dictionary['id'] }}</td>
-        <td>{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
-        <td>{{ dictionary['view_number'] }}</td>
-        <td>{{ dictionary['vote_number'] }}</td>
+      <td class="id-column">{{ dictionary['id'] }}</td>
+        <td class="date-column">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td class="view-column">{{ dictionary['view_number'] }}</td>
+        <td class="vote-column">{{ dictionary['vote_number'] }}</td>
         <td><a href="/display/{{ dictionary['id'] }}">{{ dictionary['title'] }}</a></td>
          <!--<td>{{ dictionary['message'] }}</td>-->
     </tr>
