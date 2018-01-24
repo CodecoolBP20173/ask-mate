@@ -113,6 +113,7 @@
         <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h6>
         <P class="card-subtitle mb-2 text-muted">Vote number: {{ dictionary['vote_number'] }}</P>
         <p class="card-text">Id: {{ dictionary['id'] }}</p>
+        <img src="/{{ dictionary['image'] }}" alt="Card image">
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><b>Comments:</b></li>
             {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
