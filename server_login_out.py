@@ -21,13 +21,14 @@ def registration():
 @login.route('/', methods=['GET','POST'])
 @login.route('/<error>', methods=['GET','POST'])
 def login_check(error=None):
+    tags = utility.get_all_tags()
+    questions = data_manager.list_all_questions_ordered_by_submission_time()
     if request.method == 'GET':
         if error:
             message = "Please log in to access this feature!"
         else:
             message = ""
-        questions = data_manager.list_all_questions_ordered_by_submission_time()
-        return render_template('register_login.html', questions=questions, message=message)
+        return render_template('register_login.html', questions=questions, message=message, tags=tags)
     else:
         try:
             hash = user_handling.get_password_hash_from_db(request.form['user_name'])
@@ -37,12 +38,10 @@ def login_check(error=None):
                 return redirect('/')
             else:
                 message = 'Wrong user name or password'
-                questions = data_manager.list_all_questions_ordered_by_submission_time()
-                return render_template('register_login.html', questions=questions, message=message)
+                return render_template('register_login.html', questions=questions, message=message, tags=tags)
         except TypeError:
             message = 'Wrong user name or password'
-            questions = data_manager.list_all_questions_ordered_by_submission_time()
-            return render_template('register_login.html', questions=questions, message=message)
+            return render_template('register_login.html', questions=questions, message=message, tags=tags)
 
 
 @login.route('/users', methods=['GET', 'POST'])
