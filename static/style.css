@@ -166,3 +166,7 @@ tbody:hover tr:hover td {
     font-weight: bold;
     font-size: 18px;
 }
+
+#current {
+    color: #E53935;
+}
