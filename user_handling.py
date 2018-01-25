@@ -1,5 +1,7 @@
 import bcrypt
 import connection
+from functools import wraps
+from flask import session, redirect, url_for
 
 
 def hash_password(plain_text_password):
@@ -66,3 +68,14 @@ def get_user_answers_by_id(cursor, user_id):
     cursor.execute("""SELECT * FROM answer WHERE user_id=%(user_id)s;""", {'user_id': user_id})
     return cursor.fetchall()
 
+
+
+
+def login_required(function):
+    @wraps(function)
+    def wrap(*args, **kwargs):
+        if 'user_id' in session:
+            return function(*args, **kwargs)
+        else:
+            return redirect(url_for('login.login_check')+"login_error")
+    return wrap

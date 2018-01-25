@@ -35,6 +35,7 @@ def route_index(tag=None):
 
 
 @app.route('/ask', methods=['GET', 'POST'])
+@user_handling.login_required
 def route_ask():
     if request.method == 'GET':
         return render_template('ask.html', req_url=url_for('route_ask'), question={})
