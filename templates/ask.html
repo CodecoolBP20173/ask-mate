@@ -14,7 +14,10 @@
 
 </head>
 <body>
+<div class="main ask">
+    <div class="card header">
     <h1>Ask, Mate!</h1>
+    </div>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a id="current" class="navbar-brand" href="/ask">Ask a question</a>
@@ -39,17 +42,16 @@
     </div>
 </nav>
 
-    <p><a href="/">Back</a></p>
-    <h2>Ask a question:</h2>
+    <h2 style="background:white">Ask a question:</h2>
     <form action="{{ req_url }}"
           method="POST"
           enctype=multipart/form-data>
         <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">Question title</label>
+            <label for="title" class="col-sm-2 control-label" style="background:white">Question title</label>
             <input id="title" name="title" type="text" class="form-control" value="{{ question['title'] }}">
         </div>
         <div class="form-group">
-            <label for="message" class="col-sm-2 control-label">Description:</label>
+            <label for="message" class="col-sm-2 control-label" style="background:white">Description:</label>
             <textarea id="message" class="form-control" name="message">{{ question['message'] }}</textarea>
         </div>
         {% if question['image'] is not defined %}
@@ -58,7 +60,8 @@
             <input name="file" id="file" type="file">
         </div>
         {% endif %}
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-info">Submit</button>
     </form>
+    </div>
 </body>
 </html>
