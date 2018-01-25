@@ -143,14 +143,14 @@ def search_questions(cursor, pattern):
                     question.title, question.submission_time, question.id, question.image
                     FROM question
                     LEFT JOIN answer ON question.id = answer.question_id
-                    WHERE question.title LIKE %(pattern)s
+                    WHERE LOWER(question.title) LIKE %(pattern)s
                     OR
-                    question.message LIKE %(pattern)s
+                    LOWER(question.message) LIKE %(pattern)s
                     OR
-                    answer.message LIKE %(pattern)s
+                    LOWER(answer.message) LIKE %(pattern)s
                     ORDER BY question.submission_time DESC;
                     """,
-                   {'pattern': '%' + pattern + '%'})
+                   {'pattern': '%' + pattern.lower() + '%'})
     return cursor.fetchall()
 
 
@@ -158,10 +158,10 @@ def search_questions(cursor, pattern):
 def search_answer(cursor, pattern):
     cursor.execute("""
                     SELECT * FROM answer
-                    WHERE message LIKE %(pattern)s
+                    WHERE LOWER(message) LIKE %(pattern)s
                     ORDER BY id DESC;
                     """,
-                   {'pattern': '%' + pattern + '%'})
+                   {'pattern': '%' + pattern.lower() + '%'})
     return cursor.fetchall()
 
 
