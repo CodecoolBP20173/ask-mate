@@ -12,7 +12,7 @@
 {% for question in questions %}
 <table>
     <tr class="table-light">
-        <th scope="row"><a href="/display/{{question['id']}}"> {{question['id']}}</a></th>
+        <th scope="row"><a href="/display/{{question['id']}}"> {{ question['id'] }}</a></th>
         <td> {{ question['submission_time'] }}</a></td>
         <td> {{ question['message'] }}</td>
     </tr>
@@ -32,7 +32,7 @@
 {% for comment in comments %}
 <table>
     <tr class="table-light">
-        <th scope="row">{{ question['id']}}</th>
+        <th scope="row">{{ comment['id']}}</th>
         <td> {{ comment['submission_time'] }}</td>
         <td> {{ comment['message'] }}</td>
     </tr>
