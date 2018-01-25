@@ -75,9 +75,9 @@
     </ul>
     <div class="card-body add-comment">
         <form method="post" action="display/{{question_id}}/">
-            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Like
+            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post" style="background: #3b9e3b">Like
             </button>
-            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Dislike
+            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post" style="background: #d23430">Dislike
             </button>
             <!--<a href="/display/{{question_id}}/up-vote" class="card-link" style="color:#64DD17">Like</a>
             <a href="/display/{{question_id}}/down-vote" class="card-link text-danger">Dislike .!..</a>-->
@@ -130,9 +130,9 @@
 
 
         <form method="post">
-            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post">Like
+            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post" style="background: #3b9e3b">Like
             </button>
-            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote " formmethod="post">Dislike
+            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote " formmethod="post" style="background: #d23430">Dislike
             </button>
             <!--<a href="/display/{{question_id}}/up-vote" class="card-link" style="color:#64DD17">Like</a>
             <a href="/display/{{question_id}}/down-vote" class="card-link text-danger">Dislike .!..</a>-->
