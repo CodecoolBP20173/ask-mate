@@ -5,7 +5,7 @@
 body {
     width:100%;
     background-image: url("colored-lines-with-white-background.jpg");
-    background-repeat: repeat;
+    background-repeat: repeat-y;
     background-attachment: fixed;
 }
 
