@@ -117,6 +117,13 @@ button, .button {
     font-size: 13px;
 }
 
+.login-error-message{
+    background-color: yellow;
+    color: red;
+    font-weight: bold;
+    padding-left: 24px;
+    margin-right: 70%;
+}
 #delete-comment, #delete-comment-now {
     border-radius: 4px;
     background-color: salmon;
