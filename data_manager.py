@@ -7,7 +7,11 @@ ANSWERS_FILE_NAME = 'sample_data/answer.csv'
 @connection.connection_handler
 def list_all_questions_ordered_by_submission_time(cursor):
     cursor.execute("""
-                      SELECT * FROM question
+                      SELECT q.id, q.title, q.submission_time, q.image, q.message, q.view_number,
+                      q.vote_number, q.user_id, COALESCE(u.user_name, 'Anonymous') AS user_name
+                      FROM question AS q
+                      LEFT JOIN users AS u
+                      ON q.user_id=u.id
                       ORDER BY submission_time DESC;
                    """)
     all_questions = cursor.fetchall()
@@ -16,7 +20,12 @@ def list_all_questions_ordered_by_submission_time(cursor):
 
 @connection.connection_handler
 def get_question_by_id(cursor, question_id):
-    cursor.execute("""SELECT * FROM question WHERE id = %(id)s;""", {'id': question_id})
+    cursor.execute("""SELECT q.id, q.title, q.submission_time, q.image, q.message, q.view_number,
+                      q.vote_number, q.user_id, COALESCE(u.user_name, 'Anonymous') AS user_name
+                      FROM question AS q
+                      LEFT JOIN users AS u
+                      ON q.user_id=u.id
+                      WHERE q.id =%(id)s;""", {'id': question_id})
     return cursor.fetchone()
 
 
@@ -47,7 +56,10 @@ def get_answer_by_id(cursor, answer_id):
 
 @connection.connection_handler
 def get_answers_by_question_id(cursor, id):
-    cursor.execute("""SELECT * FROM answer
+    cursor.execute("""SELECT a.id, a.submission_time, a.vote_number, a.question_id, a.message, a.image,
+                      COALESCE(u.user_name, 'Anonymous') AS user_name FROM answer AS a 
+                      LEFT JOIN users AS u 
+                      ON a.user_id = u.id
                       WHERE question_id = %(question_id)s
                       ORDER BY submission_time;""", {'question_id': id})
     answers_for_question = cursor.fetchall()

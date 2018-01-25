@@ -1,6 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, Flask
+from werkzeug.utils import secure_filename
 import data_manager, utility
+import os
+import user_handling
 from datetime import datetime
+app = Flask(__name__)
+UPLOAD_FOLDER = "static/images"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 display = Blueprint('display', __name__,
                         template_folder='templates')
@@ -27,11 +33,16 @@ def route_display(question_id):
             question_comments=question_comments,
             answer_comments=answer_comments)
     else:
+        file = request.files['file']
+        if file and utility.allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
         answer = {'submission_time': datetime.today(),
                   'vote_number': 0,
                   'question_id': question_id,
                   'message': request.form['answer'],
-                  'image': '',
+                  'image': UPLOAD_FOLDER + '/' + filename if file.filename else '',
                   'user_id': None}
         if 'user_id' in session:
             answer['user_id'] = session['user_id']
@@ -71,6 +82,7 @@ def route_counter_answer(question_id, response_id, direction):
 
 
 @display.route('/<question_id>/edit', methods=['GET', 'POST'])
+@user_handling.login_required
 def route_edit_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     if request.method == 'GET':
@@ -91,6 +103,7 @@ def route_edit_question(question_id):
 
 
 @display.route('/<question_id>/<answer_id>/edit', methods=['GET', 'POST'])
+@user_handling.login_required
 def route_edit_answer(question_id, answer_id):
     if request.method == 'GET':
         answer = data_manager.get_answer_by_id(answer_id)
@@ -115,12 +128,14 @@ def route_edit_answer(question_id, answer_id):
 
 
 @display.route('/<question_id>/delete', methods=['GET', 'POST'])
+@user_handling.login_required
 def route_delete_question(question_id):
     utility.delete_question_and_answers(question_id)
     return redirect('')
 
 
 @display.route('/<question_id>/<answer_id>/delete', methods=['GET', 'POST'])
+@user_handling.login_required
 def route_delete_answer(question_id, answer_id):
     utility.delete_answer(answer_id)
     return redirect('/display/' + question_id)

@@ -7,14 +7,20 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
           crossorigin="anonymous">-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand"
           rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Oswald:600" rel="stylesheet">
+
 
 </head>
 <body>
+<div class="main">
+    <div class="card header">
 <h1>Ask, Mate!</h1>
+        </div>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -42,12 +48,17 @@
 
 
 <div class="card mb-3">
-    <h3 class="card-header">{{ question['title'] }}</h3>
+    <h2 class="card-header text-danger" style="font-family: 'Oswald', sans-serif;">{{ question['title'] }}</h2>
     <div class="card-body">
         <h5 class="card-title text-muted">{{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h5>
-        <h6 class="card-subtitle text-muted">View number: {{ question['view_number'] }}</h6>
+        <h6 class="card-subtitle text-muted">Vote number: {{ question['vote_number'] }}</h6>
+        {% if question['user_id'] %}
+        <h6 class="card-subtitle text-muted"><a href="/login/users/{{ question['user_id'] }}">{{ question['user_name'] }}</a></h6>
+        {% else %}
+        <h6 class="card-subtitle text-muted">{{ question['user_name'] }}</h6>
+        {% endif %}
     </div>
-    <img src="/{{ question['image'] }}" alt="Card image">
+    <img src="/{{ question['image'] }}">
     <div class="card-body">
         <p class="card-text">{{ question['message'] }}</p>
     </div>
@@ -62,7 +73,19 @@
         {% endfor %}
     </ul>
     <div class="card-body add-comment">
-        <a href="/question/{{question_id}}/new-comment" class="card-link">Add comment</a>
+        <form method="post" action="display/{{question_id}}/">
+            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post">Like
+            </button>
+            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post">Dislike
+            </button>
+            <!--<a href="/display/{{question_id}}/up-vote" class="card-link" style="color:#64DD17">Like</a>
+            <a href="/display/{{question_id}}/down-vote" class="card-link text-danger">Dislike .!..</a>-->
+            <a href="/display/{{question_id}}/edit" class="card-link text-warning">Edit question</a>
+            <a href="/display/{{question_id}}/delete" class="card-link text-dark">Delete question</a>
+            <a href="/question/{{question_id}}/new-tag" class="card-link" style="color:#283593">Add new tag</a>
+            <a href="/question/{{question_id}}/new-comment" class="card-link" style="color: #AD1457">Add comment :O</a>
+           {% block content %} {% endblock %}
+        </form>
     </div>
     <div class="card-footer text-muted">
         <div id="tags">
@@ -80,46 +103,20 @@
     </div>
 </div>
 
-<div class="card card-under">
-    <div class="card-body">
-        <!--<h4 class="card-title">Tags and buttons</h4>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>-->
-        <form id="button-form">
-            <button type="submit" formaction="/display/{{question_id}}/up-vote" formmethod="post"
-                    class="btn btn-outline-success">Like
-            </button>
-            <button type="submit" formaction="/display/{{question_id}}/down-vote" formmethod="post"
-                    class="btn btn-outline-danger">Dislike
-            </button>
-            <button type="submit" formaction="/display/{{question_id}}/edit" formmethod="get" class="btn btn-warning">
-                Edit question
-            </button>
-            <button type="submit" formaction="/question/{{question_id}}/new-tag" formmethod="get"
-                    class="btn btn-primary">Add new tag
-            </button>
-            <button type="submit" formaction="/display/{{question_id}}/delete" formmethod="get" class="btn btn-danger">
-                Delete question
-            </button>
-        </form>
-        {% block content %} {% endblock %}
-    </div>
-</div>
 
 
-<h2>Answers:</h2>
+<h3>Answers:</h3>
 
 
 {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
 <div class="card">
     <div class="card-body">
-        <h5 class="card-text">{{ dictionary['message'] }}</h5>
+        <h5 style="font-family: 'Oswald', sans-serif; font-size:19px">{{ dictionary['message'] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h6>
         <P class="card-subtitle mb-2 text-muted">Vote number: {{ dictionary['vote_number'] }}</P>
-        <p class="card-subtitle mb-2 text-muted">Id: {{ dictionary['id'] }}</p>
+        <p class="card-subtitle mb-2 text-muted">{{ dictionary['user_name'] }}</p>
+        <p class="card-text">Id: {{ dictionary['id'] }}</p>
+        <img src="/{{ dictionary['image'] }}">
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><b>Comments:</b></li>
             {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
@@ -151,6 +148,6 @@
 {% endfor %}
 <p><a href="/post_answer/{{ question_id }}">Answer this question</a></p>
 
-
+</div>
 </body>
 </html>

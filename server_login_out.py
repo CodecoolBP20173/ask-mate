@@ -19,17 +19,27 @@ def registration():
 
 
 @login.route('/', methods=['GET','POST'])
-def login_check():
+@login.route('/<error>', methods=['GET','POST'])
+def login_check(error=None):
     if request.method == 'GET':
-        questions = data_manager.list_all_questions_ordered_by_submission_time()
-        return render_template('register_login.html', questions=questions, message='')
-    else:
-        hash = user_handling.get_password_hash_from_db(request.form['user_name'])
-        verify = user_handling.verify_password(request.form['password'], hash['password'])
-        if verify:
-            session['user_id'] = hash['id']
-            return redirect('/')
+        if error:
+            message = "Please log in to access this feature!"
         else:
+            message = ""
+        questions = data_manager.list_all_questions_ordered_by_submission_time()
+        return render_template('register_login.html', questions=questions, message=message)
+    else:
+        try:
+            hash = user_handling.get_password_hash_from_db(request.form['user_name'])
+            verify = user_handling.verify_password(request.form['password'], hash['password'])
+            if verify:
+                session['user_id'] = hash['id']
+                return redirect('/')
+            else:
+                message = 'Wrong user name or password'
+                questions = data_manager.list_all_questions_ordered_by_submission_time()
+                return render_template('register_login.html', questions=questions, message=message)
+        except TypeError:
             message = 'Wrong user name or password'
             questions = data_manager.list_all_questions_ordered_by_submission_time()
             return render_template('register_login.html', questions=questions, message=message)
@@ -39,6 +49,16 @@ def login_check():
 def list_users():
     list_all_users = user_handling.get_user_list()
     return render_template('user_info.html', user_info=list_all_users)
+
+
+@login.route('/users/<user_id>')
+def list_user_contributions(user_id):
+    list_all_users = user_handling.get_user_list()
+    user = user_handling.get_user_name_by_id(user_id)
+    answers = user_handling.get_user_answers_by_id(user_id)
+    questions = user_handling.get_user_questions_by_id(user_id)
+    comments = user_handling.get_user_comments_by_id(user_id)
+    return render_template('detailed_user_info.html', user_info=list_all_users, user=user, answers=answers, questions=questions, comments=comments)
 
 
 @login.route('/out')
