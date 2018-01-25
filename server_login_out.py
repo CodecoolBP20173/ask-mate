@@ -10,12 +10,17 @@ def registration():
     if request.method == 'GET':
         return render_template('registration.html')
     else:
-        new_user_data={'user_name': request.form['user_name'],
-                       'password': user_handling.hash_password(request.form['password']),
-                       'registration_date': datetime.fromtimestamp(utility.display_unix_time()),
-                       'email': request.form['email']}
-        user_handling.new_user_to_db(new_user_data)
-        return redirect('/')
+        try:
+            new_user_data={'user_name': request.form['user_name'],
+                           'password': user_handling.hash_password(request.form['password']),
+                           'registration_date': datetime.fromtimestamp(utility.display_unix_time()),
+                           'email': request.form['email']}
+            user_handling.new_user_to_db(new_user_data)
+            return redirect('/')
+        except:
+            message='Username already exists! Choose a different one, please'
+            return render_template('registration.html', message=message)
+
 
 
 @login.route('/', methods=['GET','POST'])
