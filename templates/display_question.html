@@ -51,6 +51,7 @@
     <div class="card-body">
         <h5 class="card-title text-muted">{{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h5>
         <h6 class="card-subtitle text-muted">View number: {{ question['view_number'] }}</h6>
+        <h6 class="card-subtitle text-muted">{{ question['user_name'] }}</h6>
     </div>
     <img src="/{{ question['image'] }}" alt="Card image">
     <div class="card-body">

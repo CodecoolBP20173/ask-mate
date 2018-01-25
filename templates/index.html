@@ -66,7 +66,11 @@
       <td class="id-column">{{ dictionary['id'] }}</td>
         <td class="date-column">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
         <td><a href="/display/{{ dictionary['id'] }}" class="text-danger" style="font-weight: bold">{{ dictionary['title'] }}</a></td>
-         <!--<td>{{ dictionary['message'] }}</td>-->
+        {% if dictionary['user_id'] %}
+        <td class="date-column"><a href="/login/users/{{ dictionary['user_id'] }}">{{ dictionary['user_name'] }}</a></td>
+        {% else %}
+        <td class="date-column">{{ dictionary['user_name'] }}</td>
+        {% endif %}
     </tr>
 
     {% endfor %}

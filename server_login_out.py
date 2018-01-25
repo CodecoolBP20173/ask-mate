@@ -17,6 +17,7 @@ def registration():
         user_handling.new_user_to_db(new_user_data)
         return redirect('/')
 
+
 @login.route('/', methods=['GET','POST'])
 @login.route('/<error>', methods=['GET','POST'])
 def login_check(error=None):

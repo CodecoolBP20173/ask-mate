@@ -58,17 +58,17 @@ def get_user_questions_by_id(cursor, user_id):
     cursor.execute("""SELECT * FROM question WHERE user_id=%(user_id)s;""", {'user_id': user_id})
     return cursor.fetchall()
 
+
 @connection.connection_handler
 def get_user_comments_by_id(cursor, user_id):
     cursor.execute("""SELECT * FROM comment WHERE user_id=%(user_id)s;""", {'user_id': user_id})
     return cursor.fetchall()
 
+
 @connection.connection_handler
 def get_user_answers_by_id(cursor, user_id):
     cursor.execute("""SELECT * FROM answer WHERE user_id=%(user_id)s;""", {'user_id': user_id})
     return cursor.fetchall()
-
-
 
 
 def login_required(function):
@@ -79,3 +79,11 @@ def login_required(function):
         else:
             return redirect(url_for('login.login_check')+"login_error")
     return wrap
+
+
+@connection.connection_handler
+def get_user_name_by_question_id(cursor, user_id):
+    cursor.execute("""SELECT * FROM question 
+                       
+                      WHERE user_id=%(user_id)s;""",
+                   {'user_id': user_id})
