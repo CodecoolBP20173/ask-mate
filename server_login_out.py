@@ -44,11 +44,11 @@ def login_check(error=None):
             questions = data_manager.list_all_questions_ordered_by_submission_time()
             return render_template('register_login.html', questions=questions, message=message)
 
+
 @login.route('/users', methods=['GET', 'POST'])
 def list_users():
     list_all_users = user_handling.get_user_list()
     return render_template('user_info.html', user_info=list_all_users)
-
 
 
 @login.route('/users/<user_id>')

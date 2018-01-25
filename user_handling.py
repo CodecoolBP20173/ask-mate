@@ -2,6 +2,7 @@ import bcrypt
 import connection
 from functools import wraps
 from flask import session, redirect, url_for
+import data_manager
 
 
 def hash_password(plain_text_password):
@@ -82,8 +83,21 @@ def login_required(function):
 
 
 @connection.connection_handler
-def get_user_name_by_question_id(cursor, user_id):
-    cursor.execute("""SELECT * FROM question 
-                       
-                      WHERE user_id=%(user_id)s;""",
-                   {'user_id': user_id})
+def delete_comment_by_answer(cursor, answer_id):
+    cursor.execute("""DELETE FROM comment 
+                      WHERE answer_id=%(answer_id)s;""",
+                   {'answer_id': answer_id})
+
+
+@connection.connection_handler
+def delete_comment_by_question(cursor, question_id):
+    cursor.execute("""DELETE FROM comment 
+                      WHERE question_id=%(question_id)s;""",
+                   {'question_id': question_id})
+
+
+@connection.connection_handler
+def delete_answer_comment_by_question_id(cursor, question_id):
+    answers = data_manager.get_answers_by_question_id(question_id)
+    for answer in answers:
+        delete_comment_by_answer(answer['id'])

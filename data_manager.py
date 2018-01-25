@@ -21,9 +21,9 @@ def list_all_questions_ordered_by_submission_time(cursor):
 @connection.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""SELECT q.id, q.title, q.submission_time, q.image, q.message, q.view_number,
-                      q.vote_number, u.user_name AS user_name
+                      q.vote_number, q.user_id, COALESCE(u.user_name, 'Anonymous') AS user_name
                       FROM question AS q
-                      INNER JOIN users AS u
+                      LEFT JOIN users AS u
                       ON q.user_id=u.id
                       WHERE q.id =%(id)s;""", {'id': question_id})
     return cursor.fetchone()
