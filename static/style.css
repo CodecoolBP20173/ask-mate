@@ -220,3 +220,7 @@ tbody:hover tr:hover td {
     width: 50%;
     padding-top: 0;
 }
+
+#current {
+    color: #E53935;
+}
