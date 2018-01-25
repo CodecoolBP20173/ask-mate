@@ -1,5 +1,6 @@
 import time
 import connection
+import user_handling
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
@@ -69,6 +70,7 @@ def add_new_tag(cursor, tag_name):
                       WHERE name = %(t_name)s;""", {'t_name': tag_name})
     return cursor.fetchone()
 
+
 @connection.connection_handler
 def create_question_tag_relation(cursor, question_id, tag_id):
     cursor.execute("""
@@ -116,7 +118,7 @@ def remove_tag_from_question(cursor, tag_name, question_id):
 
 @connection.connection_handler
 def delete_answer(cursor, answer_id):
-    deactivate_answer_comments(answer_id)
+    user_handling.delete_comment_by_answer(answer_id)
     cursor.execute("""
                     DELETE FROM answer
                     WHERE id = %(answer_id)s;
@@ -125,7 +127,8 @@ def delete_answer(cursor, answer_id):
 
 @connection.connection_handler
 def delete_question_and_answers(cursor, question_id):
-    deactivate_question_comments(question_id)
+    user_handling.delete_answer_comment_by_question_id(question_id)
+    user_handling.delete_comment_by_question(question_id)
     cursor.execute("""
                     DELETE FROM answer
                     WHERE question_id=%(qid)s;
@@ -138,31 +141,6 @@ def delete_question_and_answers(cursor, question_id):
                     DELETE FROM question
                     WHERE id=%(qid)s;
                     """, {'qid': question_id})
-
-
-@connection.connection_handler
-def deactivate_answer_comments(cursor, answer_id):
-    cursor.execute("""
-                    UPDATE comment
-                    SET answer_id=NULL
-                    WHERE answer_id=%(answer_id)s;
-                    """, {'answer_id': answer_id})
-
-
-@connection.connection_handler
-def deactivate_question_comments(cursor, question_id):
-    cursor.execute("""
-                    UPDATE comment
-                    SET question_id=NULL
-                    WHERE question_id=%(question_id)s;
-                    """, {'question_id': question_id})
-    cursor.execute("""
-                    SELECT * FROM answer
-                    WHERE question_id=%(question_id)s;
-                    """, {'question_id': question_id})
-    results = cursor.fetchall()
-    for answer in results:
-        deactivate_answer_comments(answer['id'])
 
 
 @connection.connection_handler

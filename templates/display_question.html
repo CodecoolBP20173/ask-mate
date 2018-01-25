@@ -51,6 +51,11 @@
     <div class="card-body">
         <h5 class="card-title text-muted">{{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h5>
         <h6 class="card-subtitle text-muted">View number: {{ question['view_number'] }}</h6>
+        {% if question['user_id'] %}
+        <h6 class="card-subtitle text-muted"><a href="/login/users/{{ question['user_id'] }}">{{ question['user_name'] }}</a></h6>
+        {% else %}
+        <h6 class="card-subtitle text-muted">{{ question['user_name'] }}</h6>
+        {% endif %}
     </div>
     <img src="/{{ question['image'] }}" alt="Card image">
     <div class="card-body">
@@ -124,7 +129,7 @@
         <h5>{{ dictionary['message'] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ dictionary['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h6>
         <P class="card-subtitle mb-2 text-muted">Vote number: {{ dictionary['vote_number'] }}</P>
-        <p class="card-subtitle mb-2 text-muted">Id: {{ dictionary['id'] }}</p>
+        <p class="card-subtitle mb-2 text-muted">{{ dictionary['user_name'] }}</p>
         <p class="card-text">Id: {{ dictionary['id'] }}</p>
         <img src="/{{ dictionary['image'] }}">
         <ul class="list-group list-group-flush">
