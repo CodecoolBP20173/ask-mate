@@ -68,9 +68,8 @@ table {
 
 
 img {
-    margin-left: 270px;
     margin-right: auto;
-    width: 300px;
+    width: 100%;
     object-fit: contain;
 }
 

@@ -84,9 +84,10 @@
             <a href="/display/{{question_id}}/edit" class="card-link text-warning">Edit question</a>
             <a href="/display/{{question_id}}/delete" class="card-link text-dark">Delete question</a>
             <a href="/question/{{question_id}}/new-tag" class="card-link" style="color:#283593">Add new tag</a>
-            <a href="/question/{{question_id}}/new-comment" class="card-link" style="color: #AD1457">Add comment :O</a>
-           {% block content %} {% endblock %}
+            <a href="/question/{{question_id}}/new-comment" class="card-link" style="color: #AD1457">Add comment</a>
         </form>
+                {% block content %} {% endblock %}
+
     </div>
     <div class="card-footer text-muted">
         <div id="tags">
@@ -104,10 +105,7 @@
     </div>
 </div>
 
-
-
 <h3>Answers:</h3>
-
 
 {% for dictionary in answers if question['id'] == dictionary['question_id'] %}
 <div class="card">
