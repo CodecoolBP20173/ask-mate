@@ -18,7 +18,9 @@
 </head>
 <body>
 <div class="main">
+    <div class="card header">
 <h1>Ask, Mate!</h1>
+        </div>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -54,7 +56,7 @@
         <h5 class="card-title text-muted">{{ question['submission_time'].strftime('%Y-%m-%d %H:%M:%S') }}</h5>
         <h6 class="card-subtitle text-muted">View number: {{ question['view_number'] }}</h6>
     </div>
-    <img src="/{{ question['image'] }}" alt="Card image">
+    <img src="/{{ question['image'] }}">
     <div class="card-body">
         <p class="card-text">{{ question['message'] }}</p>
     </div>
