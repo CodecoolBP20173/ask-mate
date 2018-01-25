@@ -11,11 +11,14 @@
 
     </head>
 <body>
+<div class="main">
+    <div class="card header">
     <h1>Ask, Mate!</h1>
-    <h2> {{ question["title"] }}</h2>
-    <p> {{ question["message"] }}</p>
+        </div>
+    <h2 style="background: white"> {{ question["title"] }}</h2>
+    <p style="background: white"> {{ question["message"] }}</p>
     <form action="{{ req_url }}" method="POST" enctype=multipart/form-data>
-            <label for="answer">Your answer:</label><br>
+            <label for="answer" style="background: white; font-weight: bold">Your answer:</label><br>
             <textarea id="answer" name="answer" required rows="10" cols="40" minlength="10">{{answers['message']}}
             </textarea>
             {% if answers['image'] is not defined %}
@@ -24,8 +27,9 @@
                 <input name="file" id="file" type="file">
             </div>
             {% endif %}
-            <button type="submit">Submit!</button>
+            <button type="submit" class="btn btn-info">Submit!</button>
     </form>
+    </div>
 </body>
 
 </html>
