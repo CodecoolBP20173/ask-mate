@@ -12,9 +12,9 @@
 {% for question in questions %}
 <table>
     <tr class="table-light">
-        <th scope="row"><a href="/display/{{question['id']}}"> {{ question['id'] }}</a></th>
+        <th scope="row">{{ question['id'] }}</th>
         <td> {{ question['submission_time'] }}</a></td>
-        <td> {{ question['message'] }}</td>
+        <td> <a href="/display/{{question['id']}}">{{ question['message'] }}</a></td>
     </tr>
 </table>
 {% endfor%}

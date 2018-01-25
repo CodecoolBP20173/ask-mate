@@ -213,7 +213,7 @@ tbody:hover tr:hover td {
 
 .header {
     color: black;
-    /*background: inherit;*/
+    background: inherit;
     margin: 0 auto;
     margin-top: 20px;
     padding: 10px;
