@@ -57,7 +57,7 @@ def get_answer_by_id(cursor, answer_id):
 @connection.connection_handler
 def get_answers_by_question_id(cursor, id):
     cursor.execute("""SELECT a.id, a.submission_time, a.vote_number, a.question_id, a.message, a.image,
-                      u.user_name FROM answer AS a 
+                      COALESCE(u.user_name, 'Anonymous') AS user_name FROM answer AS a 
                       LEFT JOIN users AS u 
                       ON a.user_id = u.id
                       WHERE question_id = %(question_id)s
