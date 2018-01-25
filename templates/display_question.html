@@ -65,10 +65,10 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item"><b>Comments:</b></li>
         {% for question_comment in question_comments %}
-        <li class="list-group-item">{{ question_comment.message }}
+        <li class="list-group-item" style="margin-left:40px; color:black; font-size: 16px;">{{ question_comment.message }}
             <form class="button-delete">
         <button type="submit" formaction="/display/{{question_id}}/{{question_comment.id}}/commdelete" formmethod="get"
-                                                                         id="delete-comment-now">Delete
+                                                                         id="delete-comment-now" style="background: white; color:red;">X
         </button></form></li>
         {% endfor %}
     </ul>
@@ -120,28 +120,25 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><b>Comments:</b></li>
             {% for list in answer_comments if list['answer_id'] == dictionary['id'] %}
-            <li class="list-group-item">{{ list['message'] }}
-                <form class="button-delete">
+            <li class="list-group-item" style="margin-left:40px; color:black; font-size: 16px;">{{ list['message'] }}
+                <form class="button-delete" >
                 <button type="submit" formaction="/display/{{question_id}}/{{list['id']}}/commdelete" formmethod="get"
-                        id="delete-comment">Delete</button></form></li>
+                        id="delete-comment" style="background: white; color:red;">X</button></form></li>
             {% endfor %}
         </ul>
 
-        <a href="/display/{{question_id}}/{{ dictionary['id'] }}/add-comment" class="card-link">Add comment</a>
-        <a href="#" class="card-link">Another link</a>
-        <form>
-            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post"
-                    class="btn btn-outline-success">Like
+
+        <form method="post">
+            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/up-vote" formmethod="post">Like
             </button>
-            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote"
-                    formmethod="post" class="btn btn-outline-danger">Dislike
+            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/down-vote " formmethod="post">Dislike
             </button>
-            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/edit" formmethod="get"
-                    class="btn btn-warning">Edit
-            </button>
-            <button type="submit" formaction="/display/{{question_id}}/{{ dictionary['id'] }}/delete" formmethod="get"
-                    class="btn btn-danger">Delete
-            </button>
+            <!--<a href="/display/{{question_id}}/up-vote" class="card-link" style="color:#64DD17">Like</a>
+            <a href="/display/{{question_id}}/down-vote" class="card-link text-danger">Dislike .!..</a>-->
+            <a href="/display/{{question_id}}/{{ dictionary['id'] }}/edit" class="card-link text-warning">Edit answer</a>
+            <a href="/display/{{question_id}}/{{ dictionary['id'] }}/delete" class="card-link text-dark">Delete answer</a>
+            <a href="/display/{{question_id}}/{{ dictionary['id'] }}/add-comment" class="card-link">Add comment</a>
+
         </form>
     </div>
 </div>
