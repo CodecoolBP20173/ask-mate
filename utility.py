@@ -1,5 +1,6 @@
 import time
 import connection
+import user_handling
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
@@ -39,9 +40,16 @@ def display_unix_time():
 
 @connection.connection_handler
 def get_all_tags(cursor):
-    cursor.execute("""
-                    SELECT * FROM tag;
-                    """)
+    """
+    :param:  -
+    :return: Return a disctionary with the following keys: name, id, count_tag
+    """
+    cursor.execute("""SELECT name, id, COUNT(id) AS count_tag 
+                      FROM tag
+                      JOIN question_tag ON tag.id = question_tag.tag_id
+                      GROUP BY id
+                      ORDER BY count_tag DESC
+                      LIMIT 7 """)
     return cursor.fetchall()
 
 
@@ -57,13 +65,10 @@ def get_tags_by_question_id(cursor, question_id):
 @connection.connection_handler
 def add_new_tag(cursor, tag_name):
     cursor.execute("""INSERT INTO tag (name) 
-                      VALUES (%(name)s);""",
-                   {'name': tag_name})
+                      VALUES (%(name)s);""", {'name': tag_name})
     cursor.execute("""SELECT id FROM tag
-                      WHERE name = %(t_name)s;""",
-                   {'t_name': tag_name})
-    result = cursor.fetchone()
-    return result
+                      WHERE name = %(t_name)s;""", {'t_name': tag_name})
+    return cursor.fetchone()
 
 
 @connection.connection_handler
@@ -94,8 +99,26 @@ def add_tag_to_question(cursor, question_id, tag_name):
 
 
 @connection.connection_handler
+def remove_tag_from_question(cursor, tag_name, question_id):
+    cursor.execute("""
+                    SELECT id FROM tag
+                    WHERE name = %(t_name)s;
+                    """,
+                   {'t_name': tag_name})
+    result = cursor.fetchone()
+    tag_id = result['id']
+    cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id=%(q_id)s
+                    AND
+                    tag_id=%(tag_id)s;
+                    """,
+                   {'q_id': question_id, 'tag_id': tag_id})
+
+
+@connection.connection_handler
 def delete_answer(cursor, answer_id):
-    deactivate_answer_comments(answer_id)
+    user_handling.delete_comment_by_answer(answer_id)
     cursor.execute("""
                     DELETE FROM answer
                     WHERE id = %(answer_id)s;
@@ -104,7 +127,8 @@ def delete_answer(cursor, answer_id):
 
 @connection.connection_handler
 def delete_question_and_answers(cursor, question_id):
-    deactivate_question_comments(question_id)
+    user_handling.delete_answer_comment_by_question_id(question_id)
+    user_handling.delete_comment_by_question(question_id)
     cursor.execute("""
                     DELETE FROM answer
                     WHERE question_id=%(qid)s;
@@ -120,33 +144,8 @@ def delete_question_and_answers(cursor, question_id):
 
 
 @connection.connection_handler
-def deactivate_answer_comments(cursor, answer_id):
-    cursor.execute("""
-                    UPDATE comment
-                    SET answer_id=NULL
-                    WHERE answer_id=%(answer_id)s;
-                    """, {'answer_id': answer_id})
-
-
-@connection.connection_handler
-def deactivate_question_comments(cursor, question_id):
-    cursor.execute("""
-                    UPDATE comment
-                    SET question_id=NULL
-                    WHERE question_id=%(question_id)s;
-                    """, {'question_id': question_id})
-    cursor.execute("""
-                    SELECT * FROM answer
-                    WHERE question_id=%(question_id)s;
-                    """, {'question_id': question_id})
-    results = cursor.fetchall()
-    for answer in results:
-        deactivate_answer_comments(answer['id'])
-
-
-@connection.connection_handler
 def show_comment_question(cursor, question_id):
-    cursor.execute("""SELECT message FROM comment WHERE question_id = %(q_id)s;""",
+    cursor.execute("""SELECT id, message FROM comment WHERE question_id = %(q_id)s;""",
                    {'q_id': question_id})
     comments = cursor.fetchall()
     return comments
@@ -154,8 +153,8 @@ def show_comment_question(cursor, question_id):
 
 @connection.connection_handler
 def add_comment_to_question(cursor, new_comment):
-    cursor.execute("""INSERT INTO comment(question_id, message, submission_time) VALUES 
-                      (%(question_id)s, %(message)s, %(submission_time)s);""", new_comment)
+    cursor.execute("""INSERT INTO comment(question_id, message, submission_time, user_id) VALUES 
+                      (%(question_id)s, %(message)s, %(submission_time)s, %(user_id)s);""", new_comment)
 
 
 @connection.connection_handler
@@ -168,5 +167,5 @@ def show_comment_answer(cursor, answer_id):
 
 @connection.connection_handler
 def add_comment_to_answer(cursor, new_comment):
-    cursor.execute("""INSERT INTO comment(answer_id, message, submission_time) VALUES 
-                      (%(answer_id)s, %(message)s, %(submission_time)s);""", new_comment)
+    cursor.execute("""INSERT INTO comment(answer_id, message, submission_time, user_id) VALUES 
+                      (%(answer_id)s, %(message)s, %(submission_time)s, %(user_id)s);""", new_comment)

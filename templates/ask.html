@@ -3,27 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Ask a question</title>
-    <link rel="stylesheet"
+    <!--<link rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
               integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-              crossorigin="anonymous">
+              crossorigin="anonymous">-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand" rel="stylesheet">
 
 </head>
 <body>
+<div class="main ask">
+    <div class="card header">
     <h1>Ask, Mate!</h1>
-    <p><a href="/">Back</a></p>
-    <h2>Ask a question:</h2>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a id="current" class="navbar-brand" href="/ask">Ask a question</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login/users">Users</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" form action="/search/questions" method="post">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search_input">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+    <h2 style="background:white">Ask a question:</h2>
     <form action="{{ req_url }}"
           method="POST"
           enctype=multipart/form-data>
         <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">Question title</label>
+            <label for="title" class="col-sm-2 control-label" style="background:white">Question title</label>
             <input id="title" name="title" type="text" class="form-control" value="{{ question['title'] }}">
         </div>
         <div class="form-group">
-            <label for="message" class="col-sm-2 control-label">Description:</label>
+            <label for="message" class="col-sm-2 control-label" style="background:white">Description:</label>
             <textarea id="message" class="form-control" name="message">{{ question['message'] }}</textarea>
         </div>
         {% if question['image'] is not defined %}
@@ -32,7 +60,8 @@
             <input name="file" id="file" type="file">
         </div>
         {% endif %}
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-info">Submit</button>
     </form>
+    </div>
 </body>
 </html>

@@ -1,0 +1,41 @@
+{% extends 'user_info.html' %}
+
+{% block content %}
+<table>
+<tr class="table-dark">
+<th scope="row">{{ user['user_name'] }}</th>
+<td>{{ user['registration_date'] }}</td>
+<td>{{ user['email'] }}</td>
+    </tr>
+</table>
+<h6>Questions:</h6>
+{% for question in questions %}
+<table>
+    <tr class="table-light">
+        <th scope="row">{{ question['id'] }}</th>
+        <td> {{ question['submission_time'] }}</a></td>
+        <td> <a href="/display/{{question['id']}}">{{ question['message'] }}</a></td>
+    </tr>
+</table>
+{% endfor%}
+<h6>Answers:</h6>
+{% for answer in answers %}
+<table>
+    <tr class="table-light">
+        <th scope="row">{{ answer['id']}}</th>
+        <td> {{ answer['submission_time'] }}</td>
+        <td> {{ answer['message'] }}</td>
+    </tr>
+</table>
+{% endfor%}
+<h6>Comments:</h6>
+{% for comment in comments %}
+<table>
+    <tr class="table-light">
+        <th scope="row">{{ comment['id']}}</th>
+        <td> {{ comment['submission_time'] }}</td>
+        <td> {{ comment['message'] }}</td>
+    </tr>
+</table>
+{% endfor%}
+{% endblock %}

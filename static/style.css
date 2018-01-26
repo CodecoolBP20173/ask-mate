@@ -1,15 +1,25 @@
 * {
-    margin: auto;
-    /*font-family: "Noto Sans Mono CJK JP Regular", fantasy;*/
-    font-family: 'Open Sans Condensed', sans-serif;
     font-size: 18px;
+}
+
+body {
+    width:100%;
+    background-image: url("colored-lines-with-white-background.jpg");
+    background-repeat: repeat-y;
+    background-attachment: fixed;
+}
+
+.main {
+    margin: 0 auto;
+    font-family: 'Oswald', sans-serif;
+    /*font-family: 'Open Sans Condensed', sans-serif;*/
+    width: 900px;
+    margin-bottom: 40px;
 }
 
 h1 {
     text-align: center;
-    background-color: #00695C;
-    /*background-color: #30799B;*/
-    color: #FFFFFF;
+    color: #000000;
     margin-top: 30px;
     height: 90px;
     font-family: 'Joti One', cursive;
@@ -18,53 +28,8 @@ h1 {
     padding-top: 5px;
 }
 
-.first_panel {
-    display: inline;
-    margin-right: 550px;
-
-}
-
-.panel-under-header {
-    /*width: 1100px;*/
-    height: 60px;
-    /*background: #66df22;*/
-    text-align: center;
-    width: 1100px;
-    vertical-align: center;
-    padding-top: 3px;
-    padding-left: 20px;
-    padding-bottom: 1px;
-    /*background-color: #E6EE9C;*/
-    margin-bottom: 15px;
-}
-
-a {
-    font-size: 22px;
-}
-
-p {
-    width: 1100px;
-}
-
-h2, h3, h4, h5 {
-    width: 1100px;
-}
-
-span {
-}
-
-#display_pic {
-    margin-top: 20px;
-    align-items: center;
-}
-
-#tags {
-    width: 1000px;
-}
-
-
-form {
-    width: 1000px;
+.navbar {
+    margin: 10px 0 20px 0;
 }
 
 textarea {
@@ -72,24 +37,40 @@ textarea {
 }
 
 table {
-    width: 1100px;
+    display: inline-block;
     margin-top: 30px;
+    width: 80%;
 }
 
-th {
-    text-align: center;
-    vertical-align: middle;
-    margin: 20px;
-    padding: 10px;
+/*
+.mb-3 {
+    display: inline-block;
+    margin-top: 30px;
+    width: 80%;
 }
+*/
+
+.card {
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 40px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+    padding: 20px;
+    /*background: inherit;*/
+}
+
+.sidetags {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 40px;
+    width: 13%;
+}
+
 
 img {
-    max-height: 300px;
-    max-width: 300px;
-}
-
-#button-form {
-    width: 1100px;
+    margin-right: auto;
+    width: 100%;
+    object-fit: contain;
 }
 
 td {
@@ -100,7 +81,6 @@ td {
 
 button, .button {
     border-radius: 4px;
-    background-color: salmon;
     border: none;
     color: #FFFFFF;
     font-size: 15px;
@@ -111,39 +91,135 @@ button, .button {
     margin-top: 20px;
 }
 
-.side-buttons button {
+.badge-danger {
+    font-size: 17px;
+}
+
+.align-items-center {
+    display: inline-block;
+}
+
+.text-muted {
+    font-size: 13px;
+}
+
+.card-text {
+    font-size: 15px;
+}
+
+.card-header {
+    font-size: 20px;
+    width: 100%;
+    background: inherit;
+}
+
+.list-group-flush, .add-comment {
+    /*margin-left: 50%;*/
+    font-size: 13px;
+}
+
+.login-error-message{
+    background-color: yellow;
+    color: red;
+    font-weight: bold;
+    padding-left: 24px;
+    margin-right: 70%;
+}
+#delete-comment, #delete-comment-now {
+    border-radius: 4px;
+    background-color: salmon;
+    border: none;
+    color: #FFFFFF;
+    font-size: 12px;
     width: 80px;
-    height: 40px;
-    text-align: center;
+    height: 30px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-top: 20px;
+    right: 20px;
+    display: inline-block;
 }
 
-.side-buttons-row {
-    display: block;
+.button-delete {
+    display: inline-block;
+    text-align: left;
 }
 
-button:hover, .button:hover {
-    background-color: #9C1A1C;
+
+td {
+    padding: 10px 15px;
+    position: relative;
+    transition: all 300ms;
 }
 
-.search-button {
-    height: 28px;
-    width: 80px;
-    background-color: black;
-    font-style: italic;
+tbody:hover td {
+    color: transparent;
+    text-shadow: 0 0 3px #aaa;
 }
 
-tr {
-    border-bottom: 2px solid black;
+tbody:hover tr:hover td {
+    color: #444;
+    text-shadow: 0 1px 0 #fff;
+}
+.badge-light{
+    font-size: 12px;
+    margin-left: 8px;
 }
 
-#tags {
-    font-size: 25px;
+.badge-primary{
+    font-size: 16px;
 }
 
-.comments {
-    background: #F8BBD0;
+.badge-delete-button{
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
 }
 
-#buttons {
-    width: 20%;
+.list-group-flush{
+    margin-left: 50%;
+    font-size: 13px;
+}
+
+.title-column {
+    width: 90%;
+    font-weight: bold;
+}
+
+.date-column, .id-column, .vote-column, .view-column {
+    font-size: 14px;
+}
+
+.id-column {
+    width: 1%;
+}
+
+.vote-column {
+    width: 1%;
+}
+.id-column {
+    width: 1%;
+}
+
+
+.id-column {
+    width: 1%;
+}
+
+.date-column {
+    width: 10%;
+}
+
+.header {
+    color: black;
+    background: inherit;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 10px;
+    width: 50%;
+    padding-top: 0;
+}
+
+#current {
+    color: #E53935;
 }

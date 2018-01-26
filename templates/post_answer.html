@@ -1,24 +1,35 @@
 <html>
     <head>
-    <title>Post an answer</title>
-        <link rel="stylesheet"
+        <title>Post an answer</title>
+        <!--<link rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
               integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-              crossorigin="anonymous">
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-            <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand" rel="stylesheet">
+              crossorigin="anonymous">-->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Arapey|Bellefair|Fascinate|Joti+One|Open+Sans+Condensed:300|Shrikhand" rel="stylesheet">
 
     </head>
 <body>
+<div class="main">
+    <div class="card header">
     <h1>Ask, Mate!</h1>
-    <h2> {{ question["title"] }}</h2>
-    <p> {{ question["message"] }}</p>
-    <form action="{{ req_url }}" method="post">
-            <label for="answer">Your answer:</label><br>
+        </div>
+    <h2 style="background: white"> {{ question["title"] }}</h2>
+    <p style="background: white"> {{ question["message"] }}</p>
+    <form action="{{ req_url }}" method="POST" enctype=multipart/form-data>
+            <label for="answer" style="background: white; font-weight: bold">Your answer:</label><br>
             <textarea id="answer" name="answer" required rows="10" cols="40" minlength="10">{{answers['message']}}
-            </textarea><br>
-            <button type="submit">Submit!</button>
+            </textarea>
+            {% if answers['image'] is not defined %}
+            <div class="form-group">
+                <label for="file">Upload a picture</label>
+                <input name="file" id="file" type="file">
+            </div>
+            {% endif %}
+            <button type="submit" class="btn btn-info">Submit!</button>
     </form>
+    </div>
 </body>
 
 </html>
