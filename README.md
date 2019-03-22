@@ -1,2 +1,2 @@
-# wswp-ask-mate
-Web and SQL with Python / 1st TW week / Ask Mate project
+ask-mate
+A crowdsourced Q&A site, like Stack Overflow built with Python Flask, HTTP and Bootstrap CSS.
